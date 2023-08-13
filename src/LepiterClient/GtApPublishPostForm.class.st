@@ -111,7 +111,6 @@ GtApPublishPostForm >> magritteAcceptAction [
 		onSuccessCallback: (GtMagritteCallback new
 				action: [ :aModel :aButton :aMemento :aDescription | 
 					| aPage serverDatabase aFilePath |
-					self halt.
 					client := GtApLepiterClient new
 							server: server;
 							username: username;
