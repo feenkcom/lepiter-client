@@ -116,14 +116,13 @@ GtApLepiterClient >> initialize [
 
 { #category : #accessing }
 GtApLepiterClient >> login [
-	| loginResult |
-	loginResult := STONJSON
-			fromString: (ZnEasy
-					post: self server , '/api/loginUser'
-					data: (ZnEntity
-							json: (STONJSON
-									toString: {'username' -> self username.
-											'password' -> self password} asDictionary))) entity string.
+	| loginResult response data |
+	data := ZnEntity
+			json: (STONJSON
+					toString: {'username' -> self username.
+							'password' -> self password} asDictionary).
+	response := ZnEasy post: self server , '/api/loginUser' data: data.
+	loginResult := STONJSON fromString: response entity string.
 	self token: (loginResult at: 'token')
 ]
 
