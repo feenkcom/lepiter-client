@@ -125,7 +125,9 @@ GtApPublishPostForm >> magritteAcceptAction [
 								createPost: self post
 								forPage: self page
 								inDatabase: serverDatabase lepiterDatabase).
-					self post database: self page database.
+					self post
+						database: self page database;
+						serverDatabase: serverDatabase rawData.
 					aFilePath := client createRenderedPost: self post.
 					self
 						post: (client
