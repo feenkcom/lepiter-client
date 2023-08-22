@@ -10,7 +10,8 @@ Class {
 		'publishedFile',
 		'uuid',
 		'publishedUser',
-		'database'
+		'database',
+		'serverDatabase'
 	],
 	#category : #'LepiterClient-Model'
 }
@@ -108,6 +109,14 @@ GtApServerPost >> page: anObject [
 ]
 
 { #category : #accessing }
+GtApServerPost >> printOn: aStream [
+
+	aStream 
+		nextPutAll: 'Server Post: ';
+		print: title
+]
+
+{ #category : #accessing }
 GtApServerPost >> publishTo: aDirectory [
 	| sequencer pageLinks aPageLink aContext anExporter anHtml resource aPage |
 	aPage := self database
@@ -129,7 +138,8 @@ GtApServerPost >> publishTo: aDirectory [
 			page: aPage;
 			pageLinks: pageLinks;
 			sequencer: sequencer;
-			database: self database.
+			database: self database;
+			serverDatabase: self serverDatabase.
 
 	anExporter := LeHtmlPageExporter new
 			context: aContext;
@@ -185,6 +195,16 @@ GtApServerPost >> publishedUser [
 { #category : #accessing }
 GtApServerPost >> publishedUser: anObject [
 	publishedUser := anObject
+]
+
+{ #category : #accessing }
+GtApServerPost >> serverDatabase [
+	^ serverDatabase
+]
+
+{ #category : #accessing }
+GtApServerPost >> serverDatabase: anObject [
+	serverDatabase := anObject
 ]
 
 { #category : #accessing }

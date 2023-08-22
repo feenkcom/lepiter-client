@@ -5,9 +5,22 @@ Class {
 }
 
 { #category : #accessing }
+LeHtmlGtAtpPostPiece >> gtOutputFor: aView [
+	<gtView>
+	^ aView textEditor
+		title: 'Output';
+		priority: 20;
+		aptitude: BrGlamorousCodeEditorAptitude;
+		text: [ String streamContents: [ :aStream | 
+			self writeWithContext: (GtApHtmlContext new stream: aStream) ] ]
+]
+
+{ #category : #accessing }
 LeHtmlGtAtpPostPiece >> initialize [
 	super initialize.
 
-	formatPiece at: #blogTitle put: LeHtmlDatabaseTitlePiece;
-	at: #blogSlug put: LeHtmlDatabaseSlugPiece
+	formatPiece
+		at: #blogTitle put: LeHtmlDatabaseTitlePiece;
+		at: #blogSlug put: LeHtmlDatabaseSlugPiece;
+		at: #urlAttribute put: LeHtmlGtApUrlAttributePiece
 ]

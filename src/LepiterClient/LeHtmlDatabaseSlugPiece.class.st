@@ -8,6 +8,6 @@ Class {
 
 { #category : #'api - writing' }
 LeHtmlDatabaseSlugPiece >> writeWithContext: aContext [
-	aContext database ifNotNil: [ :aDatabase | 
+	aContext serverDatabase ifNotNil: [ :aDatabase | 
 		aContext html escape: (aDatabase at: 'slug') ]
 ]
