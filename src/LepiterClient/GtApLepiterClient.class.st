@@ -31,7 +31,7 @@ GtApLepiterClient >> createRenderedPost: aPost [
 	postUuid := aPost uuid.
 	postDirectory := (FileLocator temp asFileReference / postUuid asString)
 			ensureCreateDirectory.
-	filePath := aPost publishTo: postDirectory.
+	filePath := aPost publishTo: postDirectory usingPath: nil.
 	figureCode := (postDirectory / 'gt-figures') exists
 			ifTrue: [ ((postDirectory / 'gt-figures') children
 					collect: [ :aFile | aFile basename -> aFile binaryContents asString ])

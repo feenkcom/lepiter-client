@@ -17,7 +17,9 @@ LeHtmlGtApUrlAttributePiece >> writeWithContext: aContext [
 	aContext serverDatabase
 		ifNotNil: [ :aDatabase | anUrl := anUrl / (aDatabase at: 'slug') ].
 
-	anUrl := anUrl / aContext pageLink fileName.
+	aContext pagePath
+		ifNil: [ anUrl := anUrl / aContext pageLink fileName ]
+		ifNotNil: [ :aPath | anUrl := anUrl / aPath ].
 
 	aContext html escapeAttributeValue: anUrl asString
 ]

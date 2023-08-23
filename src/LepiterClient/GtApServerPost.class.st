@@ -117,7 +117,7 @@ GtApServerPost >> printOn: aStream [
 ]
 
 { #category : #accessing }
-GtApServerPost >> publishTo: aDirectory [
+GtApServerPost >> publishTo: aDirectory usingPath: aPath [
 	| sequencer pageLinks aPageLink aContext anExporter anHtml resource aPage |
 	aPage := self database
 			pageWithID: self page
@@ -137,6 +137,7 @@ GtApServerPost >> publishTo: aDirectory [
 	aContext := GtApHtmlContext new
 			page: aPage;
 			pageLinks: pageLinks;
+			pagePath: aPath;
 			sequencer: sequencer;
 			database: self database;
 			serverDatabase: self serverDatabase.
