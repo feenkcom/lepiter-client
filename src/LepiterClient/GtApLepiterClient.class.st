@@ -10,6 +10,11 @@ Class {
 	#category : #'LepiterClient-Client'
 }
 
+{ #category : #'private - publishing' }
+GtApLepiterClient >> attachmentPoster [
+	^ GtApLepiterAttachmentPoster new client: self
+]
+
 { #category : #accessing }
 GtApLepiterClient >> createPost: aPost forPage: aPage inDatabase: databaseId [
 	^ LeJsonV4 uniqueInstance
@@ -61,18 +66,25 @@ GtApLepiterClient >> databases [
 				response) entity string readStream
 ]
 
-{ #category : #accessing }
+{ #category : #'api - publishing' }
 GtApLepiterClient >> exportPage: aPage inDatabase: aDatabaseId [
-	| aPost |
-	aPost := LeJsonV4 uniqueInstance
-			deserialize: (ZnClient new beOneShot
-					url: self server , '/api/createPage';
-					entity: (ZnEntity
-							json: (LeJsonV4 uniqueInstance
-									serialize: {'page' -> aPage.
-											'database' -> aDatabaseId asString} asDictionary));
-					setBearerAuthentication: self token;
-					post) readStream.
+	| aPost aPageResponse anAttachmentResponse |
+	aPageResponse := self pagePoster 
+		page: aPage; 
+		serverDatabaseId: aDatabaseId; 
+		post.
+		
+	"aPageResponse isSuccess ifFalse: [ ^ aPageResponse ]."
+	
+	anAttachmentResponse := self attachmentPoster
+		page: aPage;
+		databaseId: aDatabaseId;
+		post.
+	
+	anAttachmentResponse isSuccess ifFalse: [ ^ nil ].
+	
+	aPost := aPageResponse post.
+	
 	^ aPost
 ]
 
@@ -133,6 +145,11 @@ GtApLepiterClient >> magritteAcceptAction [
 	^ super magritteAcceptAction
 		onSuccessCallback: (GtMagritteCallback new
 				action: [ :aModel :aButton :aMemento :aDescription | self login])
+]
+
+{ #category : #'private - publishing' }
+GtApLepiterClient >> pagePoster [
+	^ GtApLepiterPagePoster new client: self
 ]
 
 { #category : #accessing }

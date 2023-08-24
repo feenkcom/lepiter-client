@@ -10,6 +10,36 @@ Class {
 	#category : #'LepiterClient-Publishing'
 }
 
+{ #category : #accessing }
+GtApLepiterPagePoster >> page [
+	^ page
+]
+
+{ #category : #accessing }
+GtApLepiterPagePoster >> page: anObject [
+	page := anObject
+]
+
+{ #category : #'api - publishing' }
+GtApLepiterPagePoster >> post [
+	| aPost aZnResponse |
+	aZnResponse := self postPage.
+
+	aZnResponse isSuccess
+		ifFalse: [ ^ GtApLepiterPostPageFailureResponse new
+				page: self page;
+				serverDatabaseId: self serverDatabaseId;
+				response: aZnResponse ].
+
+	aPost := LeJsonV4 uniqueInstance deserialize: aZnResponse readStream.
+
+	^ GtApLepiterPostPageSuccessResponse new
+		page: self page;
+		serverDatabaseId: self serverDatabaseId;
+		response: aZnResponse;
+		serverPage: aPost
+]
+
 { #category : #'api - publishing' }
 GtApLepiterPagePoster >> postPage [
 	^ ZnClient new beOneShot
