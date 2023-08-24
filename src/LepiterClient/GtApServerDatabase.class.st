@@ -49,6 +49,21 @@ GtApServerDatabase >> formatDictionary [
 ]
 
 { #category : #accessing }
+GtApServerDatabase >> gtOverviewFor: aView [
+	<gtView>
+	^ aView columnedList
+		title: 'Overview';
+		priority: 1;
+		items: [ self formatDictionary ];
+		actionUpdateButtonTooltip: 'Update overview';
+		column: 'Name' text: #key;
+		column: 'Value'
+			text: [ :aPair | aPair value asString ]
+			weight: 2;
+		send: #value
+]
+
+{ #category : #accessing }
 GtApServerDatabase >> gtPagesFor: aView [
 	<gtView>
 	self server ifNil: [ ^ aView empty ].
