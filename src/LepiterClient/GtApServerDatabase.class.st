@@ -45,7 +45,7 @@ GtApServerDatabase >> formatDictionary [
 	^ {#name -> self name.
 		#id -> self id.
 		#slug -> self slug.
-		#description -> self description}
+		#description -> self description} asDictionary
 ]
 
 { #category : #accessing }
@@ -54,7 +54,7 @@ GtApServerDatabase >> gtOverviewFor: aView [
 	^ aView columnedList
 		title: 'Overview';
 		priority: 1;
-		items: [ self formatDictionary ];
+		items: [ self formatDictionary associations ];
 		actionUpdateButtonTooltip: 'Update overview';
 		column: 'Name' text: #key;
 		column: 'Value'
