@@ -31,7 +31,7 @@ GtApLepiterPagePoster >> post [
 				serverDatabaseId: self serverDatabaseId;
 				response: aZnResponse ].
 
-	aPost := LeJsonV4 uniqueInstance deserialize: aZnResponse readStream.
+	aPost := LeJsonV4 uniqueInstance deserialize: aZnResponse contents readStream.
 
 	^ GtApLepiterPostPageSuccessResponse new
 		page: self page;

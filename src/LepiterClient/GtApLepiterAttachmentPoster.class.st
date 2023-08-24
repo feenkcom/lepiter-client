@@ -14,6 +14,13 @@ Class {
 	#category : #'LepiterClient-Publishing'
 }
 
+{ #category : #initialization }
+GtApLepiterAttachmentPoster >> initialize [
+	super initialize.
+	
+	responses := OrderedCollection new.
+]
+
 { #category : #accessing }
 GtApLepiterAttachmentPoster >> page [
 	^ page
@@ -40,7 +47,7 @@ GtApLepiterAttachmentPoster >> postCreateAttachment [
 	anEntity := ZnEntity
 				json: (STONJSON toString: {
 					'blob' -> serverFile blob.
-					'fileName' -> currentSnippetAttachment name.
+					'fileName' -> currentSnippetAttachment basename.
 					'attachmentId' -> currentSnippetAttachment uidString.
 					'database' -> self serverDatabaseId asString} asDictionary).
 	
@@ -66,9 +73,11 @@ GtApLepiterAttachmentPoster >> postCreateAttachment [
 
 { #category : #'private - publishing' }
 GtApLepiterAttachmentPoster >> postCreateFile [
+	self flag: 'use stream instead of bytes:'.
+
 	^ ZnClient new beOneShot
 		url: self server , '/api/createFile';
-		entity: (ZnEntity json: '{}');
+		entity: (ZnEntity bytes: currentSnippetAttachment contents);
 		setBearerAuthentication: self token;
 		post;
 		response

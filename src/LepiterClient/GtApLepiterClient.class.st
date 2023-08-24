@@ -58,28 +58,36 @@ GtApLepiterClient >> createRenderedPost: aPost [
 
 { #category : #accessing }
 GtApLepiterClient >> databases [
-	^ LeJsonV4 uniqueInstance
+	| allDatabases |
+	allDatabases := LeJsonV4 uniqueInstance
 		deserialize: (ZnClient new beOneShot
 				url: self server , '/api/databases';
 				setBearerAuthentication: self token;
 				get;
-				response) entity string readStream
+				response) entity string readStream.
+				
+	allDatabases do: [ :aDatabase | 
+		aDatabase 
+			server: self server; 
+			token: self token ].
+			
+	^ allDatabases
 ]
 
 { #category : #'api - publishing' }
 GtApLepiterClient >> exportPage: aPage inDatabase: aDatabaseId [
 	| aPost aPageResponse anAttachmentResponse |
+	anAttachmentResponse := self attachmentPoster
+		page: aPage;
+		serverDatabaseId: aDatabaseId;
+		post.
+	
 	aPageResponse := self pagePoster 
 		page: aPage; 
 		serverDatabaseId: aDatabaseId; 
 		post.
 		
 	"aPageResponse isSuccess ifFalse: [ ^ aPageResponse ]."
-	
-	anAttachmentResponse := self attachmentPoster
-		page: aPage;
-		databaseId: aDatabaseId;
-		post.
 	
 	anAttachmentResponse isSuccess ifFalse: [ ^ nil ].
 	
