@@ -53,16 +53,12 @@ GtApLepiterClient >> createRenderedPost: aPost [
 
 { #category : #accessing }
 GtApLepiterClient >> databases [
-	^ (STONJSON
-		fromString: (ZnClient new beOneShot
+	^ LeJsonV4 uniqueInstance
+		deserialize: (ZnClient new beOneShot
 				url: self server , '/api/databases';
 				setBearerAuthentication: self token;
 				get;
-				response) entity string)
-		collect: [ :aDb | 
-			(GtApLepiterDatabase fromRaw: aDb)
-				server: self server;
-				token: self token ]
+				response) entity string readStream
 ]
 
 { #category : #accessing }

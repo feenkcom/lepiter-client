@@ -1,29 +1,58 @@
 Class {
-	#name : #GtApLepiterDatabase,
+	#name : #GtApServerDatabase,
 	#superclass : #Object,
 	#instVars : [
-		'rawData',
 		'server',
 		'token',
 		'pages',
-		'posts'
+		'posts',
+		'name',
+		'description',
+		'ledatabase',
+		'slug',
+		'user',
+		'id'
 	],
 	#category : #'LepiterClient-Model'
 }
 
 { #category : #accessing }
-GtApLepiterDatabase class >> fromRaw: aDb [
-	^ self new rawData: aDb
+GtApServerDatabase class >> leJsonV4AttributeMapping [
+	^ {#name -> #name.
+		#id -> #id.
+		#slug -> #slug.
+		#description -> #description.
+		#ledatabase -> #ledatabase}
 ]
 
 { #category : #accessing }
-GtApLepiterDatabase >> description [
-	^ self rawData at: 'description'
+GtApServerDatabase class >> leJsonV4Name [
+	^ #apServerDatabase
 ]
 
 { #category : #accessing }
-GtApLepiterDatabase >> gtPagesFor: aView [
+GtApServerDatabase >> description [
+	^ description
+]
+
+{ #category : #accessing }
+GtApServerDatabase >> description: anObject [
+	description := anObject
+]
+
+{ #category : #accessing }
+GtApServerDatabase >> formatDictionary [
+	^ {#name -> self name.
+		#id -> self id.
+		#slug -> self slug.
+		#description -> self description}
+]
+
+{ #category : #accessing }
+GtApServerDatabase >> gtPagesFor: aView [
 	<gtView>
+	self server ifNil: [ ^ aView empty ].
+
 	^ aView columnedList
 		title: 'Pages';
 		priority: 1;
@@ -51,15 +80,19 @@ GtApLepiterDatabase >> gtPagesFor: aView [
 ]
 
 { #category : #accessing }
-GtApLepiterDatabase >> gtPostsFor: aView [
+GtApServerDatabase >> gtPostsFor: aView [
 	<gtView>
+	self server ifNil: [ ^ aView empty ].
+
 	^ aView columnedList
 		title: 'Posts';
 		priority: 1;
 		items: [ self posts ];
 		column: 'Title' text: #title;
 		column: 'Abstract' text: #abstract;
-		column: 'Published' text: #isPublished width: 75;
+		column: 'Published'
+			text: #isPublished
+			width: 75;
 		actionButtonIcon: BrGlamorousVectorIcons refresh
 			tooltip: 'Update'
 			action: [ :aButton :aTab | 
@@ -68,73 +101,64 @@ GtApLepiterDatabase >> gtPostsFor: aView [
 ]
 
 { #category : #accessing }
-GtApLepiterDatabase >> gtRawDataFor: aView [
-	<gtView>
-	^ aView columnedTree
-		title: 'Raw data';
-		priority: 40;
-		items: [ rawData associations ];
-		column: 'Property' text: #key;
-		column: 'Value' text: #value;
-		children: [ :each | 
-			each value isDictionary
-				ifTrue: [ each value associations ]
-				ifFalse: [ (each value isArray and: [ each value allSatisfy: #isDictionary ])
-						ifTrue: [ each value collectWithIndex: [ :x :i | i -> x ] ]
-						ifFalse: [ #() ] ] ];
-		send: #value
+GtApServerDatabase >> id [
+	^ id
 ]
 
 { #category : #accessing }
-GtApLepiterDatabase >> id [
-	^ self rawData at: 'id' at: 'uuid'
+GtApServerDatabase >> id: anObject [
+	id := anObject
 ]
 
 { #category : #accessing }
-GtApLepiterDatabase >> lepiterDatabase [
-	^ self rawData at: 'ledatabase' at: 'uuid'
+GtApServerDatabase >> ledatabase [
+	^ ledatabase
 ]
 
 { #category : #accessing }
-GtApLepiterDatabase >> location [
+GtApServerDatabase >> ledatabase: anObject [
+	ledatabase := anObject
+]
+
+{ #category : #accessing }
+GtApServerDatabase >> lepiterDatabase [
+	^ self ledatabase
+]
+
+{ #category : #accessing }
+GtApServerDatabase >> location [
 	^ self server , '/' , self slug
 ]
 
 { #category : #accessing }
-GtApLepiterDatabase >> name [
-	^ self rawData at: 'name'
+GtApServerDatabase >> name [
+	^ name
 ]
 
 { #category : #accessing }
-GtApLepiterDatabase >> pageByUuid: aUuid [
+GtApServerDatabase >> name: anObject [
+	name := anObject
+]
+
+{ #category : #accessing }
+GtApServerDatabase >> pageByUuid: aUuid [
 	^ self pages detect: [ :aPage | aPage uid = aUuid ]
 ]
 
 { #category : #accessing }
-GtApLepiterDatabase >> pages [
+GtApServerDatabase >> pages [
 	^ pages ifNil: [ self refreshPages ]
 ]
 
 { #category : #accessing }
-GtApLepiterDatabase >> posts [
+GtApServerDatabase >> posts [
 	^ posts ifNil: [ self refreshPosts ]
 ]
 
 { #category : #accessing }
-GtApLepiterDatabase >> rawData [
-	^ rawData
-]
-
-{ #category : #accessing }
-GtApLepiterDatabase >> rawData: anObject [
-	rawData := anObject
-]
-
-{ #category : #accessing }
-GtApLepiterDatabase >> refreshPages [
+GtApServerDatabase >> refreshPages [
 	^ pages := (ZnClient new beOneShot
-			url: self server , '/api/pages?database='
-					, (self rawData at: 'ledatabase' at: 'uuid');
+			url: self server , '/api/pages?database=' , self ledatabase asString;
 			setBearerAuthentication: self token;
 			get;
 			response) entity string
@@ -142,9 +166,9 @@ GtApLepiterDatabase >> refreshPages [
 ]
 
 { #category : #accessing }
-GtApLepiterDatabase >> refreshPosts [
+GtApServerDatabase >> refreshPosts [
 	^ posts := (((ZnClient new beOneShot
-			url: self server , '/api/posts?database=' , self slug;
+			url: self server , '/api/posts?database=' , self ledatabase asString;
 			get;
 			response) entity string
 			readStreamDo: [ :aStream | LeJsonV4 uniqueInstance deserialize: aStream ])
@@ -152,26 +176,41 @@ GtApLepiterDatabase >> refreshPosts [
 ]
 
 { #category : #accessing }
-GtApLepiterDatabase >> server [
+GtApServerDatabase >> server [
 	^ server
 ]
 
 { #category : #accessing }
-GtApLepiterDatabase >> server: anObject [
+GtApServerDatabase >> server: anObject [
 	server := anObject
 ]
 
 { #category : #accessing }
-GtApLepiterDatabase >> slug [
-	^ self rawData at: 'slug'
+GtApServerDatabase >> slug [
+	^ slug
 ]
 
 { #category : #accessing }
-GtApLepiterDatabase >> token [
+GtApServerDatabase >> slug: anObject [
+	slug := anObject
+]
+
+{ #category : #accessing }
+GtApServerDatabase >> token [
 	^ token
 ]
 
 { #category : #accessing }
-GtApLepiterDatabase >> token: anObject [
+GtApServerDatabase >> token: anObject [
 	token := anObject
+]
+
+{ #category : #accessing }
+GtApServerDatabase >> user [
+	^ user
+]
+
+{ #category : #accessing }
+GtApServerDatabase >> user: anObject [
+	user := anObject
 ]
