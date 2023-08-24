@@ -4,16 +4,15 @@ Class {
 	#category : #BaselineOfLepiterClient
 }
 
+{ #category : #accessing }
+BaselineOfLepiterClient class >> gtDependencyAnalysisPreloadedBaselines [
+
+	^ super gtDependencyAnalysisPreloadedBaselines copyWith:
+		  BaselineOfGToolkit
+]
+
 { #category : #baseline }
 BaselineOfLepiterClient >> baseline: spec [
 	<baseline>
-	^ spec
-		for: #common
-		do: [ spec
-				baseline: 'GToolkit4Magritte'
-				with: [ spec repository: 'github://feenkcom/gt4magritte:main/src' ].
-			spec 
-				baseline: 'LepiterEngineCore'
-				with: [ spec repository: 'github://feenkcom/lepiter:main/src' ].
-			spec package: 'LepiterClient' ]
+	^ spec for: #common do: [ spec package: 'LepiterClient' ]
 ]
