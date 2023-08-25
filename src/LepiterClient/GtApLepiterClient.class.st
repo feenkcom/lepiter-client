@@ -76,26 +76,28 @@ GtApLepiterClient >> databases [
 
 { #category : #'api - publishing' }
 GtApLepiterClient >> exportPage: aPage inDatabase: aDatabaseId [
-	| aPost aPageResponse anAttachmentResponse |
-	self halt.
-	
+	| aServerPage aPageResponse anAttachmentResponse |
 	anAttachmentResponse := self attachmentPoster
 		page: aPage;
 		serverDatabaseId: aDatabaseId;
 		post.
+		
+	anAttachmentResponse isSuccess ifFalse: [ ^ anAttachmentResponse ].
 	
 	aPageResponse := self pagePoster 
 		page: aPage; 
 		serverDatabaseId: aDatabaseId; 
 		post.
 		
-	"aPageResponse isSuccess ifFalse: [ ^ aPageResponse ]."
+	aPageResponse isSuccess ifFalse: [ ^ aPageResponse ].
 	
-	anAttachmentResponse isSuccess ifFalse: [ ^ nil ].
+	aServerPage := aPageResponse serverPage.
 	
-	aPost := aPageResponse post.
-	
-	^ aPost
+	^ GtApLepiterClientExportPageSuccessResponse new
+		clientPage: aPage;
+		serverDatabaseId: aDatabaseId;
+		serverPage: aServerPage;
+		responses: { anAttachmentResponse. aPageResponse }
 ]
 
 { #category : #accessing }
