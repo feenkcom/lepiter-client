@@ -38,49 +38,57 @@ GtApLepiterAttachmentPoster >> post [
 	snippetAttachments items do: [ :eachAttachment | 
 		self postForAttachment: eachAttachment ].
 		
-	^ responses
+	^ GtApLepiterResponses new responses: responses
 ]
 
 { #category : #'private - publishing' }
 GtApLepiterAttachmentPoster >> postCreateAttachment [
 	| aZnResponse anEntity anApResponse aClient |
 	anEntity := ZnEntity
-				json: (STONJSON toString: {
-					'blob' -> serverFile blob.
-					'fileName' -> currentSnippetAttachment basename.
-					'attachmentId' -> currentSnippetAttachment uidString.
-					'database' -> self serverDatabaseId asString} asDictionary).
-	
+			json: (STONJSON
+					toString: {'blob' -> serverFile blob.
+							'fileName' -> currentSnippetAttachment basename.
+							'attachmentId' -> currentSnippetAttachment uidString.
+							'database' -> self serverDatabaseId asString} asDictionary).
+
 	aClient := ZnClient new beOneShot
-		url: self server , '/api/createAttachment';
-		entity: anEntity;
-		setBearerAuthentication: self token.
+			url: self server , '/api/createAttachment';
+			entity: anEntity;
+			setBearerAuthentication: self token.
 	aZnResponse := aClient
-		post;
-		response.
-		
+			post;
+			response.
+
 	anApResponse := aZnResponse isSuccess
-		ifTrue: [ GtApLepiterRequestSuccess new
-			znClient: aClient ]
-		ifFalse: [ GtApLepiterRequestFailure new
-			znClient: aClient
-			 ].
-		
+			ifTrue: [ GtApLepiterRequestSuccess new znClient: aClient ]
+			ifFalse: [ GtApLepiterRequestFailure new znClient: aClient ].
+
 	responses add: anApResponse.
-	
+
 	^ anApResponse
 ]
 
 { #category : #'private - publishing' }
 GtApLepiterAttachmentPoster >> postCreateFile [
+	| aZnResponse anApResponse aClient |
 	self flag: 'use stream instead of bytes:'.
 
-	^ ZnClient new beOneShot
+	aClient := ZnClient new beOneShot
 		url: self server , '/api/createFile';
 		entity: (ZnEntity bytes: currentSnippetAttachment contents);
-		setBearerAuthentication: self token;
+		setBearerAuthentication: self token.
+		
+	aZnResponse := aClient
 		post;
-		response
+		response.
+		
+	anApResponse := aZnResponse isSuccess
+			ifTrue: [ GtApLepiterRequestSuccess new znClient: aClient ]
+			ifFalse: [ GtApLepiterRequestFailure new znClient: aClient ].
+
+	responses add: anApResponse.
+	
+	^ anApResponse
 ]
 
 { #category : #'api - publishing' }

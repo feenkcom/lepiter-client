@@ -77,6 +77,8 @@ GtApLepiterClient >> databases [
 { #category : #'api - publishing' }
 GtApLepiterClient >> exportPage: aPage inDatabase: aDatabaseId [
 	| aPost aPageResponse anAttachmentResponse |
+	self halt.
+	
 	anAttachmentResponse := self attachmentPoster
 		page: aPage;
 		serverDatabaseId: aDatabaseId;

@@ -1,8 +1,8 @@
 Class {
 	#name : #GtApLepiterRequestSuccess,
 	#superclass : #Object,
-	#traits : 'TGtApLepiterResponse',
-	#classTraits : 'TGtApLepiterResponse classTrait',
+	#traits : 'TGtApLepiterResponse + TGtApLepiterZnClient',
+	#classTraits : 'TGtApLepiterResponse classTrait + TGtApLepiterZnClient classTrait',
 	#instVars : [
 		'znClient'
 	],
