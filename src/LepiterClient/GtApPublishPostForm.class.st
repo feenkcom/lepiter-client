@@ -110,33 +110,11 @@ GtApPublishPostForm >> magritteAcceptAction [
 	^ super magritteAcceptAction
 		onSuccessCallback: (GtMagritteCallback new
 				action: [ :aModel :aButton :aMemento :aDescription | 
-					| aPage serverDatabase aFilePath |
-					client := GtApLepiterClient new
-							server: server;
-							username: username;
-							password: password;
-							login.
-					serverDatabase := client lookupDatabase: self database.
-					aPage := client
-							exportPage: self page
-							inDatabase: serverDatabase lepiterDatabase.
-					self
-						post: (client
-								createPost: self post
-								forPage: self page
-								inDatabase: serverDatabase lepiterDatabase).
-					self post
-						database: self page database;
-						serverDatabase: serverDatabase rawData.
-					aFilePath := client createRenderedPost: self post.
-					self
-						post: (client
-								publishPost: self post
-								withAuthor: self author
-								andFile: aFilePath).
+					self publish.
 					self anchor phlow spawnObject: self post.
 					self anchor
-						inUIProcessDo: [ self anchor dispatchEvent: BrDropdownHideWish new ] ])
+						inUIProcessDo: [ self anchor dispatchEvent: BrDropdownHideWish new ] ]);
+		beEnabledOnValidAndInactiveOverallStatus
 ]
 
 { #category : #accessing }
@@ -178,6 +156,39 @@ GtApPublishPostForm >> post [
 { #category : #accessing }
 GtApPublishPostForm >> post: anObject [
 	post := anObject
+]
+
+{ #category : #actions }
+GtApPublishPostForm >> publish [
+	| aPageResponse serverDatabase aFilePath aPostResponse |
+	self halt.
+
+	client := GtApLepiterClient new
+			server: server;
+			username: username;
+			password: password;
+			login.
+	serverDatabase := client lookupDatabase: self database.
+	aPageResponse := client
+			exportPage: self page
+			inDatabase: serverDatabase lepiterDatabase.
+	self halt.
+	aPostResponse := client
+			createPost: self post
+			forPage: self page
+			inDatabase: serverDatabase lepiterDatabase asString.
+	self post: aPostResponse.
+	self post
+		database: self page database;
+		serverDatabase: serverDatabase rawData.
+	self halt.
+	aFilePath := client createRenderedPost: self post.
+	self halt.
+	self
+		post: (client
+				publishPost: self post
+				withAuthor: self author
+				andFile: aFilePath)
 ]
 
 { #category : #accessing }

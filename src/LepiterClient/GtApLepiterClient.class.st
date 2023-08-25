@@ -17,17 +17,25 @@ GtApLepiterClient >> attachmentPoster [
 
 { #category : #accessing }
 GtApLepiterClient >> createPost: aPost forPage: aPage inDatabase: databaseId [
-	^ LeJsonV4 uniqueInstance
-		deserialize: (ZnClient new beOneShot
-				url: self server , '/api/createPost';
-				entity: (ZnEntity
-						json: (STONJSON
-								toString: {'page' -> aPage uid asString.
-										'database' -> databaseId.
-										'title' -> aPost title.
-										'abstract' -> aPost abstract} asDictionary));
-				setBearerAuthentication: self token;
-				post) readStream
+	| aZnClient anEntity anApResponse aModel |
+	anEntity := ZnEntity
+			json: (STONJSON
+					toString: {'page' -> aPage uid asString.
+							'database' -> databaseId asString.
+							'title' -> aPost title.
+							'abstract' -> aPost abstract} asDictionary).
+	aZnClient := ZnClient new beOneShot
+			url: self server , '/api/createPost';
+			entity: anEntity;
+			setBearerAuthentication: self token.
+	aZnClient post.
+
+	anApResponse := GtApLepiterRequestUtility responseForZnClient: aZnClient.
+	anApResponse isSuccess ifFalse: [ ^ anApResponse ].
+
+	aModel := LeJsonV4 uniqueInstance deserialize: aZnClient response entity string readStream.
+	anApResponse model: aModel.
+	^ anApResponse
 ]
 
 { #category : #accessing }
@@ -100,7 +108,7 @@ GtApLepiterClient >> exportPage: aPage inDatabase: aDatabaseId [
 		responses: { anAttachmentResponse. aPageResponse }
 ]
 
-{ #category : #accessing }
+{ #category : #'gt - extensions' }
 GtApLepiterClient >> gtDatabasesFor: aView [
 	<gtView>
 	self token ifNil: [ ^ aView empty ].
@@ -114,17 +122,10 @@ GtApLepiterClient >> gtDatabasesFor: aView [
 		column: 'Location' text: #location
 ]
 
-{ #category : #accessing }
-GtApLepiterClient >> gtLoginFor: aView [
-	<gtView>
-	^ (super gtMagritteFor: aView)
-		title: 'Login'
-]
-
-{ #category : #accessing }
+{ #category : #'gt - extensions' }
 GtApLepiterClient >> gtMagritteFor: aView [
 	<gtView>
-	^ aView empty
+	^ (super gtMagritteFor: aView) title: 'Login'
 ]
 
 { #category : #accessing }
@@ -161,7 +162,11 @@ GtApLepiterClient >> magritteAcceptAction [
 	<magritteActionDescription>
 	^ super magritteAcceptAction
 		onSuccessCallback: (GtMagritteCallback new
-				action: [ :aModel :aButton :aMemento :aDescription | self login])
+				action: [ :aModel :aButton :aMemento :aDescription | 
+					aMemento commit. 
+					self login.
+					aButton phlow fireUpdateWish ]);
+		beEnabledOnValidAndInactiveOverallStatus
 ]
 
 { #category : #'private - publishing' }

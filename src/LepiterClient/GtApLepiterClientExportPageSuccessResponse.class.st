@@ -1,6 +1,8 @@
 Class {
 	#name : #GtApLepiterClientExportPageSuccessResponse,
 	#superclass : #Object,
+	#traits : 'TGtApLepiterResponse',
+	#classTraits : 'TGtApLepiterResponse classTrait',
 	#instVars : [
 		'serverPage',
 		'clientPage',
@@ -18,6 +20,11 @@ GtApLepiterClientExportPageSuccessResponse >> clientPage [
 { #category : #accessing }
 GtApLepiterClientExportPageSuccessResponse >> clientPage: anObject [
 	clientPage := anObject
+]
+
+{ #category : #testing }
+GtApLepiterClientExportPageSuccessResponse >> isSuccess [
+	^ true
 ]
 
 { #category : #accessing }

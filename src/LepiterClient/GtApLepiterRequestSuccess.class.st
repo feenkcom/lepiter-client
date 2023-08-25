@@ -4,7 +4,8 @@ Class {
 	#traits : 'TGtApLepiterResponse + TGtApLepiterZnClient',
 	#classTraits : 'TGtApLepiterResponse classTrait + TGtApLepiterZnClient classTrait',
 	#instVars : [
-		'znClient'
+		'znClient',
+		'model'
 	],
 	#category : #'LepiterClient-Publishing'
 }
@@ -12,6 +13,16 @@ Class {
 { #category : #testing }
 GtApLepiterRequestSuccess >> isSuccess [
 	^ true
+]
+
+{ #category : #accessing }
+GtApLepiterRequestSuccess >> model [
+	^ model
+]
+
+{ #category : #accessing }
+GtApLepiterRequestSuccess >> model: anObject [
+	model := anObject
 ]
 
 { #category : #accessing }

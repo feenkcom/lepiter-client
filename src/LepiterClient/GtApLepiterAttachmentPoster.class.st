@@ -43,7 +43,7 @@ GtApLepiterAttachmentPoster >> post [
 
 { #category : #'private - publishing' }
 GtApLepiterAttachmentPoster >> postCreateAttachment [
-	| aZnResponse anEntity anApResponse aClient |
+	| aZnResponse anEntity anApResponse aZnClient |
 	anEntity := ZnEntity
 			json: (STONJSON
 					toString: {'blob' -> serverFile blob.
@@ -51,17 +51,15 @@ GtApLepiterAttachmentPoster >> postCreateAttachment [
 							'attachmentId' -> currentSnippetAttachment uidString.
 							'database' -> self serverDatabaseId asString} asDictionary).
 
-	aClient := ZnClient new beOneShot
+	aZnClient := ZnClient new beOneShot
 			url: self server , '/api/createAttachment';
 			entity: anEntity;
 			setBearerAuthentication: self token.
-	aZnResponse := aClient
+	aZnResponse := aZnClient
 			post;
 			response.
 
-	anApResponse := aZnResponse isSuccess
-			ifTrue: [ GtApLepiterRequestSuccess new znClient: aClient ]
-			ifFalse: [ GtApLepiterRequestFailure new znClient: aClient ].
+	anApResponse := GtApLepiterRequestUtility responseForZnClient: aZnClient.
 
 	responses add: anApResponse.
 
