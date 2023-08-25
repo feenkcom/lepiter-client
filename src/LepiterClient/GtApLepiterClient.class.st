@@ -138,6 +138,11 @@ GtApLepiterClient >> login [
 					toString: {'username' -> self username.
 							'password' -> self password} asDictionary).
 	response := ZnEasy post: self server , '/api/loginUser' data: data.
+
+	response isSuccess ifFalse: [ 
+		self error: ('Unsuccessful login: {1}' 
+			format: {response}) ].
+
 	loginResult := STONJSON fromString: response entity string.
 	self token: (loginResult at: 'token')
 ]
