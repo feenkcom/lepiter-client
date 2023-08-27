@@ -214,14 +214,31 @@ GtApLepiterClient >> passwordDescription [
 
 { #category : #accessing }
 GtApLepiterClient >> publishPost: aPost withAuthor: anAuthorName andFile: aFilePath [
-	^ LeJsonV4 uniqueInstance
-		deserialize: (ZnClient new beOneShot
-				url: self server, '/api/publishPost';
-				entity: (ZnEntity
-						json: '{"post": "' , aPost uuid asString , '", "file": "' , aFilePath pathString
-								, '", "author": "' , anAuthorName , '"}');
-				setBearerAuthentication: token;
-				post) readStream
+	| anEntity aClient aResponse anApResponse |
+	anEntity := ZnEntity
+			json: '{"post": "' , aPost uuid asString , '", "file": "' , aFilePath pathString
+					, '", "author": "' , anAuthorName , '"}'.
+	aClient := ZnClient new beOneShot
+			url: self server , '/api/publishPost';
+			entity: anEntity;
+			setBearerAuthentication: token.
+
+	aResponse := aClient
+			post;
+			response.
+			
+	anApResponse := GtApLepiterRequestUtility responseForZnClient: aClient.
+
+	anApResponse isSuccess ifTrue: [ 
+		| aServerPost |
+		aServerPost := LeJsonV4 uniqueInstance deserialize: aResponse contents readStream.
+		anApResponse model: aServerPost ].
+		
+	^ GtApLepiterPublishPostResponse new
+		inputPost: aPost;
+		authorName: anAuthorName;
+		filePath: aFilePath;
+		response: anApResponse
 ]
 
 { #category : #accessing }

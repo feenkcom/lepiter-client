@@ -13,6 +13,7 @@ Class {
 
 { #category : #accessing }
 GtApLepiterCreateRenderedPostResponse >> filePath [
+	<return: #RelativePath>
 	^ filePath
 ]
 
