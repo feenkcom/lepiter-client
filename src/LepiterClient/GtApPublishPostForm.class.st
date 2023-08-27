@@ -10,7 +10,8 @@ Class {
 		'database',
 		'client',
 		'post',
-		'author'
+		'author',
+		'result'
 	],
 	#category : #'LepiterClient-UI'
 }
@@ -160,36 +161,16 @@ GtApPublishPostForm >> post: anObject [
 
 { #category : #actions }
 GtApPublishPostForm >> publish [
-	| aPageResponse serverDatabase aFilePath aPostResponse |
-	self halt.
-
 	client := GtApLepiterClient new
 			server: server;
 			username: username;
 			password: password;
 			login.
-	serverDatabase := client lookupDatabase: self database.
-	self halt.
-	aPageResponse := client
-			exportPage: self page
-			inDatabase: serverDatabase lepiterDatabase.
-	self halt.
-	aPostResponse := client
-			createPost: self post
-			forPage: self page
-			inDatabase: serverDatabase lepiterDatabase asString.
-	self post: aPostResponse model.
-	self post
-		database: self page database;
-		serverDatabase: serverDatabase rawData.
-	self halt.
-	aFilePath := client createRenderedPost: self post.
-	self halt.
-	self
-		post: (client
-				publishPost: self post
-				withAuthor: self author
-				andFile: aFilePath)
+
+	result := client
+			publishPostOfPage: self page
+			inDatabaseNamed: self database
+			authorName: self author
 ]
 
 { #category : #accessing }

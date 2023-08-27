@@ -242,6 +242,37 @@ GtApLepiterClient >> publishPost: aPost withAuthor: anAuthorName andFile: aFileP
 ]
 
 { #category : #accessing }
+GtApLepiterClient >> publishPostOfPage: aPage inDatabaseNamed: aDatabaseName authorName: anAuthorName [
+	| aServerDatabase aPageResponse aPostResponse anInputPost anOutputPost aRenderedPostResponse |
+	aServerDatabase := self lookupDatabase: aDatabaseName.
+
+	aPageResponse := self
+			exportPage: aPage
+			inDatabase: aServerDatabase lepiterDatabase.
+	aPageResponse isSuccess ifFalse: [ ^ aPageResponse ].
+
+	anInputPost := GtApServerPost forPage: aPage.
+	aPostResponse := self
+			createPost: anInputPost
+			forPage: aPage
+			inDatabase: aServerDatabase lepiterDatabase asString.
+	aPostResponse isSuccess ifFalse: [ ^ aPostResponse ].	
+	
+	"I think it should not be a rawData and the #createPost:forPage:inDatabase:
+	must return properly initialized object."
+	anOutputPost := aPostResponse model.
+	anOutputPost serverDatabase: aServerDatabase.
+
+	aRenderedPostResponse := self createRenderedPost: anOutputPost.
+	aRenderedPostResponse isSuccess ifFalse: [ ^ aRenderedPostResponse ].
+
+	^ self
+		publishPost: anOutputPost
+		withAuthor: anAuthorName
+		andFile: aRenderedPostResponse filePath
+]
+
+{ #category : #accessing }
 GtApLepiterClient >> server [
 	^ server
 ]
