@@ -15,7 +15,7 @@ LeHtmlGtApUrlAttributePiece >> writeWithContext: aContext [
 	anUrl := self baseUrl.
 
 	aContext serverDatabase
-		ifNotNil: [ :aDatabase | anUrl := anUrl / (aDatabase at: 'slug') ].
+		ifNotNil: [ :aDatabase | anUrl := anUrl / aDatabase slug ].
 
 	aContext pagePath
 		ifNil: [ anUrl := anUrl / aContext pageLink fileName ]

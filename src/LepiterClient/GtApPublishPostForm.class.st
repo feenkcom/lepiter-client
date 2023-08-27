@@ -169,6 +169,7 @@ GtApPublishPostForm >> publish [
 			password: password;
 			login.
 	serverDatabase := client lookupDatabase: self database.
+	self halt.
 	aPageResponse := client
 			exportPage: self page
 			inDatabase: serverDatabase lepiterDatabase.
@@ -177,7 +178,7 @@ GtApPublishPostForm >> publish [
 			createPost: self post
 			forPage: self page
 			inDatabase: serverDatabase lepiterDatabase asString.
-	self post: aPostResponse.
+	self post: aPostResponse model.
 	self post
 		database: self page database;
 		serverDatabase: serverDatabase rawData.

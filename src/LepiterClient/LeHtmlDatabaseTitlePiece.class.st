@@ -9,5 +9,5 @@ Class {
 { #category : #'api - writing' }
 LeHtmlDatabaseTitlePiece >> writeWithContext: aContext [
 	aContext serverDatabase ifNotNil: [ :aDatabase | 
-		aContext html escape: (aDatabase at: 'name') ]
+		aContext html escape: aDatabase name ]
 ]

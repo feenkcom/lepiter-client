@@ -17,7 +17,7 @@ GtApLepiterClient >> attachmentPoster [
 
 { #category : #accessing }
 GtApLepiterClient >> createPost: aPost forPage: aPage inDatabase: databaseId [
-	| aZnClient anEntity anApResponse aModel |
+	| aZnClient anEntity anApResponse aServerPost |
 	anEntity := ZnEntity
 			json: (STONJSON
 					toString: {'page' -> aPage uid asString.
@@ -33,35 +33,54 @@ GtApLepiterClient >> createPost: aPost forPage: aPage inDatabase: databaseId [
 	anApResponse := GtApLepiterRequestUtility responseForZnClient: aZnClient.
 	anApResponse isSuccess ifFalse: [ ^ anApResponse ].
 
-	aModel := LeJsonV4 uniqueInstance deserialize: aZnClient response entity string readStream.
-	anApResponse model: aModel.
+	aServerPost := LeJsonV4 uniqueInstance deserialize: aZnClient response entity string readStream.
+	aServerPost database: aPage database.
+	
+	anApResponse model: aServerPost.
 	^ anApResponse
 ]
 
 { #category : #accessing }
-GtApLepiterClient >> createRenderedPost: aPost [
-	| postUuid postDirectory filePath figureCode |
-	postUuid := aPost uuid.
+GtApLepiterClient >> createRenderedPost: aServerPost [
+	| postUuid postDirectory filePath figureCode anEntity aClient aResponse anApResponse |
+	postUuid := aServerPost uuid.
 	postDirectory := (FileLocator temp asFileReference / postUuid asString)
 			ensureCreateDirectory.
-	filePath := aPost publishTo: postDirectory usingPath: nil.
+	filePath := aServerPost publishTo: postDirectory usingPath: nil.
 	figureCode := (postDirectory / 'gt-figures') exists
 			ifTrue: [ ((postDirectory / 'gt-figures') children
 					collect: [ :aFile | aFile basename -> aFile binaryContents asString ])
 					asDictionary ]
 			ifFalse: [ {} ].
-	ZnClient new beOneShot
-		url: self server, '/api/createRenderedPost';
-		entity: (ZnEntity
-				json: (STONJSON
-						toString: {'post' -> postUuid asString.
-								'filePath' -> filePath pathString.
-								'contents'
-									-> (postDirectory / filePath pathString) asFileReference contents.
-								'figures' -> figureCode} asDictionary));
-		setBearerAuthentication: token;
-		post.
-	^ filePath
+
+	anEntity := ZnEntity
+			json: (STONJSON
+					toString: {'post' -> postUuid asString.
+							'filePath' -> filePath pathString.
+							'contents'
+								-> (postDirectory / filePath pathString) asFileReference contents.
+							'figures' -> figureCode} asDictionary).
+
+	aClient := ZnClient new beOneShot
+			url: self server , '/api/createRenderedPost';
+			entity: anEntity;
+			setBearerAuthentication: token.
+
+	aResponse := aClient
+			post;
+			response.
+
+	anApResponse := GtApLepiterRequestUtility responseForZnClient: aClient.
+
+	anApResponse isSuccess ifTrue: [ 
+		| aModel |
+		aModel := LeJsonV4 uniqueInstance deserialize: aResponse entity string readStream.
+		anApResponse model: aModel ].
+
+	^ GtApLepiterCreateRenderedPostResponse new
+		response: anApResponse;
+		filePath: filePath;
+		serverPost: aServerPost
 ]
 
 { #category : #accessing }
