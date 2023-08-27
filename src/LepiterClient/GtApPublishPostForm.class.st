@@ -8,22 +8,22 @@ Class {
 		'server',
 		'anchor',
 		'database',
-		'client',
-		'post',
 		'author',
-		'result'
+		'result',
+		'abstract',
+		'title'
 	],
 	#category : #'LepiterClient-UI'
 }
 
 { #category : #accessing }
 GtApPublishPostForm >> abstract [
-	^ self post abstract
+	^ abstract
 ]
 
 { #category : #accessing }
 GtApPublishPostForm >> abstract: aString [
-	^ self post abstract: aString
+	abstract := aString
 ]
 
 { #category : #accessing }
@@ -32,6 +32,7 @@ GtApPublishPostForm >> abstractDescription [
 	^ MAStringDescription new
 		label: 'Abstract';
 		accessor: #abstract;
+		default: '';
 		priority: 6;
 		beRequired
 ]
@@ -67,6 +68,7 @@ GtApPublishPostForm >> authorDescription [
 	^ MAStringDescription new
 		label: 'Author';
 		accessor: #author;
+		default: '';
 		priority: 7;
 		beRequired
 ]
@@ -87,6 +89,7 @@ GtApPublishPostForm >> databaseDescription [
 	^ MAStringDescription new
 		label: 'Database';
 		accessor: #database;
+		default: '';
 		priority: 2;
 		beRequired
 ]
@@ -112,7 +115,7 @@ GtApPublishPostForm >> magritteAcceptAction [
 		onSuccessCallback: (GtMagritteCallback new
 				action: [ :aModel :aButton :aMemento :aDescription | 
 					self publish.
-					self anchor phlow spawnObject: self post.
+					self anchor phlow spawnObject: self result.
 					self anchor
 						inUIProcessDo: [ self anchor dispatchEvent: BrDropdownHideWish new ] ]);
 		beEnabledOnValidAndInactiveOverallStatus
@@ -124,9 +127,12 @@ GtApPublishPostForm >> page [
 ]
 
 { #category : #accessing }
-GtApPublishPostForm >> page: anObject [
-	page := anObject.
-	self post: (GtApServerPost forPage: page)
+GtApPublishPostForm >> page: aPage [
+	| aPost |
+	page := aPage.
+	aPost := GtApServerPost forPage: aPage.
+	self title: aPost title.
+	self abstract: aPost abstract
 ]
 
 { #category : #accessing }
@@ -145,32 +151,35 @@ GtApPublishPostForm >> passwordDescription [
 	^ MAPasswordDescription new
 		label: 'Password';
 		accessor: #password;
+		default: '';
 		priority: 4;
 		beRequired
 ]
 
-{ #category : #accessing }
-GtApPublishPostForm >> post [
-	^ post
-]
-
-{ #category : #accessing }
-GtApPublishPostForm >> post: anObject [
-	post := anObject
-]
-
 { #category : #actions }
 GtApPublishPostForm >> publish [
-	client := GtApLepiterClient new
+	| aClient aResult |
+	aClient := GtApLepiterClient new
 			server: server;
 			username: username;
 			password: password;
 			login.
 
-	result := client
+	result := aResult := aClient
 			publishPostOfPage: self page
 			inDatabaseNamed: self database
-			authorName: self author
+			authorName: self author.
+
+	result isSuccess
+		ifFalse: [ GtApLepiterRequestError new
+				client: aClient;
+				result: aResult;
+				signal ]
+]
+
+{ #category : #accessing }
+GtApPublishPostForm >> result [
+	^ result
 ]
 
 { #category : #accessing }
@@ -189,18 +198,19 @@ GtApPublishPostForm >> serverDescription [
 	^ MAStringDescription new
 		label: 'Server';
 		accessor: #server;
+		default: '';
 		priority: 1;
 		beRequired
 ]
 
 { #category : #accessing }
 GtApPublishPostForm >> title [
-	^ self post title
+	^ title
 ]
 
 { #category : #accessing }
 GtApPublishPostForm >> title: aString [
-	^ self post title: aString
+	title := aString
 ]
 
 { #category : #accessing }
@@ -209,6 +219,7 @@ GtApPublishPostForm >> titleDescription [
 	^ MAStringDescription new
 		label: 'Title';
 		accessor: #title;
+		default: '';
 		priority: 5;
 		beRequired
 ]
@@ -229,6 +240,7 @@ GtApPublishPostForm >> usernameDescription [
 	^ MAStringDescription new
 		label: 'Username';
 		accessor: #username;
+		default: '';
 		priority: 3;
 		beRequired
 ]
