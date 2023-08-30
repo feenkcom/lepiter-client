@@ -96,7 +96,7 @@ GtApPublishPostForm >> databaseDescription [
 
 { #category : #accessing }
 GtApPublishPostForm >> defaultServer [
-	^ 'https://test.lepiter.io'
+	^ 'https://lepiter.io'
 ]
 
 { #category : #accessing }
