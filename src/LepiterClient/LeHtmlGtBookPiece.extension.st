@@ -4,8 +4,7 @@ Extension { #name : #LeHtmlGtBookPiece }
 LeHtmlGtBookPiece class >> atpPost [
 	^ self fromFile: FileLocator gtResource 
 		/ 'feenkcom' 
-		/ 'lepiter-atproto-server' 
-		/ 'deployment' 
-		/ 'atpPost'
+		/ 'lepiter-client' 
+		/ 'templates'
 		/ 'page-template.html'
 ]
