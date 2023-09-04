@@ -56,7 +56,7 @@ GtApLepiterClient >> createRenderedPost: aServerPost [
 	anEntity := ZnEntity
 			json: (STONJSON
 					toString: {'post' -> postUuid asString.
-							'filePath' -> filePath pathString.
+							'filePath' -> filePath basenameWithoutExtension.
 							'contents'
 								-> (postDirectory / filePath pathString) asFileReference contents.
 							'figures' -> figureCode} asDictionary).
