@@ -13,8 +13,54 @@ Class {
 		'abstract',
 		'title'
 	],
+	#classInstVars : [
+		'defaultServer',
+		'defaultUsername',
+		'defaultDatabase',
+		'defaultAuthor'
+	],
 	#category : #'LepiterClient-UI'
 }
+
+{ #category : #accessing }
+GtApPublishPostForm class >> defaultAuthor [
+	^ defaultAuthor ifNil: [ '' ]
+]
+
+{ #category : #accessing }
+GtApPublishPostForm class >> defaultAuthor: anObject [
+	defaultAuthor := anObject
+]
+
+{ #category : #accessing }
+GtApPublishPostForm class >> defaultDatabase [
+	^ defaultDatabase ifNil: [ '' ]
+]
+
+{ #category : #accessing }
+GtApPublishPostForm class >> defaultDatabase: anObject [
+	defaultDatabase := anObject
+]
+
+{ #category : #accessing }
+GtApPublishPostForm class >> defaultServer [
+	^ defaultServer ifNil: [ 'https://lepiter.io' ]
+]
+
+{ #category : #defaults }
+GtApPublishPostForm class >> defaultServer: anObject [
+	defaultServer := anObject
+]
+
+{ #category : #accessing }
+GtApPublishPostForm class >> defaultUsername [
+	^ defaultUsername ifNil: [ '' ]
+]
+
+{ #category : #accessing }
+GtApPublishPostForm class >> defaultUsername: anObject [
+	defaultUsername := anObject
+]
 
 { #category : #accessing }
 GtApPublishPostForm >> abstract [
@@ -34,6 +80,7 @@ GtApPublishPostForm >> abstractDescription [
 		accessor: #abstract;
 		default: '';
 		priority: 6;
+		autoAccept: true;
 		beRequired
 ]
 
@@ -59,7 +106,8 @@ GtApPublishPostForm >> author [
 
 { #category : #accessing }
 GtApPublishPostForm >> author: anObject [
-	author := anObject
+	author := anObject.
+	self class defaultAuthor: anObject
 ]
 
 { #category : #accessing }
@@ -70,6 +118,7 @@ GtApPublishPostForm >> authorDescription [
 		accessor: #author;
 		default: '';
 		priority: 7;
+		autoAccept: true;
 		beRequired
 ]
 
@@ -80,7 +129,8 @@ GtApPublishPostForm >> database [
 
 { #category : #accessing }
 GtApPublishPostForm >> database: anObject [
-	database := anObject
+	database := anObject.
+	self class defaultDatabase: anObject
 ]
 
 { #category : #accessing }
@@ -91,21 +141,18 @@ GtApPublishPostForm >> databaseDescription [
 		accessor: #database;
 		default: '';
 		priority: 2;
+		autoAccept: true;
 		beRequired
 ]
 
 { #category : #accessing }
-GtApPublishPostForm >> defaultServer [
-	^ 'https://lepiter.io'
-]
-
-{ #category : #accessing }
 GtApPublishPostForm >> initialize [
-	server := self defaultServer.
-	username := ''.
+	server := self class defaultServer.
+	username := self class defaultUsername.
 	password := ''.
-	database := ''.
-	author := ''
+	database := self class defaultDatabase.
+	abstract := ''.
+	author := self class defaultAuthor
 ]
 
 { #category : #accessing }
@@ -119,6 +166,14 @@ GtApPublishPostForm >> magritteAcceptAction [
 					self anchor
 						inUIProcessDo: [ self anchor dispatchEvent: BrDropdownHideWish new ] ]);
 		beEnabledOnValidAndInactiveOverallStatus
+]
+
+{ #category : #accessing }
+GtApPublishPostForm >> magritteCancelAction [
+	"Users do not need a cancel action since all Magritte descriptions 
+	have `#autoAccept:` set to true."
+	<magritteActionDescription>
+	^ nil
 ]
 
 { #category : #accessing }
@@ -153,6 +208,7 @@ GtApPublishPostForm >> passwordDescription [
 		accessor: #password;
 		default: '';
 		priority: 4;
+		autoAccept: true;
 		beRequired
 ]
 
@@ -189,7 +245,8 @@ GtApPublishPostForm >> server [
 
 { #category : #accessing }
 GtApPublishPostForm >> server: anObject [
-	server := anObject
+	server := anObject.
+	self class defaultServer: anObject
 ]
 
 { #category : #accessing }
@@ -200,6 +257,7 @@ GtApPublishPostForm >> serverDescription [
 		accessor: #server;
 		default: '';
 		priority: 1;
+		autoAccept: true;
 		beRequired
 ]
 
@@ -221,6 +279,7 @@ GtApPublishPostForm >> titleDescription [
 		accessor: #title;
 		default: '';
 		priority: 5;
+		autoAccept: true;
 		beRequired
 ]
 
@@ -231,7 +290,8 @@ GtApPublishPostForm >> username [
 
 { #category : #accessing }
 GtApPublishPostForm >> username: anObject [
-	username := anObject
+	username := anObject.
+	self class defaultUsername: anObject
 ]
 
 { #category : #accessing }
@@ -242,5 +302,6 @@ GtApPublishPostForm >> usernameDescription [
 		accessor: #username;
 		default: '';
 		priority: 3;
+		autoAccept: true;
 		beRequired
 ]
