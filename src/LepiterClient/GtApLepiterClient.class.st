@@ -42,11 +42,12 @@ GtApLepiterClient >> createPost: aPost forPage: aPage inDatabase: databaseId [
 
 { #category : #accessing }
 GtApLepiterClient >> createRenderedPost: aServerPost [
-	| postUuid postDirectory filePath figureCode anEntity aClient aResponse anApResponse |
+	| postUuid postDirectory filePath figureCode anEntity aClient aResponse anApResponse basename |
 	postUuid := aServerPost uuid.
 	postDirectory := (FileLocator temp asFileReference / postUuid asString)
 			ensureCreateDirectory.
 	filePath := aServerPost publishTo: postDirectory usingPath: nil.
+	basename := filePath basenameWithoutExtension.
 	figureCode := (postDirectory / 'gt-figures') exists
 			ifTrue: [ ((postDirectory / 'gt-figures') children
 					collect: [ :aFile | aFile basename -> aFile binaryContents asString ])
@@ -56,7 +57,7 @@ GtApLepiterClient >> createRenderedPost: aServerPost [
 	anEntity := ZnEntity
 			json: (STONJSON
 					toString: {'post' -> postUuid asString.
-							'filePath' -> filePath basenameWithoutExtension.
+							'filePath' -> basename.
 							'contents'
 								-> (postDirectory / filePath pathString) asFileReference contents.
 							'figures' -> figureCode} asDictionary).
@@ -79,7 +80,7 @@ GtApLepiterClient >> createRenderedPost: aServerPost [
 
 	^ GtApLepiterCreateRenderedPostResponse new
 		response: anApResponse;
-		filePath: filePath;
+		filePath: basename asFileReference asPath;
 		serverPost: aServerPost
 ]
 
