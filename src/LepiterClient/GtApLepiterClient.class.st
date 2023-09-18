@@ -44,7 +44,7 @@ GtApLepiterClient >> createPost: aPost forPage: aPage inDatabase: databaseId [
 GtApLepiterClient >> createRenderedPost: aServerPost [
 	| postUuid postDirectory filePath figureCode anEntity aClient aResponse anApResponse basename |
 	postUuid := aServerPost uuid.
-	postDirectory := (FileLocator temp asFileReference / postUuid asString)
+	postDirectory := (FileLocator temp asFileReference / ('lepiter-client-post-directory-', postUuid asString))
 			ensureCreateDirectory.
 	filePath := aServerPost publishTo: postDirectory usingPath: nil.
 	basename := filePath basenameWithoutExtension.
