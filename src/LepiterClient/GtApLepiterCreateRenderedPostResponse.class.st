@@ -27,6 +27,15 @@ GtApLepiterCreateRenderedPostResponse >> isSuccess [
 	^ self response isSuccess
 ]
 
+{ #category : #printing }
+GtApLepiterCreateRenderedPostResponse >> printOn: aStream [
+	super printOn: aStream.
+
+	aStream nextPut: $(.
+	aStream print: self response.
+	aStream nextPut: $)
+]
+
 { #category : #accessing }
 GtApLepiterCreateRenderedPostResponse >> response [
 	^ response
