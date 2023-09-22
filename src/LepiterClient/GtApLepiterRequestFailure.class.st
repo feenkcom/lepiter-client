@@ -35,6 +35,27 @@ GtApLepiterRequestFailure >> gtResponseJsonFor: aView [
 		view: #gtJsonFor:
 ]
 
+{ #category : #printing }
+GtApLepiterRequestFailure >> printOn: stream [
+	super printOn: stream.
+	stream nextPut: $(.
+	"Request"
+	self requestLine printMethodAndUriOn: stream.
+	
+	stream nextPutAll: ': '.
+	
+	"Response"
+	self statusLine printCodeAndReasonOn: stream.
+	self hasEntity ifTrue: [
+		stream space.
+		self entity printContentTypeAndLengthOn: stream.
+		
+		stream cr.
+		stream print: self entity contents ].
+	
+	stream nextPut: $)
+]
+
 { #category : #accessing }
 GtApLepiterRequestFailure >> znClient [
 	^ znClient
