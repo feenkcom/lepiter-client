@@ -1,5 +1,5 @@
 Class {
-	#name : #GtApLepiterAttachmentPoster,
+	#name : #LeClientAttachmentPoster,
 	#superclass : #Object,
 	#traits : 'TGtApLepiterWithClient',
 	#classTraits : 'TGtApLepiterWithClient classTrait',
@@ -15,34 +15,34 @@ Class {
 }
 
 { #category : #initialization }
-GtApLepiterAttachmentPoster >> initialize [
+LeClientAttachmentPoster >> initialize [
 	super initialize.
 	
 	responses := OrderedCollection new.
 ]
 
 { #category : #accessing }
-GtApLepiterAttachmentPoster >> page [
+LeClientAttachmentPoster >> page [
 	^ page
 ]
 
 { #category : #accessing }
-GtApLepiterAttachmentPoster >> page: anObject [
+LeClientAttachmentPoster >> page: anObject [
 	page := anObject
 ]
 
 { #category : #'api - publishing' }
-GtApLepiterAttachmentPoster >> post [
+LeClientAttachmentPoster >> post [
 	snippetAttachments := self page attachments all; get.
 	
 	snippetAttachments items do: [ :eachAttachment | 
 		self postForAttachment: eachAttachment ].
 		
-	^ GtApLepiterResponses new responses: responses
+	^ LeClientResponses new responses: responses
 ]
 
 { #category : #'private - publishing' }
-GtApLepiterAttachmentPoster >> postCreateAttachment [
+LeClientAttachmentPoster >> postCreateAttachment [
 	| aZnResponse anEntity anApResponse aZnClient |
 	anEntity := ZnEntity
 			json: (STONJSON
@@ -59,7 +59,7 @@ GtApLepiterAttachmentPoster >> postCreateAttachment [
 			post;
 			response.
 
-	anApResponse := GtApLepiterRequestUtility responseForZnClient: aZnClient.
+	anApResponse := LeClientRequestUtility responseForZnClient: aZnClient.
 
 	responses add: anApResponse.
 
@@ -67,7 +67,7 @@ GtApLepiterAttachmentPoster >> postCreateAttachment [
 ]
 
 { #category : #'private - publishing' }
-GtApLepiterAttachmentPoster >> postCreateFile [
+LeClientAttachmentPoster >> postCreateFile [
 	| aZnResponse anApResponse aClient |
 	self flag: 'use stream instead of bytes:'.
 
@@ -81,8 +81,8 @@ GtApLepiterAttachmentPoster >> postCreateFile [
 		response.
 		
 	anApResponse := aZnResponse isSuccess
-			ifTrue: [ GtApLepiterRequestSuccess new znClient: aClient ]
-			ifFalse: [ GtApLepiterRequestFailure new znClient: aClient ].
+			ifTrue: [ LeClientRequestSuccess new znClient: aClient ]
+			ifFalse: [ LeClientRequestFailure new znClient: aClient ].
 
 	responses add: anApResponse.
 	
@@ -90,7 +90,7 @@ GtApLepiterAttachmentPoster >> postCreateFile [
 ]
 
 { #category : #'api - publishing' }
-GtApLepiterAttachmentPoster >> postForAttachment: aSnippetAttachment [
+LeClientAttachmentPoster >> postForAttachment: aSnippetAttachment [
 	| aFileResponse anAttachmentResponse aJson |
 	currentSnippetAttachment := aSnippetAttachment.
 	
@@ -98,7 +98,7 @@ GtApLepiterAttachmentPoster >> postForAttachment: aSnippetAttachment [
 	aFileResponse isSuccess ifFalse: [ ^ aFileResponse ].
 	
 	aJson := NeoJSONObject fromString: aFileResponse contents.
-	serverFile := GtApLepiterServerFile new
+	serverFile := LeClientFile new
 		blob: (aJson at: #blob).
 	
 	anAttachmentResponse := self postCreateAttachment.
@@ -107,11 +107,11 @@ GtApLepiterAttachmentPoster >> postForAttachment: aSnippetAttachment [
 ]
 
 { #category : #accessing }
-GtApLepiterAttachmentPoster >> serverDatabaseId [
+LeClientAttachmentPoster >> serverDatabaseId [
 	^ serverDatabaseId
 ]
 
 { #category : #accessing }
-GtApLepiterAttachmentPoster >> serverDatabaseId: anObject [
+LeClientAttachmentPoster >> serverDatabaseId: anObject [
 	serverDatabaseId := anObject
 ]

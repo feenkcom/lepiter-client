@@ -1,5 +1,5 @@
 Class {
-	#name : #GtApLepiterPostPageSuccessResponse,
+	#name : #LeClientPostPageSuccessResponse,
 	#superclass : #Object,
 	#traits : 'TGtApLepiterResponse',
 	#classTraits : 'TGtApLepiterResponse classTrait',
@@ -13,46 +13,46 @@ Class {
 }
 
 { #category : #testing }
-GtApLepiterPostPageSuccessResponse >> isSuccess [
+LeClientPostPageSuccessResponse >> isSuccess [
 	^ true
 ]
 
 { #category : #accessing }
-GtApLepiterPostPageSuccessResponse >> page [
+LeClientPostPageSuccessResponse >> page [
 	^ page
 ]
 
 { #category : #accessing }
-GtApLepiterPostPageSuccessResponse >> page: anObject [
+LeClientPostPageSuccessResponse >> page: anObject [
 	page := anObject
 ]
 
 { #category : #accessing }
-GtApLepiterPostPageSuccessResponse >> response [
+LeClientPostPageSuccessResponse >> response [
 	^ response
 ]
 
 { #category : #accessing }
-GtApLepiterPostPageSuccessResponse >> response: anObject [
+LeClientPostPageSuccessResponse >> response: anObject [
 	response := anObject
 ]
 
 { #category : #accessing }
-GtApLepiterPostPageSuccessResponse >> serverDatabaseId [
+LeClientPostPageSuccessResponse >> serverDatabaseId [
 	^ serverDatabaseId
 ]
 
 { #category : #accessing }
-GtApLepiterPostPageSuccessResponse >> serverDatabaseId: anObject [
+LeClientPostPageSuccessResponse >> serverDatabaseId: anObject [
 	serverDatabaseId := anObject
 ]
 
 { #category : #accessing }
-GtApLepiterPostPageSuccessResponse >> serverPage [
+LeClientPostPageSuccessResponse >> serverPage [
 	^ serverPage
 ]
 
 { #category : #accessing }
-GtApLepiterPostPageSuccessResponse >> serverPage: anObject [
+LeClientPostPageSuccessResponse >> serverPage: anObject [
 	serverPage := anObject
 ]

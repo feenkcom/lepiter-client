@@ -1,5 +1,5 @@
 Class {
-	#name : #GtApLepiterRequestFailure,
+	#name : #LeClientRequestFailure,
 	#superclass : #Object,
 	#traits : 'TGtApLepiterResponse + TGtApLepiterZnClient',
 	#classTraits : 'TGtApLepiterResponse classTrait + TGtApLepiterZnClient classTrait',
@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #'gt - extensions' }
-GtApLepiterRequestFailure >> gtRequestJsonFor: aView [
+LeClientRequestFailure >> gtRequestJsonFor: aView [
 	<gtView>
 	self isNoContent ifTrue: [ ^ aView empty ].
 	self contentType main = 'application' ifFalse: [ ^ aView empty ].
@@ -23,7 +23,7 @@ GtApLepiterRequestFailure >> gtRequestJsonFor: aView [
 ]
 
 { #category : #'gt - extensions' }
-GtApLepiterRequestFailure >> gtResponseJsonFor: aView [
+LeClientRequestFailure >> gtResponseJsonFor: aView [
 	<gtView>
 	self isNoContent ifTrue: [ ^ aView empty ].
 	self contentType main = 'application' ifFalse: [ ^ aView empty ].
@@ -36,7 +36,7 @@ GtApLepiterRequestFailure >> gtResponseJsonFor: aView [
 ]
 
 { #category : #printing }
-GtApLepiterRequestFailure >> printOn: stream [
+LeClientRequestFailure >> printOn: stream [
 	super printOn: stream.
 	stream nextPut: $(.
 	"Request"
@@ -57,11 +57,11 @@ GtApLepiterRequestFailure >> printOn: stream [
 ]
 
 { #category : #accessing }
-GtApLepiterRequestFailure >> znClient [
+LeClientRequestFailure >> znClient [
 	^ znClient
 ]
 
 { #category : #accessing }
-GtApLepiterRequestFailure >> znClient: anObject [
+LeClientRequestFailure >> znClient: anObject [
 	znClient := anObject
 ]

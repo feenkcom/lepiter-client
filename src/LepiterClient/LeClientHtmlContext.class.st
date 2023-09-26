@@ -1,5 +1,5 @@
 Class {
-	#name : #GtApHtmlContext,
+	#name : #LeClientHtmlContext,
 	#superclass : #LeHtmlContext,
 	#instVars : [
 		'serverDatabase',
@@ -9,21 +9,21 @@ Class {
 }
 
 { #category : #accessing }
-GtApHtmlContext >> pagePath [
+LeClientHtmlContext >> pagePath [
 	^ pagePath
 ]
 
 { #category : #accessing }
-GtApHtmlContext >> pagePath: anObject [
+LeClientHtmlContext >> pagePath: anObject [
 	pagePath := anObject
 ]
 
 { #category : #accessing }
-GtApHtmlContext >> serverDatabase [
+LeClientHtmlContext >> serverDatabase [
 	^ serverDatabase
 ]
 
 { #category : #accessing }
-GtApHtmlContext >> serverDatabase: anObject [
+LeClientHtmlContext >> serverDatabase: anObject [
 	serverDatabase := anObject
 ]

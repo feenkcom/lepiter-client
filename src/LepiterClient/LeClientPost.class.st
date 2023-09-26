@@ -1,5 +1,5 @@
 Class {
-	#name : #GtApServerPost,
+	#name : #LeClientPost,
 	#superclass : #Object,
 	#instVars : [
 		'page',
@@ -17,7 +17,7 @@ Class {
 }
 
 { #category : #accessing }
-GtApServerPost class >> forPage: aPage [
+LeClientPost class >> forPage: aPage [
 	^ self new
 		page: aPage uid;
 		title: aPage title;
@@ -38,7 +38,7 @@ GtApServerPost class >> forPage: aPage [
 ]
 
 { #category : #accessing }
-GtApServerPost class >> leJsonV4AttributeMapping [
+LeClientPost class >> leJsonV4AttributeMapping [
 	^ {#title -> #title.
 		#abstract -> #abstract.
 		#page -> #page.
@@ -50,43 +50,43 @@ GtApServerPost class >> leJsonV4AttributeMapping [
 ]
 
 { #category : #accessing }
-GtApServerPost class >> leJsonV4Name [
+LeClientPost class >> leJsonV4Name [
 
 	^ #apServerPost
 ]
 
 { #category : #accessing }
-GtApServerPost >> abstract [
+LeClientPost >> abstract [
 	^ abstract
 ]
 
 { #category : #accessing }
-GtApServerPost >> abstract: anObject [
+LeClientPost >> abstract: anObject [
 	abstract := anObject
 ]
 
 { #category : #accessing }
-GtApServerPost >> database [
+LeClientPost >> database [
 	^ database
 ]
 
 { #category : #accessing }
-GtApServerPost >> database: anObject [
+LeClientPost >> database: anObject [
 	database := anObject
 ]
 
 { #category : #accessing }
-GtApServerPost >> gtViewCardFor: aView [
+LeClientPost >> gtViewCardFor: aView [
 	<gtView>
 
 	^ aView explicit
 		title: 'Summary';
 		priority: 1;
-		stencil: [ GtApServerPostCardElement new post: self ]
+		stencil: [ LeClientPostCardElement new post: self ]
 ]
 
 { #category : #accessing }
-GtApServerPost >> gtViewPageFor: aView [
+LeClientPost >> gtViewPageFor: aView [
 	<gtView>
 	self database ifNil: [ ^ aView empty ].
 
@@ -94,22 +94,22 @@ GtApServerPost >> gtViewPageFor: aView [
 ]
 
 { #category : #accessing }
-GtApServerPost >> isPublished [
+LeClientPost >> isPublished [
 	^ publishedAt isNotNil
 ]
 
 { #category : #accessing }
-GtApServerPost >> page [
+LeClientPost >> page [
 	^ page
 ]
 
 { #category : #accessing }
-GtApServerPost >> page: anObject [
+LeClientPost >> page: anObject [
 	page := anObject
 ]
 
 { #category : #accessing }
-GtApServerPost >> printOn: aStream [
+LeClientPost >> printOn: aStream [
 
 	aStream 
 		nextPutAll: 'Server Post: ';
@@ -117,7 +117,7 @@ GtApServerPost >> printOn: aStream [
 ]
 
 { #category : #accessing }
-GtApServerPost >> publishTo: aDirectory usingPath: aPath [
+LeClientPost >> publishTo: aDirectory usingPath: aPath [
 	| sequencer pageLinks aPageLink aContext anExporter anHtml resource aPage |
 	aPage := self database
 			pageWithID: self page
@@ -134,7 +134,7 @@ GtApServerPost >> publishTo: aDirectory usingPath: aPath [
 			linkForPage: aPage
 			ifFound: #yourself
 			ifNone: [ self error: 'This should not happen' ].
-	aContext := GtApHtmlContext new
+	aContext := LeClientHtmlContext new
 			page: aPage;
 			pageLinks: pageLinks;
 			pagePath: aPath;
@@ -169,71 +169,71 @@ GtApServerPost >> publishTo: aDirectory usingPath: aPath [
 ]
 
 { #category : #accessing }
-GtApServerPost >> publishedAt [
+LeClientPost >> publishedAt [
 	^ publishedAt
 ]
 
 { #category : #accessing }
-GtApServerPost >> publishedAt: anObject [
+LeClientPost >> publishedAt: anObject [
 	publishedAt := anObject
 ]
 
 { #category : #accessing }
-GtApServerPost >> publishedFile [
+LeClientPost >> publishedFile [
 	^ publishedFile
 ]
 
 { #category : #accessing }
-GtApServerPost >> publishedFile: anObject [
+LeClientPost >> publishedFile: anObject [
 	publishedFile := anObject
 ]
 
 { #category : #accessing }
-GtApServerPost >> publishedUser [
+LeClientPost >> publishedUser [
 	^ publishedUser
 ]
 
 { #category : #accessing }
-GtApServerPost >> publishedUser: anObject [
+LeClientPost >> publishedUser: anObject [
 	publishedUser := anObject
 ]
 
 { #category : #accessing }
-GtApServerPost >> serverDatabase [
+LeClientPost >> serverDatabase [
 	^ serverDatabase
 ]
 
 { #category : #accessing }
-GtApServerPost >> serverDatabase: anObject [
+LeClientPost >> serverDatabase: anObject [
 	serverDatabase := anObject
 ]
 
 { #category : #accessing }
-GtApServerPost >> thumbnail [
+LeClientPost >> thumbnail [
 	^ thumbnail
 ]
 
 { #category : #accessing }
-GtApServerPost >> thumbnail: anObject [
+LeClientPost >> thumbnail: anObject [
 	thumbnail := anObject
 ]
 
 { #category : #accessing }
-GtApServerPost >> title [
+LeClientPost >> title [
 	^ title
 ]
 
 { #category : #accessing }
-GtApServerPost >> title: anObject [
+LeClientPost >> title: anObject [
 	title := anObject
 ]
 
 { #category : #accessing }
-GtApServerPost >> uuid [
+LeClientPost >> uuid [
 	^ uuid
 ]
 
 { #category : #accessing }
-GtApServerPost >> uuid: anObject [
+LeClientPost >> uuid: anObject [
 	uuid := anObject
 ]

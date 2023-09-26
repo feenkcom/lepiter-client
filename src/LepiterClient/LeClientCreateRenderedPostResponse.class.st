@@ -1,5 +1,5 @@
 Class {
-	#name : #GtApLepiterCreateRenderedPostResponse,
+	#name : #LeClientCreateRenderedPostResponse,
 	#superclass : #Object,
 	#traits : 'TGtApLepiterResponse',
 	#classTraits : 'TGtApLepiterResponse classTrait',
@@ -12,23 +12,23 @@ Class {
 }
 
 { #category : #accessing }
-GtApLepiterCreateRenderedPostResponse >> filePath [
+LeClientCreateRenderedPostResponse >> filePath [
 	<return: #RelativePath>
 	^ filePath
 ]
 
 { #category : #accessing }
-GtApLepiterCreateRenderedPostResponse >> filePath: anObject [
+LeClientCreateRenderedPostResponse >> filePath: anObject [
 	filePath := anObject
 ]
 
 { #category : #testing }
-GtApLepiterCreateRenderedPostResponse >> isSuccess [
+LeClientCreateRenderedPostResponse >> isSuccess [
 	^ self response isSuccess
 ]
 
 { #category : #printing }
-GtApLepiterCreateRenderedPostResponse >> printOn: aStream [
+LeClientCreateRenderedPostResponse >> printOn: aStream [
 	super printOn: aStream.
 
 	aStream nextPut: $(.
@@ -37,21 +37,21 @@ GtApLepiterCreateRenderedPostResponse >> printOn: aStream [
 ]
 
 { #category : #accessing }
-GtApLepiterCreateRenderedPostResponse >> response [
+LeClientCreateRenderedPostResponse >> response [
 	^ response
 ]
 
 { #category : #accessing }
-GtApLepiterCreateRenderedPostResponse >> response: anObject [
+LeClientCreateRenderedPostResponse >> response: anObject [
 	response := anObject
 ]
 
 { #category : #accessing }
-GtApLepiterCreateRenderedPostResponse >> serverPost [
+LeClientCreateRenderedPostResponse >> serverPost [
 	^ serverPost
 ]
 
 { #category : #accessing }
-GtApLepiterCreateRenderedPostResponse >> serverPost: anObject [
+LeClientCreateRenderedPostResponse >> serverPost: anObject [
 	serverPost := anObject
 ]

@@ -1,5 +1,5 @@
 Class {
-	#name : #GtApPublishPostForm,
+	#name : #LeClientPublishPostForm,
 	#superclass : #Object,
 	#instVars : [
 		'page',
@@ -23,57 +23,57 @@ Class {
 }
 
 { #category : #accessing }
-GtApPublishPostForm class >> defaultAuthor [
+LeClientPublishPostForm class >> defaultAuthor [
 	^ defaultAuthor ifNil: [ '' ]
 ]
 
 { #category : #accessing }
-GtApPublishPostForm class >> defaultAuthor: anObject [
+LeClientPublishPostForm class >> defaultAuthor: anObject [
 	defaultAuthor := anObject
 ]
 
 { #category : #accessing }
-GtApPublishPostForm class >> defaultDatabase [
+LeClientPublishPostForm class >> defaultDatabase [
 	^ defaultDatabase ifNil: [ '' ]
 ]
 
 { #category : #accessing }
-GtApPublishPostForm class >> defaultDatabase: anObject [
+LeClientPublishPostForm class >> defaultDatabase: anObject [
 	defaultDatabase := anObject
 ]
 
 { #category : #accessing }
-GtApPublishPostForm class >> defaultServer [
+LeClientPublishPostForm class >> defaultServer [
 	^ defaultServer ifNil: [ 'https://lepiter.io' ]
 ]
 
 { #category : #defaults }
-GtApPublishPostForm class >> defaultServer: anObject [
+LeClientPublishPostForm class >> defaultServer: anObject [
 	defaultServer := anObject
 ]
 
 { #category : #accessing }
-GtApPublishPostForm class >> defaultUsername [
+LeClientPublishPostForm class >> defaultUsername [
 	^ defaultUsername ifNil: [ '' ]
 ]
 
 { #category : #accessing }
-GtApPublishPostForm class >> defaultUsername: anObject [
+LeClientPublishPostForm class >> defaultUsername: anObject [
 	defaultUsername := anObject
 ]
 
 { #category : #accessing }
-GtApPublishPostForm >> abstract [
+LeClientPublishPostForm >> abstract [
 	^ abstract
 ]
 
 { #category : #accessing }
-GtApPublishPostForm >> abstract: aString [
+LeClientPublishPostForm >> abstract: aString [
 	abstract := aString
 ]
 
 { #category : #accessing }
-GtApPublishPostForm >> abstractDescription [
+LeClientPublishPostForm >> abstractDescription [
 	<magritteDescription>
 	^ MAStringDescription new
 		label: 'Abstract';
@@ -85,33 +85,33 @@ GtApPublishPostForm >> abstractDescription [
 ]
 
 { #category : #accessing }
-GtApPublishPostForm >> anchor [
+LeClientPublishPostForm >> anchor [
 	^ anchor
 ]
 
 { #category : #accessing }
-GtApPublishPostForm >> anchor: anObject [
+LeClientPublishPostForm >> anchor: anObject [
 	anchor := anObject
 ]
 
 { #category : #accessing }
-GtApPublishPostForm >> asElement [
+LeClientPublishPostForm >> asElement [
 	^ self asGtMagritteViewModel asElement margin: (BlInsets all: 8)
 ]
 
 { #category : #accessing }
-GtApPublishPostForm >> author [
+LeClientPublishPostForm >> author [
 	^ author
 ]
 
 { #category : #accessing }
-GtApPublishPostForm >> author: anObject [
+LeClientPublishPostForm >> author: anObject [
 	author := anObject.
 	self class defaultAuthor: anObject
 ]
 
 { #category : #accessing }
-GtApPublishPostForm >> authorDescription [
+LeClientPublishPostForm >> authorDescription [
 	<magritteDescription>
 	^ MAStringDescription new
 		label: 'Author';
@@ -123,18 +123,18 @@ GtApPublishPostForm >> authorDescription [
 ]
 
 { #category : #accessing }
-GtApPublishPostForm >> database [
+LeClientPublishPostForm >> database [
 	^ database
 ]
 
 { #category : #accessing }
-GtApPublishPostForm >> database: anObject [
+LeClientPublishPostForm >> database: anObject [
 	database := anObject.
 	self class defaultDatabase: anObject
 ]
 
 { #category : #accessing }
-GtApPublishPostForm >> databaseDescription [
+LeClientPublishPostForm >> databaseDescription [
 	<magritteDescription>
 	^ MAStringDescription new
 		label: 'Database';
@@ -146,7 +146,7 @@ GtApPublishPostForm >> databaseDescription [
 ]
 
 { #category : #accessing }
-GtApPublishPostForm >> initialize [
+LeClientPublishPostForm >> initialize [
 	server := self class defaultServer.
 	username := self class defaultUsername.
 	password := ''.
@@ -156,7 +156,7 @@ GtApPublishPostForm >> initialize [
 ]
 
 { #category : #accessing }
-GtApPublishPostForm >> magritteAcceptAction [
+LeClientPublishPostForm >> magritteAcceptAction [
 	<magritteActionDescription>
 	^ super magritteAcceptAction
 		onSuccessCallback: (GtMagritteCallback new
@@ -169,7 +169,7 @@ GtApPublishPostForm >> magritteAcceptAction [
 ]
 
 { #category : #accessing }
-GtApPublishPostForm >> magritteCancelAction [
+LeClientPublishPostForm >> magritteCancelAction [
 	"Users do not need a cancel action since all Magritte descriptions 
 	have `#autoAccept:` set to true."
 	<magritteActionDescription>
@@ -177,31 +177,31 @@ GtApPublishPostForm >> magritteCancelAction [
 ]
 
 { #category : #accessing }
-GtApPublishPostForm >> page [
+LeClientPublishPostForm >> page [
 	^ page
 ]
 
 { #category : #accessing }
-GtApPublishPostForm >> page: aPage [
+LeClientPublishPostForm >> page: aPage [
 	| aPost |
 	page := aPage.
-	aPost := GtApServerPost forPage: aPage.
+	aPost := LeClientPost forPage: aPage.
 	self title: aPost title.
 	self abstract: aPost abstract
 ]
 
 { #category : #accessing }
-GtApPublishPostForm >> password [
+LeClientPublishPostForm >> password [
 	^ password
 ]
 
 { #category : #accessing }
-GtApPublishPostForm >> password: anObject [
+LeClientPublishPostForm >> password: anObject [
 	password := anObject
 ]
 
 { #category : #accessing }
-GtApPublishPostForm >> passwordDescription [
+LeClientPublishPostForm >> passwordDescription [
 	<magritteDescription>
 	^ MAPasswordDescription new
 		label: 'Password';
@@ -213,9 +213,9 @@ GtApPublishPostForm >> passwordDescription [
 ]
 
 { #category : #actions }
-GtApPublishPostForm >> publish [
+LeClientPublishPostForm >> publish [
 	| aClient aResult |
-	aClient := GtApLepiterClient new
+	aClient := LepiterClient new
 			server: server;
 			username: username;
 			password: password;
@@ -227,30 +227,30 @@ GtApPublishPostForm >> publish [
 			authorName: self author.
 
 	result isSuccess
-		ifFalse: [ GtApLepiterRequestError new
+		ifFalse: [ LeClientRequestError new
 				client: aClient;
 				result: aResult;
 				signal ]
 ]
 
 { #category : #accessing }
-GtApPublishPostForm >> result [
+LeClientPublishPostForm >> result [
 	^ result
 ]
 
 { #category : #accessing }
-GtApPublishPostForm >> server [
+LeClientPublishPostForm >> server [
 	^ server
 ]
 
 { #category : #accessing }
-GtApPublishPostForm >> server: anObject [
+LeClientPublishPostForm >> server: anObject [
 	server := anObject.
 	self class defaultServer: anObject
 ]
 
 { #category : #accessing }
-GtApPublishPostForm >> serverDescription [
+LeClientPublishPostForm >> serverDescription [
 	<magritteDescription>
 	^ MAStringDescription new
 		label: 'Server';
@@ -262,17 +262,17 @@ GtApPublishPostForm >> serverDescription [
 ]
 
 { #category : #accessing }
-GtApPublishPostForm >> title [
+LeClientPublishPostForm >> title [
 	^ title
 ]
 
 { #category : #accessing }
-GtApPublishPostForm >> title: aString [
+LeClientPublishPostForm >> title: aString [
 	title := aString
 ]
 
 { #category : #accessing }
-GtApPublishPostForm >> titleDescription [
+LeClientPublishPostForm >> titleDescription [
 	<magritteDescription>
 	^ MAStringDescription new
 		label: 'Title';
@@ -284,18 +284,18 @@ GtApPublishPostForm >> titleDescription [
 ]
 
 { #category : #accessing }
-GtApPublishPostForm >> username [
+LeClientPublishPostForm >> username [
 	^ username
 ]
 
 { #category : #accessing }
-GtApPublishPostForm >> username: anObject [
+LeClientPublishPostForm >> username: anObject [
 	username := anObject.
 	self class defaultUsername: anObject
 ]
 
 { #category : #accessing }
-GtApPublishPostForm >> usernameDescription [
+LeClientPublishPostForm >> usernameDescription [
 	<magritteDescription>
 	^ MAStringDescription new
 		label: 'Username';

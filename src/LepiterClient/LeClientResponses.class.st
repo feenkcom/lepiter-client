@@ -1,5 +1,5 @@
 Class {
-	#name : #GtApLepiterResponses,
+	#name : #LeClientResponses,
 	#superclass : #Object,
 	#traits : 'TGtApLepiterResponse',
 	#classTraits : 'TGtApLepiterResponse classTrait',
@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #'gt - extensions' }
-GtApLepiterResponses >> gtResponsesFor: aView [
+LeClientResponses >> gtResponsesFor: aView [
 	<gtView>
 	responses ifNil: [ ^ aView empty ].
 
@@ -32,16 +32,16 @@ GtApLepiterResponses >> gtResponsesFor: aView [
 ]
 
 { #category : #testing }
-GtApLepiterResponses >> isSuccess [
+LeClientResponses >> isSuccess [
 	^ self responses allSatisfy: #isSuccess
 ]
 
 { #category : #accessing }
-GtApLepiterResponses >> responses [
+LeClientResponses >> responses [
 	^ responses
 ]
 
 { #category : #accessing }
-GtApLepiterResponses >> responses: anObject [
+LeClientResponses >> responses: anObject [
 	responses := anObject
 ]

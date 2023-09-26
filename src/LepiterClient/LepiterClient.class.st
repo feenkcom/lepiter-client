@@ -1,5 +1,5 @@
 Class {
-	#name : #GtApLepiterClient,
+	#name : #LepiterClient,
 	#superclass : #Object,
 	#instVars : [
 		'server',
@@ -11,12 +11,12 @@ Class {
 }
 
 { #category : #'private - publishing' }
-GtApLepiterClient >> attachmentPoster [
-	^ GtApLepiterAttachmentPoster new client: self
+LepiterClient >> attachmentPoster [
+	^ LeClientAttachmentPoster new client: self
 ]
 
 { #category : #accessing }
-GtApLepiterClient >> createPost: aPost forPage: aPage inDatabase: databaseId [
+LepiterClient >> createPost: aPost forPage: aPage inDatabase: databaseId [
 	| aZnClient anEntity anApResponse aServerPost |
 	anEntity := ZnEntity
 			json: (STONJSON
@@ -30,7 +30,7 @@ GtApLepiterClient >> createPost: aPost forPage: aPage inDatabase: databaseId [
 			setBearerAuthentication: self token.
 	aZnClient post.
 
-	anApResponse := GtApLepiterRequestUtility responseForZnClient: aZnClient.
+	anApResponse := LeClientRequestUtility responseForZnClient: aZnClient.
 	anApResponse isSuccess ifFalse: [ ^ anApResponse ].
 
 	aServerPost := LeJsonV4 uniqueInstance deserialize: aZnClient response entity string readStream.
@@ -41,7 +41,7 @@ GtApLepiterClient >> createPost: aPost forPage: aPage inDatabase: databaseId [
 ]
 
 { #category : #accessing }
-GtApLepiterClient >> createRenderedPost: aServerPost [
+LepiterClient >> createRenderedPost: aServerPost [
 	| postUuid postDirectory filePath figureCode anEntity aClient aResponse anApResponse basename |
 	postUuid := aServerPost uuid.
 	postDirectory := (FileLocator temp asFileReference
@@ -76,7 +76,7 @@ GtApLepiterClient >> createRenderedPost: aServerPost [
 			post;
 			response.
 
-	anApResponse := GtApLepiterRequestUtility responseForZnClient: aClient.
+	anApResponse := LeClientRequestUtility responseForZnClient: aClient.
 
 	anApResponse isSuccess
 		ifTrue: [ | aModel |
@@ -84,14 +84,14 @@ GtApLepiterClient >> createRenderedPost: aServerPost [
 					deserialize: aResponse entity string readStream.
 			anApResponse model: aModel ].
 
-	^ GtApLepiterCreateRenderedPostResponse new
+	^ LeClientCreateRenderedPostResponse new
 		response: anApResponse;
 		filePath: basename asFileReference asPath;
 		serverPost: aServerPost
 ]
 
 { #category : #accessing }
-GtApLepiterClient >> databases [
+LepiterClient >> databases [
 	| allDatabases |
 	allDatabases := LeJsonV4 uniqueInstance
 		deserialize: (ZnClient new beOneShot
@@ -109,12 +109,12 @@ GtApLepiterClient >> databases [
 ]
 
 { #category : #accessing }
-GtApLepiterClient >> exportFigure: aFile [ 
+LepiterClient >> exportFigure: aFile [ 
 	^ aFile basename -> (self exportFile: aFile)
 ]
 
 { #category : #accessing }
-GtApLepiterClient >> exportFigures: postDirectory [
+LepiterClient >> exportFigures: postDirectory [
 	^ (postDirectory / 'gt-figures') exists
 		ifTrue: [ (postDirectory / 'gt-figures') children
 				collect: [ :aFile | self exportFigure: aFile ] ]
@@ -122,7 +122,7 @@ GtApLepiterClient >> exportFigures: postDirectory [
 ]
 
 { #category : #accessing }
-GtApLepiterClient >> exportFile: aFile [
+LepiterClient >> exportFile: aFile [
 	| aClient aZnResponse anApResponse |
 	aClient := ZnClient new beOneShot
 			url: self server , '/api/createFile';
@@ -134,14 +134,14 @@ GtApLepiterClient >> exportFile: aFile [
 			response.
 
 	anApResponse := aZnResponse isSuccess
-			ifTrue: [ GtApLepiterRequestSuccess new znClient: aClient ]
-			ifFalse: [ GtApLepiterRequestFailure new znClient: aClient ].
+			ifTrue: [ LeClientRequestSuccess new znClient: aClient ]
+			ifFalse: [ LeClientRequestFailure new znClient: aClient ].
 
 	^ anApResponse
 ]
 
 { #category : #'api - publishing' }
-GtApLepiterClient >> exportPage: aPage inDatabase: aDatabaseId [
+LepiterClient >> exportPage: aPage inDatabase: aDatabaseId [
 	| aServerPage aPageResponse anAttachmentResponse |
 	anAttachmentResponse := self attachmentPoster
 		page: aPage;
@@ -159,7 +159,7 @@ GtApLepiterClient >> exportPage: aPage inDatabase: aDatabaseId [
 	
 	aServerPage := aPageResponse serverPage.
 	
-	^ GtApLepiterClientExportPageSuccessResponse new
+	^ LeClientClientExportPageSuccessResponse new
 		clientPage: aPage;
 		serverDatabaseId: aDatabaseId;
 		serverPage: aServerPage;
@@ -167,7 +167,7 @@ GtApLepiterClient >> exportPage: aPage inDatabase: aDatabaseId [
 ]
 
 { #category : #'gt - extensions' }
-GtApLepiterClient >> gtDatabasesFor: aView [
+LepiterClient >> gtDatabasesFor: aView [
 	<gtView>
 	self token ifNil: [ ^ aView empty ].
 
@@ -181,20 +181,20 @@ GtApLepiterClient >> gtDatabasesFor: aView [
 ]
 
 { #category : #'gt - extensions' }
-GtApLepiterClient >> gtMagritteFor: aView [
+LepiterClient >> gtMagritteFor: aView [
 	<gtView>
 	^ (super gtMagritteFor: aView) title: 'Login'
 ]
 
 { #category : #accessing }
-GtApLepiterClient >> initialize [
+LepiterClient >> initialize [
 	server := ''.
 	username := ''.
 	password := ''
 ]
 
 { #category : #accessing }
-GtApLepiterClient >> login [
+LepiterClient >> login [
 	| loginResult response data |
 	data := ZnEntity
 			json: (STONJSON
@@ -211,12 +211,12 @@ GtApLepiterClient >> login [
 ]
 
 { #category : #accessing }
-GtApLepiterClient >> lookupDatabase: aDbName [
+LepiterClient >> lookupDatabase: aDbName [
 	^ self databases detect: [:aDb | aDb name = aDbName ]
 ]
 
 { #category : #accessing }
-GtApLepiterClient >> magritteAcceptAction [
+LepiterClient >> magritteAcceptAction [
 	<magritteActionDescription>
 	^ super magritteAcceptAction
 		onSuccessCallback: (GtMagritteCallback new
@@ -228,22 +228,22 @@ GtApLepiterClient >> magritteAcceptAction [
 ]
 
 { #category : #'private - publishing' }
-GtApLepiterClient >> pagePoster [
-	^ GtApLepiterPagePoster new client: self
+LepiterClient >> pagePoster [
+	^ LeClientPagePoster new client: self
 ]
 
 { #category : #accessing }
-GtApLepiterClient >> password [
+LepiterClient >> password [
 	^ password
 ]
 
 { #category : #accessing }
-GtApLepiterClient >> password: anObject [
+LepiterClient >> password: anObject [
 	password := anObject
 ]
 
 { #category : #accessing }
-GtApLepiterClient >> passwordDescription [
+LepiterClient >> passwordDescription [
 	<magritteDescription>
 	^ MAPasswordDescription new
 		priority: 3;
@@ -252,7 +252,7 @@ GtApLepiterClient >> passwordDescription [
 ]
 
 { #category : #accessing }
-GtApLepiterClient >> publishPost: aPost withAuthor: anAuthorName andFile: aFilePath [
+LepiterClient >> publishPost: aPost withAuthor: anAuthorName andFile: aFilePath [
 	| anEntity aClient aResponse anApResponse |
 	anEntity := ZnEntity
 			json: '{"post": "' , aPost uuid asString , '", "file": "' , aFilePath pathString
@@ -266,14 +266,14 @@ GtApLepiterClient >> publishPost: aPost withAuthor: anAuthorName andFile: aFileP
 			post;
 			response.
 			
-	anApResponse := GtApLepiterRequestUtility responseForZnClient: aClient.
+	anApResponse := LeClientRequestUtility responseForZnClient: aClient.
 
 	anApResponse isSuccess ifTrue: [ 
 		| aServerPost |
 		aServerPost := LeJsonV4 uniqueInstance deserialize: aResponse contents readStream.
 		anApResponse model: aServerPost ].
 		
-	^ GtApLepiterPublishPostResponse new
+	^ LeClientPublishPostResponse new
 		inputPost: aPost;
 		authorName: anAuthorName;
 		filePath: aFilePath;
@@ -281,7 +281,7 @@ GtApLepiterClient >> publishPost: aPost withAuthor: anAuthorName andFile: aFileP
 ]
 
 { #category : #accessing }
-GtApLepiterClient >> publishPostOfPage: aPage inDatabaseNamed: aDatabaseName authorName: anAuthorName [
+LepiterClient >> publishPostOfPage: aPage inDatabaseNamed: aDatabaseName authorName: anAuthorName [
 	| aServerDatabase aPageResponse aPostResponse anInputPost anOutputPost aRenderedPostResponse |
 	aServerDatabase := self lookupDatabase: aDatabaseName.
 
@@ -290,7 +290,7 @@ GtApLepiterClient >> publishPostOfPage: aPage inDatabaseNamed: aDatabaseName aut
 			inDatabase: aServerDatabase lepiterDatabase.
 	aPageResponse isSuccess ifFalse: [ ^ aPageResponse ].
 
-	anInputPost := GtApServerPost forPage: aPage.
+	anInputPost := LeClientPost forPage: aPage.
 	aPostResponse := self
 			createPost: anInputPost
 			forPage: aPage
@@ -312,17 +312,17 @@ GtApLepiterClient >> publishPostOfPage: aPage inDatabaseNamed: aDatabaseName aut
 ]
 
 { #category : #accessing }
-GtApLepiterClient >> server [
+LepiterClient >> server [
 	^ server
 ]
 
 { #category : #accessing }
-GtApLepiterClient >> server: anObject [
+LepiterClient >> server: anObject [
 	server := anObject
 ]
 
 { #category : #accessing }
-GtApLepiterClient >> serverDescription [
+LepiterClient >> serverDescription [
 	<magritteDescription>
 	^ MAStringDescription new
 		priority: 1;
@@ -331,27 +331,27 @@ GtApLepiterClient >> serverDescription [
 ]
 
 { #category : #accessing }
-GtApLepiterClient >> token [
+LepiterClient >> token [
 	^ token
 ]
 
 { #category : #accessing }
-GtApLepiterClient >> token: anObject [
+LepiterClient >> token: anObject [
 	token := anObject
 ]
 
 { #category : #accessing }
-GtApLepiterClient >> username [
+LepiterClient >> username [
 	^ username
 ]
 
 { #category : #accessing }
-GtApLepiterClient >> username: anObject [
+LepiterClient >> username: anObject [
 	username := anObject
 ]
 
 { #category : #accessing }
-GtApLepiterClient >> usernameDescription [
+LepiterClient >> usernameDescription [
 	<magritteDescription>
 	^ MAStringDescription new
 		priority: 2;

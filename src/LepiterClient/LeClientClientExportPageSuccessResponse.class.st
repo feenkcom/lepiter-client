@@ -1,5 +1,5 @@
 Class {
-	#name : #GtApLepiterClientExportPageSuccessResponse,
+	#name : #LeClientClientExportPageSuccessResponse,
 	#superclass : #Object,
 	#traits : 'TGtApLepiterResponse',
 	#classTraits : 'TGtApLepiterResponse classTrait',
@@ -13,46 +13,46 @@ Class {
 }
 
 { #category : #accessing }
-GtApLepiterClientExportPageSuccessResponse >> clientPage [
+LeClientClientExportPageSuccessResponse >> clientPage [
 	^ clientPage
 ]
 
 { #category : #accessing }
-GtApLepiterClientExportPageSuccessResponse >> clientPage: anObject [
+LeClientClientExportPageSuccessResponse >> clientPage: anObject [
 	clientPage := anObject
 ]
 
 { #category : #testing }
-GtApLepiterClientExportPageSuccessResponse >> isSuccess [
+LeClientClientExportPageSuccessResponse >> isSuccess [
 	^ true
 ]
 
 { #category : #accessing }
-GtApLepiterClientExportPageSuccessResponse >> responses [
+LeClientClientExportPageSuccessResponse >> responses [
 	^ responses
 ]
 
 { #category : #accessing }
-GtApLepiterClientExportPageSuccessResponse >> responses: anObject [
+LeClientClientExportPageSuccessResponse >> responses: anObject [
 	responses := anObject
 ]
 
 { #category : #accessing }
-GtApLepiterClientExportPageSuccessResponse >> serverDatabaseId [
+LeClientClientExportPageSuccessResponse >> serverDatabaseId [
 	^ serverDatabaseId
 ]
 
 { #category : #accessing }
-GtApLepiterClientExportPageSuccessResponse >> serverDatabaseId: anObject [
+LeClientClientExportPageSuccessResponse >> serverDatabaseId: anObject [
 	serverDatabaseId := anObject
 ]
 
 { #category : #accessing }
-GtApLepiterClientExportPageSuccessResponse >> serverPage [
+LeClientClientExportPageSuccessResponse >> serverPage [
 	^ serverPage
 ]
 
 { #category : #accessing }
-GtApLepiterClientExportPageSuccessResponse >> serverPage: anObject [
+LeClientClientExportPageSuccessResponse >> serverPage: anObject [
 	serverPage := anObject
 ]

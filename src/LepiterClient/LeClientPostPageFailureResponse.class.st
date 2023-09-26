@@ -1,5 +1,5 @@
 Class {
-	#name : #GtApLepiterPostPageFailureResponse,
+	#name : #LeClientPostPageFailureResponse,
 	#superclass : #Object,
 	#traits : 'TGtApLepiterResponse',
 	#classTraits : 'TGtApLepiterResponse classTrait',
@@ -12,31 +12,31 @@ Class {
 }
 
 { #category : #accessing }
-GtApLepiterPostPageFailureResponse >> page [
+LeClientPostPageFailureResponse >> page [
 	^ page
 ]
 
 { #category : #accessing }
-GtApLepiterPostPageFailureResponse >> page: anObject [
+LeClientPostPageFailureResponse >> page: anObject [
 	page := anObject
 ]
 
 { #category : #accessing }
-GtApLepiterPostPageFailureResponse >> response [
+LeClientPostPageFailureResponse >> response [
 	^ response
 ]
 
 { #category : #accessing }
-GtApLepiterPostPageFailureResponse >> response: anObject [
+LeClientPostPageFailureResponse >> response: anObject [
 	response := anObject
 ]
 
 { #category : #accessing }
-GtApLepiterPostPageFailureResponse >> serverDatabaseId [
+LeClientPostPageFailureResponse >> serverDatabaseId [
 	^ serverDatabaseId
 ]
 
 { #category : #accessing }
-GtApLepiterPostPageFailureResponse >> serverDatabaseId: anObject [
+LeClientPostPageFailureResponse >> serverDatabaseId: anObject [
 	serverDatabaseId := anObject
 ]

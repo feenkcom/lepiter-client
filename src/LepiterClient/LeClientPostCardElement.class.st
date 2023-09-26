@@ -1,5 +1,5 @@
 Class {
-	#name : #GtApServerPostCardElement,
+	#name : #LeClientPostCardElement,
 	#superclass : #BrHorizontalPane,
 	#instVars : [
 		'titleElement',
@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #accessing }
-GtApServerPostCardElement >> buildDescriptionElement [
+LeClientPostCardElement >> buildDescriptionElement [
 	^ descriptionElement := BrEditor new
 			beReadOnlyWithoutSelection;
 			aptitude: BrGlamorousRegularEditorAptitude;
@@ -26,7 +26,7 @@ GtApServerPostCardElement >> buildDescriptionElement [
 ]
 
 { #category : #accessing }
-GtApServerPostCardElement >> buildPublishedIndicator [
+LeClientPostCardElement >> buildPublishedIndicator [
 	^ publishedIndicator := BrVerticalPane new
 			vMatchParent;
 			hExact: 5;
@@ -36,25 +36,25 @@ GtApServerPostCardElement >> buildPublishedIndicator [
 ]
 
 { #category : #accessing }
-GtApServerPostCardElement >> buildThumbElement [
+LeClientPostCardElement >> buildThumbElement [
 	^ thumbElement := BrAsyncFileWidget new
 			hMatchParent;
 			vExact: 200
 ]
 
 { #category : #accessing }
-GtApServerPostCardElement >> buildTitleElement [
+LeClientPostCardElement >> buildTitleElement [
 	^ titleElement := BrLabel new aptitude: BrGlamorousLabelAptitude new bold
 ]
 
 { #category : #accessing }
-GtApServerPostCardElement >> dateAndAuthorElement [
+LeClientPostCardElement >> dateAndAuthorElement [
 	^ dateAndAuthorElement := BrLabel new
 			aptitude: (BrGlamorousLabelAptitude new foreground: BrGlamorousColors formLabelTextColor)
 ]
 
 { #category : #accessing }
-GtApServerPostCardElement >> dateAndAuthorFrom: aPost [
+LeClientPostCardElement >> dateAndAuthorFrom: aPost [
 	aPost publishedAt
 		ifNil: [ dateAndAuthorElement visibility: BlVisibility gone ]
 		ifNotNil: [ dateAndAuthorElement
@@ -65,7 +65,7 @@ GtApServerPostCardElement >> dateAndAuthorFrom: aPost [
 ]
 
 { #category : #accessing }
-GtApServerPostCardElement >> description: aString [
+LeClientPostCardElement >> description: aString [
 	descriptionElement
 		styler: (LeSnippetStyler new
 				snippetViewModel: (LeTextSnippet new text: aString asRopedText) asSnippetViewModel);
@@ -73,7 +73,7 @@ GtApServerPostCardElement >> description: aString [
 ]
 
 { #category : #accessing }
-GtApServerPostCardElement >> initialize [
+LeClientPostCardElement >> initialize [
 	| contentContainer |
 	super initialize.
 
@@ -99,14 +99,14 @@ GtApServerPostCardElement >> initialize [
 ]
 
 { #category : #accessing }
-GtApServerPostCardElement >> isPublished: aBoolean [
+LeClientPostCardElement >> isPublished: aBoolean [
 	aBoolean
 		ifTrue: [ publishedIndicator visibility: BlVisibility visible ]
 		ifFalse: [ publishedIndicator visibility: BlVisibility gone ]
 ]
 
 { #category : #accessing }
-GtApServerPostCardElement >> post: aPost [
+LeClientPostCardElement >> post: aPost [
 	self title: aPost title.
 	self thumb: aPost thumbnail.
 	self description: aPost abstract.
@@ -115,13 +115,13 @@ GtApServerPostCardElement >> post: aPost [
 ]
 
 { #category : #accessing }
-GtApServerPostCardElement >> thumb: anObject [
+LeClientPostCardElement >> thumb: anObject [
 	anObject isEmptyOrNil
 		ifTrue: [ thumbElement visibility: BlVisibility gone ]
 		ifFalse: [ thumbElement url: anObject ]
 ]
 
 { #category : #accessing }
-GtApServerPostCardElement >> title: aString [
+LeClientPostCardElement >> title: aString [
 	titleElement text: aString
 ]

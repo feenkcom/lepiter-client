@@ -12,7 +12,7 @@ LeHtmlGtAtpPostPiece >> gtOutputFor: aView [
 		priority: 20;
 		aptitude: BrGlamorousCodeEditorAptitude;
 		text: [ String streamContents: [ :aStream | 
-			self writeWithContext: (GtApHtmlContext new stream: aStream) ] ]
+			self writeWithContext: (LeClientHtmlContext new stream: aStream) ] ]
 ]
 
 { #category : #accessing }

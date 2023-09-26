@@ -1,5 +1,5 @@
 Class {
-	#name : #GtApLepiterLoginPane,
+	#name : #LeClientLoginPane,
 	#superclass : #Object,
 	#instVars : [
 		'onLogin',
@@ -11,19 +11,19 @@ Class {
 }
 
 { #category : #accessing }
-GtApLepiterLoginPane >> asElement [
+LeClientLoginPane >> asElement [
 	^ self asGtMagritteViewModel asElement
 ]
 
 { #category : #accessing }
-GtApLepiterLoginPane >> initialize [
+LeClientLoginPane >> initialize [
 	self server: ''.
 	self username: ''.
 	self password: ''
 ]
 
 { #category : #accessing }
-GtApLepiterLoginPane >> magritteAcceptAction [
+LeClientLoginPane >> magritteAcceptAction [
 	<magritteActionDescription>
 	^ super magritteAcceptAction
 		onSuccessCallback: (GtMagritteCallback new
@@ -40,27 +40,27 @@ GtApLepiterLoginPane >> magritteAcceptAction [
 ]
 
 { #category : #accessing }
-GtApLepiterLoginPane >> onLogin [
+LeClientLoginPane >> onLogin [
 	^ onLogin
 ]
 
 { #category : #accessing }
-GtApLepiterLoginPane >> onLogin: anObject [
+LeClientLoginPane >> onLogin: anObject [
 	onLogin := anObject
 ]
 
 { #category : #accessing }
-GtApLepiterLoginPane >> password [
+LeClientLoginPane >> password [
 	^ password
 ]
 
 { #category : #accessing }
-GtApLepiterLoginPane >> password: anObject [
+LeClientLoginPane >> password: anObject [
 	password := anObject
 ]
 
 { #category : #accessing }
-GtApLepiterLoginPane >> passwordDescription [
+LeClientLoginPane >> passwordDescription [
 	<magritteDescription>
 	^ MAPasswordDescription new
 		priority: 3;
@@ -69,17 +69,17 @@ GtApLepiterLoginPane >> passwordDescription [
 ]
 
 { #category : #accessing }
-GtApLepiterLoginPane >> server [
+LeClientLoginPane >> server [
 	^ server
 ]
 
 { #category : #accessing }
-GtApLepiterLoginPane >> server: anObject [
+LeClientLoginPane >> server: anObject [
 	server := anObject
 ]
 
 { #category : #accessing }
-GtApLepiterLoginPane >> serverDescription [
+LeClientLoginPane >> serverDescription [
 	<magritteDescription>
 	^ MAStringDescription new
 		priority: 1;
@@ -88,17 +88,17 @@ GtApLepiterLoginPane >> serverDescription [
 ]
 
 { #category : #accessing }
-GtApLepiterLoginPane >> username [
+LeClientLoginPane >> username [
 	^ username
 ]
 
 { #category : #accessing }
-GtApLepiterLoginPane >> username: anObject [
+LeClientLoginPane >> username: anObject [
 	username := anObject
 ]
 
 { #category : #accessing }
-GtApLepiterLoginPane >> usernameDescription [
+LeClientLoginPane >> usernameDescription [
 	<magritteDescription>
 	^ MAStringDescription new
 		priority: 2;

@@ -8,7 +8,7 @@ Trait {
 
 { #category : #accessing }
 TGtApLepiterWithClient >> client [
-	<return: #GtApLepiterClient>
+	<return: #LepiterClient>
 	^ client
 ]
 

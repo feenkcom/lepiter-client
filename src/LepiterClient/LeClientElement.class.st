@@ -1,5 +1,5 @@
 Class {
-	#name : #GtApLepiterElement,
+	#name : #LeClientElement,
 	#superclass : #BrVerticalPane,
 	#instVars : [
 		'server',
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #accessing }
-GtApLepiterElement >> initialize [
+LeClientElement >> initialize [
 	super initialize.
 	
 	self matchParent.
@@ -25,32 +25,32 @@ GtApLepiterElement >> initialize [
 ]
 
 { #category : #accessing }
-GtApLepiterElement >> initializeDatabasePane [
-	databasePane := GtApLepiterDatabasePane new matchParent
+LeClientElement >> initializeDatabasePane [
+	databasePane := LeClientDatabasePane new matchParent
 			visibility: BlVisibility gone
 ]
 
 { #category : #accessing }
-GtApLepiterElement >> initializeLoginPane [
-	loginPane := (GtApLepiterLoginPane new
+LeClientElement >> initializeLoginPane [
+	loginPane := (LeClientLoginPane new
 			onLogin: [ :aPair | 
 				self server: aPair key.
 				self setToken: aPair value ]) asElement matchParent
 ]
 
 { #category : #accessing }
-GtApLepiterElement >> server [
+LeClientElement >> server [
 	^ server
 ]
 
 { #category : #accessing }
-GtApLepiterElement >> server: anObject [
+LeClientElement >> server: anObject [
 	server := anObject.
 	databasePane server: anObject
 ]
 
 { #category : #accessing }
-GtApLepiterElement >> setToken: aToken [
+LeClientElement >> setToken: aToken [
 	self token: aToken.
 	loginPane
 		visibility: (aToken ifNil: [ BlVisibility visible ] ifNotNil: [ BlVisibility gone ]).
@@ -60,11 +60,11 @@ GtApLepiterElement >> setToken: aToken [
 ]
 
 { #category : #accessing }
-GtApLepiterElement >> token [
+LeClientElement >> token [
 	^ token
 ]
 
 { #category : #accessing }
-GtApLepiterElement >> token: anObject [
+LeClientElement >> token: anObject [
 	token := anObject
 ]

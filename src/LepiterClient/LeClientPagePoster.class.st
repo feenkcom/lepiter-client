@@ -1,5 +1,5 @@
 Class {
-	#name : #GtApLepiterPagePoster,
+	#name : #LeClientPagePoster,
 	#superclass : #Object,
 	#traits : 'TGtApLepiterWithClient',
 	#classTraits : 'TGtApLepiterWithClient classTrait',
@@ -11,29 +11,29 @@ Class {
 }
 
 { #category : #accessing }
-GtApLepiterPagePoster >> page [
+LeClientPagePoster >> page [
 	^ page
 ]
 
 { #category : #accessing }
-GtApLepiterPagePoster >> page: anObject [
+LeClientPagePoster >> page: anObject [
 	page := anObject
 ]
 
 { #category : #'api - publishing' }
-GtApLepiterPagePoster >> post [
+LeClientPagePoster >> post [
 	| aPost aZnResponse |
 	aZnResponse := self postPage.
 
 	aZnResponse isSuccess
-		ifFalse: [ ^ GtApLepiterPostPageFailureResponse new
+		ifFalse: [ ^ LeClientPostPageFailureResponse new
 				page: self page;
 				serverDatabaseId: self serverDatabaseId;
 				response: aZnResponse ].
 
 	aPost := LeJsonV4 uniqueInstance deserialize: aZnResponse contents readStream.
 
-	^ GtApLepiterPostPageSuccessResponse new
+	^ LeClientPostPageSuccessResponse new
 		page: self page;
 		serverDatabaseId: self serverDatabaseId;
 		response: aZnResponse;
@@ -41,7 +41,7 @@ GtApLepiterPagePoster >> post [
 ]
 
 { #category : #'api - publishing' }
-GtApLepiterPagePoster >> postPage [
+LeClientPagePoster >> postPage [
 	^ ZnClient new beOneShot
 		url: self server , '/api/createPage';
 		entity: (ZnEntity
@@ -54,11 +54,11 @@ GtApLepiterPagePoster >> postPage [
 ]
 
 { #category : #accessing }
-GtApLepiterPagePoster >> serverDatabaseId [
+LeClientPagePoster >> serverDatabaseId [
 	^ serverDatabaseId
 ]
 
 { #category : #accessing }
-GtApLepiterPagePoster >> serverDatabaseId: anObject [
+LeClientPagePoster >> serverDatabaseId: anObject [
 	serverDatabaseId := anObject
 ]

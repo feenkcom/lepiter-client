@@ -1,5 +1,5 @@
 Class {
-	#name : #GtApLepiterDatabasePane,
+	#name : #LeClientDatabasePane,
 	#superclass : #BrVerticalPane,
 	#instVars : [
 		'server',
@@ -15,7 +15,7 @@ Class {
 }
 
 { #category : #accessing }
-GtApLepiterDatabasePane >> initialize [
+LeClientDatabasePane >> initialize [
 	super initialize.
 	
 	self initializeDatabaseList.
@@ -26,12 +26,12 @@ GtApLepiterDatabasePane >> initialize [
 ]
 
 { #category : #accessing }
-GtApLepiterDatabasePane >> initializeDatabaseDetails [
+LeClientDatabasePane >> initializeDatabaseDetails [
 	databaseDetails := BrVerticalPane new matchParent
 ]
 
 { #category : #accessing }
-GtApLepiterDatabasePane >> initializeDatabaseList [
+LeClientDatabasePane >> initializeDatabaseList [
 	databaseList := BrColumnedList new hMatchParent vFitContent.
 
 	databaseList column
@@ -70,12 +70,12 @@ GtApLepiterDatabasePane >> initializeDatabaseList [
 ]
 
 { #category : #accessing }
-GtApLepiterDatabasePane >> postForPage: aPage [
+LeClientDatabasePane >> postForPage: aPage [
 	^ posts detect: [ :aPost | aPost page = aPage uid ] ifNone: [ nil ]
 ]
 
 { #category : #accessing }
-GtApLepiterDatabasePane >> refreshDatabaseDetails [
+LeClientDatabasePane >> refreshDatabaseDetails [
 	databaseDetails
 		addChild: (BrLabel new
 				aptitude: BrGlamorousLabelAptitude new bold;
@@ -84,7 +84,7 @@ GtApLepiterDatabasePane >> refreshDatabaseDetails [
 	databaseDetails
 		addChild: (BrSimpleList new beHorizontal hMatchParent vFitContent
 				items: pages;
-				itemStencil: [ GtApLepiterPageElement new
+				itemStencil: [ LeClientPageElement new
 						server: server;
 						token: token ];
 				itemDataBinder: [ :anItemElement :anItem | 
@@ -95,7 +95,7 @@ GtApLepiterDatabasePane >> refreshDatabaseDetails [
 ]
 
 { #category : #accessing }
-GtApLepiterDatabasePane >> refreshDatabaseList [
+LeClientDatabasePane >> refreshDatabaseList [
 	databases := STONJSON
 			fromString: (ZnClient new beOneShot
 					url: self server , '/api/databases';
@@ -107,7 +107,7 @@ GtApLepiterDatabasePane >> refreshDatabaseList [
 ]
 
 { #category : #accessing }
-GtApLepiterDatabasePane >> selectDatabase: aDb [
+LeClientDatabasePane >> selectDatabase: aDb [
 	database := aDb.
 	pages := (ZnClient new beOneShot
 			url: self server , '/api/pages?database=' , (aDb at: 'ledatabase' at: 'uuid');
@@ -126,22 +126,22 @@ GtApLepiterDatabasePane >> selectDatabase: aDb [
 ]
 
 { #category : #accessing }
-GtApLepiterDatabasePane >> server [
+LeClientDatabasePane >> server [
 	^ server
 ]
 
 { #category : #accessing }
-GtApLepiterDatabasePane >> server: anObject [
+LeClientDatabasePane >> server: anObject [
 	server := anObject
 ]
 
 { #category : #accessing }
-GtApLepiterDatabasePane >> token [
+LeClientDatabasePane >> token [
 	^ token
 ]
 
 { #category : #accessing }
-GtApLepiterDatabasePane >> token: anObject [
+LeClientDatabasePane >> token: anObject [
 	token := anObject.
 	self refreshDatabaseList
 ]

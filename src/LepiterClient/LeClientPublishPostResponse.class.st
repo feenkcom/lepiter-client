@@ -1,5 +1,5 @@
 Class {
-	#name : #GtApLepiterPublishPostResponse,
+	#name : #LeClientPublishPostResponse,
 	#superclass : #Object,
 	#traits : 'TGtApLepiterResponse',
 	#classTraits : 'TGtApLepiterResponse classTrait',
@@ -13,53 +13,53 @@ Class {
 }
 
 { #category : #accessing }
-GtApLepiterPublishPostResponse >> authorName [
+LeClientPublishPostResponse >> authorName [
 	^ authorName
 ]
 
 { #category : #accessing }
-GtApLepiterPublishPostResponse >> authorName: anObject [
+LeClientPublishPostResponse >> authorName: anObject [
 	authorName := anObject
 ]
 
 { #category : #accessing }
-GtApLepiterPublishPostResponse >> filePath [
+LeClientPublishPostResponse >> filePath [
 	^ filePath
 ]
 
 { #category : #accessing }
-GtApLepiterPublishPostResponse >> filePath: anObject [
+LeClientPublishPostResponse >> filePath: anObject [
 	filePath := anObject
 ]
 
 { #category : #accessing }
-GtApLepiterPublishPostResponse >> inputPost [
-	<return: #GtApServerPost>
+LeClientPublishPostResponse >> inputPost [
+	<return: #LeClientPost>
 	^ inputPost
 ]
 
 { #category : #accessing }
-GtApLepiterPublishPostResponse >> inputPost: anObject [
+LeClientPublishPostResponse >> inputPost: anObject [
 	inputPost := anObject
 ]
 
 { #category : #testing }
-GtApLepiterPublishPostResponse >> isSuccess [
+LeClientPublishPostResponse >> isSuccess [
 	^ self response isSuccess
 ]
 
 { #category : #accessing }
-GtApLepiterPublishPostResponse >> outputPost [
-	<return: #GtApServerPost>
+LeClientPublishPostResponse >> outputPost [
+	<return: #LeClientPost>
 	^ self response model
 ]
 
 { #category : #accessing }
-GtApLepiterPublishPostResponse >> response [
+LeClientPublishPostResponse >> response [
 	^ response
 ]
 
 { #category : #accessing }
-GtApLepiterPublishPostResponse >> response: anObject [
+LeClientPublishPostResponse >> response: anObject [
 	response := anObject
 ]

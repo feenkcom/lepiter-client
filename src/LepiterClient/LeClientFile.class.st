@@ -1,5 +1,5 @@
 Class {
-	#name : #GtApLepiterServerFile,
+	#name : #LeClientFile,
 	#superclass : #Object,
 	#instVars : [
 		'blob',
@@ -9,21 +9,21 @@ Class {
 }
 
 { #category : #accessing }
-GtApLepiterServerFile >> blob [
+LeClientFile >> blob [
 	^ blob
 ]
 
 { #category : #accessing }
-GtApLepiterServerFile >> blob: anObject [
+LeClientFile >> blob: anObject [
 	blob := anObject
 ]
 
 { #category : #accessing }
-GtApLepiterServerFile >> fileName [
+LeClientFile >> fileName [
 	^ fileName
 ]
 
 { #category : #accessing }
-GtApLepiterServerFile >> fileName: anObject [
+LeClientFile >> fileName: anObject [
 	fileName := anObject
 ]

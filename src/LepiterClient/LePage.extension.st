@@ -9,7 +9,7 @@ LePage >> gtExportActionFor: anAction [
 		icon: BrGlamorousVectorIcons link;
 		content: [ :aButton | 
 			aFormCache ifNil: [ 
-				aFormCache := GtApPublishPostForm new
+				aFormCache := LeClientPublishPostForm new
 					page: self;
 					anchor: aButton ] ]
 ]

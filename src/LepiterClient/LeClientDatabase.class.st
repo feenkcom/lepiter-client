@@ -1,5 +1,5 @@
 Class {
-	#name : #GtApServerDatabase,
+	#name : #LeClientDatabase,
 	#superclass : #Object,
 	#instVars : [
 		'server',
@@ -17,7 +17,7 @@ Class {
 }
 
 { #category : #accessing }
-GtApServerDatabase class >> leJsonV4AttributeMapping [
+LeClientDatabase class >> leJsonV4AttributeMapping [
 	^ {#name -> #name.
 		#id -> #id.
 		#slug -> #slug.
@@ -26,22 +26,22 @@ GtApServerDatabase class >> leJsonV4AttributeMapping [
 ]
 
 { #category : #accessing }
-GtApServerDatabase class >> leJsonV4Name [
+LeClientDatabase class >> leJsonV4Name [
 	^ #apServerDatabase
 ]
 
 { #category : #accessing }
-GtApServerDatabase >> description [
+LeClientDatabase >> description [
 	^ description
 ]
 
 { #category : #accessing }
-GtApServerDatabase >> description: anObject [
+LeClientDatabase >> description: anObject [
 	description := anObject
 ]
 
 { #category : #accessing }
-GtApServerDatabase >> formatDictionary [
+LeClientDatabase >> formatDictionary [
 	^ {#name -> self name.
 		#id -> self id.
 		#slug -> self slug.
@@ -49,7 +49,7 @@ GtApServerDatabase >> formatDictionary [
 ]
 
 { #category : #accessing }
-GtApServerDatabase >> gtOverviewFor: aView [
+LeClientDatabase >> gtOverviewFor: aView [
 	<gtView>
 	^ aView columnedList
 		title: 'Overview';
@@ -64,7 +64,7 @@ GtApServerDatabase >> gtOverviewFor: aView [
 ]
 
 { #category : #accessing }
-GtApServerDatabase >> gtPagesFor: aView [
+LeClientDatabase >> gtPagesFor: aView [
 	<gtView>
 	self server ifNil: [ ^ aView empty ].
 
@@ -95,7 +95,7 @@ GtApServerDatabase >> gtPagesFor: aView [
 ]
 
 { #category : #accessing }
-GtApServerDatabase >> gtPostsFor: aView [
+LeClientDatabase >> gtPostsFor: aView [
 	<gtView>
 	self server ifNil: [ ^ aView empty ].
 
@@ -116,62 +116,62 @@ GtApServerDatabase >> gtPostsFor: aView [
 ]
 
 { #category : #accessing }
-GtApServerDatabase >> id [
+LeClientDatabase >> id [
 	^ id
 ]
 
 { #category : #accessing }
-GtApServerDatabase >> id: anObject [
+LeClientDatabase >> id: anObject [
 	id := anObject
 ]
 
 { #category : #accessing }
-GtApServerDatabase >> ledatabase [
+LeClientDatabase >> ledatabase [
 	^ ledatabase
 ]
 
 { #category : #accessing }
-GtApServerDatabase >> ledatabase: anObject [
+LeClientDatabase >> ledatabase: anObject [
 	ledatabase := anObject
 ]
 
 { #category : #accessing }
-GtApServerDatabase >> lepiterDatabase [
+LeClientDatabase >> lepiterDatabase [
 	^ self ledatabase
 ]
 
 { #category : #accessing }
-GtApServerDatabase >> location [
+LeClientDatabase >> location [
 	^ self server , '/' , self slug
 ]
 
 { #category : #accessing }
-GtApServerDatabase >> name [
+LeClientDatabase >> name [
 	^ name
 ]
 
 { #category : #accessing }
-GtApServerDatabase >> name: anObject [
+LeClientDatabase >> name: anObject [
 	name := anObject
 ]
 
 { #category : #accessing }
-GtApServerDatabase >> pageByUuid: aUuid [
+LeClientDatabase >> pageByUuid: aUuid [
 	^ self pages detect: [ :aPage | aPage uid = aUuid ]
 ]
 
 { #category : #accessing }
-GtApServerDatabase >> pages [
+LeClientDatabase >> pages [
 	^ pages ifNil: [ self refreshPages ]
 ]
 
 { #category : #accessing }
-GtApServerDatabase >> posts [
+LeClientDatabase >> posts [
 	^ posts ifNil: [ self refreshPosts ]
 ]
 
 { #category : #accessing }
-GtApServerDatabase >> refreshPages [
+LeClientDatabase >> refreshPages [
 	^ pages := (ZnClient new beOneShot
 			url: self server , '/api/pages?database=' , self ledatabase asString;
 			setBearerAuthentication: self token;
@@ -181,7 +181,7 @@ GtApServerDatabase >> refreshPages [
 ]
 
 { #category : #accessing }
-GtApServerDatabase >> refreshPosts [
+LeClientDatabase >> refreshPosts [
 	^ posts := (((ZnClient new beOneShot
 			url: self server , '/api/posts?database=' , self ledatabase asString;
 			get;
@@ -191,41 +191,41 @@ GtApServerDatabase >> refreshPosts [
 ]
 
 { #category : #accessing }
-GtApServerDatabase >> server [
+LeClientDatabase >> server [
 	^ server
 ]
 
 { #category : #accessing }
-GtApServerDatabase >> server: anObject [
+LeClientDatabase >> server: anObject [
 	server := anObject
 ]
 
 { #category : #accessing }
-GtApServerDatabase >> slug [
+LeClientDatabase >> slug [
 	^ slug
 ]
 
 { #category : #accessing }
-GtApServerDatabase >> slug: anObject [
+LeClientDatabase >> slug: anObject [
 	slug := anObject
 ]
 
 { #category : #accessing }
-GtApServerDatabase >> token [
+LeClientDatabase >> token [
 	^ token
 ]
 
 { #category : #accessing }
-GtApServerDatabase >> token: anObject [
+LeClientDatabase >> token: anObject [
 	token := anObject
 ]
 
 { #category : #accessing }
-GtApServerDatabase >> user [
+LeClientDatabase >> user [
 	^ user
 ]
 
 { #category : #accessing }
-GtApServerDatabase >> user: anObject [
+LeClientDatabase >> user: anObject [
 	user := anObject
 ]

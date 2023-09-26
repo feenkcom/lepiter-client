@@ -1,5 +1,5 @@
 Class {
-	#name : #GtApLepiterRequestError,
+	#name : #LeClientRequestError,
 	#superclass : #Error,
 	#instVars : [
 		'client',
@@ -9,21 +9,21 @@ Class {
 }
 
 { #category : #accessing }
-GtApLepiterRequestError >> client [
+LeClientRequestError >> client [
 	^ client
 ]
 
 { #category : #accessing }
-GtApLepiterRequestError >> client: anObject [
+LeClientRequestError >> client: anObject [
 	client := anObject
 ]
 
 { #category : #accessing }
-GtApLepiterRequestError >> result [
+LeClientRequestError >> result [
 	^ result
 ]
 
 { #category : #accessing }
-GtApLepiterRequestError >> result: anObject [
+LeClientRequestError >> result: anObject [
 	result := anObject
 ]

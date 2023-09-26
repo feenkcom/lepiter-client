@@ -1,5 +1,5 @@
 Class {
-	#name : #GtApLepiterRequestSuccess,
+	#name : #LeClientRequestSuccess,
 	#superclass : #Object,
 	#traits : 'TGtApLepiterResponse + TGtApLepiterZnClient',
 	#classTraits : 'TGtApLepiterResponse classTrait + TGtApLepiterZnClient classTrait',
@@ -11,26 +11,26 @@ Class {
 }
 
 { #category : #testing }
-GtApLepiterRequestSuccess >> isSuccess [
+LeClientRequestSuccess >> isSuccess [
 	^ true
 ]
 
 { #category : #accessing }
-GtApLepiterRequestSuccess >> model [
+LeClientRequestSuccess >> model [
 	^ model
 ]
 
 { #category : #accessing }
-GtApLepiterRequestSuccess >> model: anObject [
+LeClientRequestSuccess >> model: anObject [
 	model := anObject
 ]
 
 { #category : #accessing }
-GtApLepiterRequestSuccess >> znClient [
+LeClientRequestSuccess >> znClient [
 	^ znClient
 ]
 
 { #category : #accessing }
-GtApLepiterRequestSuccess >> znClient: anObject [
+LeClientRequestSuccess >> znClient: anObject [
 	znClient := anObject
 ]

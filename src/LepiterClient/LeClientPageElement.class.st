@@ -1,5 +1,5 @@
 Class {
-	#name : #GtApLepiterPageElement,
+	#name : #LeClientPageElement,
 	#superclass : #BrHorizontalPane,
 	#instVars : [
 		'pageContainer',
@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : #accessing }
-GtApLepiterPageElement >> contextMenuItems [
+LeClientPageElement >> contextMenuItems [
 	self post
 		ifNil: [ ^ {'Create Post' -> [ self createPost ].
 				'Create and Publish Post'
@@ -27,7 +27,7 @@ GtApLepiterPageElement >> contextMenuItems [
 ]
 
 { #category : #accessing }
-GtApLepiterPageElement >> createPost [
+LeClientPageElement >> createPost [
 	(self
 		sendRequestTo: '/api/createPost'
 		with: {'page' -> self page uid asString.
@@ -36,17 +36,17 @@ GtApLepiterPageElement >> createPost [
 ]
 
 { #category : #accessing }
-GtApLepiterPageElement >> databaseId [
+LeClientPageElement >> databaseId [
 	^ databaseId
 ]
 
 { #category : #accessing }
-GtApLepiterPageElement >> databaseId: anObject [
+LeClientPageElement >> databaseId: anObject [
 	databaseId := anObject
 ]
 
 { #category : #accessing }
-GtApLepiterPageElement >> initialize [
+LeClientPageElement >> initialize [
 	super initialize.
 
 	self hFitContent.
@@ -61,7 +61,7 @@ GtApLepiterPageElement >> initialize [
 ]
 
 { #category : #accessing }
-GtApLepiterPageElement >> initializeBorder [
+LeClientPageElement >> initializeBorder [
 	border := BrVerticalPane new
 			vMatchParent;
 			hExact: 5;
@@ -70,7 +70,7 @@ GtApLepiterPageElement >> initializeBorder [
 ]
 
 { #category : #accessing }
-GtApLepiterPageElement >> initializePageContainer [
+LeClientPageElement >> initializePageContainer [
 	pageContainer := LePageSummaryCardElement new
 			addAptitude: (BrGlamorousWithContextMenuAptitude
 					content: [ BrGlamorousSimpleContextMenuContent new
@@ -79,23 +79,23 @@ GtApLepiterPageElement >> initializePageContainer [
 ]
 
 { #category : #accessing }
-GtApLepiterPageElement >> page [
+LeClientPageElement >> page [
 	^ page
 ]
 
 { #category : #accessing }
-GtApLepiterPageElement >> page: anObject [
+LeClientPageElement >> page: anObject [
 	page := anObject.
 	pageContainer pageViewModel: anObject asContentUIModel
 ]
 
 { #category : #accessing }
-GtApLepiterPageElement >> post [
+LeClientPageElement >> post [
 	^ post
 ]
 
 { #category : #accessing }
-GtApLepiterPageElement >> post: anObject [
+LeClientPageElement >> post: anObject [
 	post := anObject.
 	post
 		ifNotNil: [ border
@@ -106,7 +106,7 @@ GtApLepiterPageElement >> post: anObject [
 ]
 
 { #category : #accessing }
-GtApLepiterPageElement >> publishPost [
+LeClientPageElement >> publishPost [
 	(self
 		sendRequestTo: '/api/publishPost'
 		with: {'post' -> self post uuid asString} asDictionary)
@@ -114,7 +114,7 @@ GtApLepiterPageElement >> publishPost [
 ]
 
 { #category : #accessing }
-GtApLepiterPageElement >> sendRequestTo: aUrl with: aBody [
+LeClientPageElement >> sendRequestTo: aUrl with: aBody [
 	^ ZnClient new beOneShot
 		url: self server , aUrl;
 		setBearerAuthentication: self token;
@@ -123,21 +123,21 @@ GtApLepiterPageElement >> sendRequestTo: aUrl with: aBody [
 ]
 
 { #category : #accessing }
-GtApLepiterPageElement >> server [
+LeClientPageElement >> server [
 	^ server
 ]
 
 { #category : #accessing }
-GtApLepiterPageElement >> server: anObject [
+LeClientPageElement >> server: anObject [
 	server := anObject
 ]
 
 { #category : #accessing }
-GtApLepiterPageElement >> token [
+LeClientPageElement >> token [
 	^ token
 ]
 
 { #category : #accessing }
-GtApLepiterPageElement >> token: anObject [
+LeClientPageElement >> token: anObject [
 	token := anObject
 ]
