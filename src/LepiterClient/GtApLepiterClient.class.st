@@ -44,15 +44,20 @@ GtApLepiterClient >> createPost: aPost forPage: aPage inDatabase: databaseId [
 GtApLepiterClient >> createRenderedPost: aServerPost [
 	| postUuid postDirectory filePath figureCode anEntity aClient aResponse anApResponse basename |
 	postUuid := aServerPost uuid.
-	postDirectory := (FileLocator temp asFileReference / ('lepiter-client-post-directory-', postUuid asString))
+	postDirectory := (FileLocator temp asFileReference
+			/ ('lepiter-client-post-directory-' , postUuid asString))
 			ensureCreateDirectory.
 	filePath := aServerPost publishTo: postDirectory usingPath: nil.
 	basename := filePath basenameWithoutExtension.
-	figureCode := (postDirectory / 'gt-figures') exists
-			ifTrue: [ ((postDirectory / 'gt-figures') children
-					collect: [ :aFile | aFile basename -> aFile binaryContents asString ])
-					asDictionary ]
-			ifFalse: [ {} ].
+	figureCode := self exportFigures: postDirectory.
+
+	figureCode := figureCode
+			collect: [ :aPair | 
+				aPair value isSuccess
+					ifTrue: [ | aJson |
+						aJson := NeoJSONObject fromString: aPair value response contents.
+						aPair key -> (aJson at: #blob) ]
+					ifFalse: [ ^ aPair value ] ].
 
 	anEntity := ZnEntity
 			json: (STONJSON
@@ -60,7 +65,7 @@ GtApLepiterClient >> createRenderedPost: aServerPost [
 							'filePath' -> basename.
 							'contents'
 								-> (postDirectory / filePath pathString) asFileReference contents.
-							'figures' -> figureCode} asDictionary).
+							'figures' -> figureCode asDictionary} asDictionary).
 
 	aClient := ZnClient new beOneShot
 			url: self server , '/api/createRenderedPost';
@@ -73,10 +78,11 @@ GtApLepiterClient >> createRenderedPost: aServerPost [
 
 	anApResponse := GtApLepiterRequestUtility responseForZnClient: aClient.
 
-	anApResponse isSuccess ifTrue: [ 
-		| aModel |
-		aModel := LeJsonV4 uniqueInstance deserialize: aResponse entity string readStream.
-		anApResponse model: aModel ].
+	anApResponse isSuccess
+		ifTrue: [ | aModel |
+			aModel := LeJsonV4 uniqueInstance
+					deserialize: aResponse entity string readStream.
+			anApResponse model: aModel ].
 
 	^ GtApLepiterCreateRenderedPostResponse new
 		response: anApResponse;
@@ -100,6 +106,38 @@ GtApLepiterClient >> databases [
 			token: self token ].
 			
 	^ allDatabases
+]
+
+{ #category : #accessing }
+GtApLepiterClient >> exportFigure: aFile [ 
+	^ aFile basename -> (self exportFile: aFile)
+]
+
+{ #category : #accessing }
+GtApLepiterClient >> exportFigures: postDirectory [
+	^ (postDirectory / 'gt-figures') exists
+		ifTrue: [ (postDirectory / 'gt-figures') children
+				collect: [ :aFile | self exportFigure: aFile ] ]
+		ifFalse: [ {} ]
+]
+
+{ #category : #accessing }
+GtApLepiterClient >> exportFile: aFile [
+	| aClient aZnResponse anApResponse |
+	aClient := ZnClient new beOneShot
+			url: self server , '/api/createFile';
+			entity: (ZnEntity bytes: aFile binaryContents);
+			setBearerAuthentication: self token.
+
+	aZnResponse := aClient
+			post;
+			response.
+
+	anApResponse := aZnResponse isSuccess
+			ifTrue: [ GtApLepiterRequestSuccess new znClient: aClient ]
+			ifFalse: [ GtApLepiterRequestFailure new znClient: aClient ].
+
+	^ anApResponse
 ]
 
 { #category : #'api - publishing' }
