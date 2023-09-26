@@ -7,7 +7,7 @@ pipeline {
                 }
             }
             steps {
-                build(job: '../lepiter-atproto-server/main', wait: false)
+                build(job: '../lepiter-server/main', wait: false)
             }
         }
     }
