@@ -109,6 +109,36 @@ LepiterClient >> databases [
 ]
 
 { #category : #accessing }
+LepiterClient >> deletePage: aPage [
+	| aClient aResponse |
+	aClient := ZnClient new beOneShot
+			url: self server , '/api/deletePage';
+			entity: (ZnEntity json: '{"page": "' , aPage uid asString36 , '"}');
+			setBearerAuthentication: token.
+
+	aResponse := aClient
+			post;
+			response.
+
+	^ LeClientRequestUtility responseForZnClient: aClient
+]
+
+{ #category : #accessing }
+LepiterClient >> deletePost: aPost [
+	| aClient aResponse |
+	aClient := ZnClient new beOneShot
+			url: self server , '/api/deletePost';
+			entity: (ZnEntity json: '{"post": "' , aPost uuid asString , '"}');
+			setBearerAuthentication: token.
+
+	aResponse := aClient
+			post;
+			response.
+
+	^ LeClientRequestUtility responseForZnClient: aClient
+]
+
+{ #category : #accessing }
 LepiterClient >> exportFigure: aFile [ 
 	^ aFile basename -> (self exportFile: aFile)
 ]
