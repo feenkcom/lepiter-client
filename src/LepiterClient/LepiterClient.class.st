@@ -166,6 +166,28 @@ LepiterClient >> exportPage: aPage inDatabase: aDatabaseId [
 		responses: { anAttachmentResponse. aPageResponse }
 ]
 
+{ #category : #accessing }
+LepiterClient >> findPostByPage: aPage [
+	| anEntity aClient aResponse anApResponse |
+	aClient := ZnClient new beOneShot
+			url: self server , '/api/postByPage';
+			queryAt: 'page' put:  aPage uid asString36;
+			setBearerAuthentication: token.
+
+	aResponse := aClient
+			get;
+			response.
+			
+	anApResponse := LeClientRequestUtility responseForZnClient: aClient.
+
+	anApResponse isSuccess ifTrue: [ 
+		| aServerPost |
+		aServerPost := LeJsonV4 uniqueInstance deserialize: aResponse contents readStream.
+		anApResponse model: aServerPost ].
+		
+	^ anApResponse
+]
+
 { #category : #'gt - extensions' }
 LepiterClient >> gtDatabasesFor: aView [
 	<gtView>
