@@ -14,6 +14,25 @@ Class {
 	#category : #'LepiterClient-Publishing'
 }
 
+{ #category : #'api - publishing' }
+LeClientAttachmentPoster >> checkAttachmentExists [
+	| aZnResponse anApResponse aZnClient |
+	aZnClient := ZnClient new beOneShot
+			url: self server , '/api/attachment';
+			queryAt: #attachmentId put: currentSnippetAttachment uidString;
+			queryAt: #database put: self serverDatabaseId asString;
+			setBearerAuthentication: self token.
+	aZnResponse := aZnClient
+			get;
+			response.
+
+	anApResponse := LeClientRequestUtility responseForZnClient: aZnClient.
+
+	responses add: anApResponse.
+
+	^ anApResponse
+]
+
 { #category : #initialization }
 LeClientAttachmentPoster >> initialize [
 	super initialize.
@@ -91,8 +110,14 @@ LeClientAttachmentPoster >> postCreateFile [
 
 { #category : #'api - publishing' }
 LeClientAttachmentPoster >> postForAttachment: aSnippetAttachment [
-	| aFileResponse anAttachmentResponse aJson |
+	| aFileResponse anAttachmentResponse aJson anAttachmentExistsResponse |
 	currentSnippetAttachment := aSnippetAttachment.
+	
+	anAttachmentExistsResponse := self checkAttachmentExists.
+	
+	anAttachmentExistsResponse isSuccess ifTrue: [
+		^ anAttachmentExistsResponse
+	].
 	
 	aFileResponse := self postCreateFile.
 	aFileResponse isSuccess ifFalse: [ ^ aFileResponse ].
