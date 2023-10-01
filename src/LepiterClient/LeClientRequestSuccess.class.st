@@ -1,13 +1,14 @@
 Class {
 	#name : #LeClientRequestSuccess,
 	#superclass : #Object,
-	#traits : 'TGtApLepiterResponse + TGtApLepiterZnClient',
-	#classTraits : 'TGtApLepiterResponse classTrait + TGtApLepiterZnClient classTrait',
+	#traits : 'TLeClientResponse - {#description} + TLeClientZincResponse',
+	#classTraits : 'TLeClientResponse classTrait + TLeClientZincResponse classTrait',
 	#instVars : [
-		'znClient',
-		'model'
+		'model',
+		'response',
+		'request'
 	],
-	#category : #'LepiterClient-Publishing'
+	#category : #'LepiterClient-Responses'
 }
 
 { #category : #testing }
@@ -26,11 +27,23 @@ LeClientRequestSuccess >> model: anObject [
 ]
 
 { #category : #accessing }
-LeClientRequestSuccess >> znClient [
-	^ znClient
+LeClientRequestSuccess >> request [
+	<return: #ZnRequest>
+	^ request
 ]
 
 { #category : #accessing }
-LeClientRequestSuccess >> znClient: anObject [
-	znClient := anObject
+LeClientRequestSuccess >> request: anObject [
+	request := anObject
+]
+
+{ #category : #accessing }
+LeClientRequestSuccess >> response [
+	<return: #ZnResponse>
+	^ response
+]
+
+{ #category : #accessing }
+LeClientRequestSuccess >> response: anObject [
+	response := anObject
 ]

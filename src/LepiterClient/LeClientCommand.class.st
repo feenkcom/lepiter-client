@@ -21,6 +21,14 @@ LeClientCommand >> context: aContext [
 ]
 
 { #category : #'api - actions' }
+LeClientCommand >> execute [
+	"Perform a main command action.
+	It is assumed that #prepare was called prior this call."
+
+	self subclassResponsibility
+]
+
+{ #category : #'api - actions' }
 LeClientCommand >> prepare [
 	"Prepare (initialize) this command.
 	It may instantiate subcommands too.

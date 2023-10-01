@@ -1,51 +1,57 @@
 Trait {
-	#name : #TGtApLepiterZnClient,
-	#category : #'LepiterClient-Publishing'
+	#name : #TLeClientZincResponse,
+	#category : #'LepiterClient-Responses'
 }
 
 { #category : #accessing }
-TGtApLepiterZnClient >> code [
+TLeClientZincResponse >> code [
 	<return: #Integer>
 	^ self statusLine code
 ]
 
 { #category : #accessing }
-TGtApLepiterZnClient >> contentType [
+TLeClientZincResponse >> contentType [
 	<return: #ZnMimeType>
 	^ self response contentType
 ]
 
 { #category : #accessing }
-TGtApLepiterZnClient >> contents [
+TLeClientZincResponse >> contents [
 	^ self znClient response contents
 ]
 
+{ #category : #printing }
+TLeClientZincResponse >> description [
+	^ String streamContents: [ :stream | 
+			self statusLine printCodeAndReasonOn: stream ]
+]
+
 { #category : #accessing }
-TGtApLepiterZnClient >> entity [
+TLeClientZincResponse >> entity [
 	<return: #ZnEntity>
 	^ self response entity
 ]
 
 { #category : #testing }
-TGtApLepiterZnClient >> hasEntity [
+TLeClientZincResponse >> hasEntity [
 	<return: #Boolean>
 	^ self response hasEntity
 ]
 
 { #category : #testing }
-TGtApLepiterZnClient >> isNoContent [
+TLeClientZincResponse >> isNoContent [
 	<return: #Boolean>
 	^ self response isNoContent
 ]
 
 { #category : #accessing }
-TGtApLepiterZnClient >> method [
+TLeClientZincResponse >> method [
 	<return: #ZnRequest>
 	^ self requestLine method
 ]
 
 { #category : #printing }
-TGtApLepiterZnClient >> printOn: stream [
+TLeClientZincResponse >> printOn: stream [
 	super printOn: stream.
 	stream nextPut: $(.
 	"Request"
@@ -63,43 +69,37 @@ TGtApLepiterZnClient >> printOn: stream [
 ]
 
 { #category : #accessing }
-TGtApLepiterZnClient >> reason [
+TLeClientZincResponse >> reason [
 	<return: #String>
 	^ self statusLine reason
 ]
 
 { #category : #accessing }
-TGtApLepiterZnClient >> request [
+TLeClientZincResponse >> request [
 	<return: #ZnRequest>
-	^ self znClient request
+	^ self explicitRequirement
 ]
 
 { #category : #accessing }
-TGtApLepiterZnClient >> requestLine [
+TLeClientZincResponse >> requestLine [
 	<return: #ZnRequestLine>
 	^ self request requestLine
 ]
 
 { #category : #accessing }
-TGtApLepiterZnClient >> response [
+TLeClientZincResponse >> response [
 	<return: #ZnResponse>
-	^ self znClient response
+	^ self explicitRequirement
 ]
 
 { #category : #accessing }
-TGtApLepiterZnClient >> statusLine [
+TLeClientZincResponse >> statusLine [
 	<return: #ZnRequestLine>
 	^ self response statusLine
 ]
 
 { #category : #accessing }
-TGtApLepiterZnClient >> uriPathQueryFragment [
+TLeClientZincResponse >> uriPathQueryFragment [
 	<return: #String>
 	^ self requestLine uriPathQueryFragment
-]
-
-{ #category : #accessing }
-TGtApLepiterZnClient >> znClient [
-	<return: #ZnClient>
-	^ self explicitRequirement
 ]

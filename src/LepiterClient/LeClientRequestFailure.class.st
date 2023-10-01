@@ -1,12 +1,13 @@
 Class {
 	#name : #LeClientRequestFailure,
 	#superclass : #Object,
-	#traits : 'TGtApLepiterResponse + TGtApLepiterZnClient',
-	#classTraits : 'TGtApLepiterResponse classTrait + TGtApLepiterZnClient classTrait',
+	#traits : 'TLeClientResponse - {#description} + TLeClientZincResponse',
+	#classTraits : 'TLeClientResponse classTrait + TLeClientZincResponse classTrait',
 	#instVars : [
-		'znClient'
+		'request',
+		'response'
 	],
-	#category : #'LepiterClient-Publishing'
+	#category : #'LepiterClient-Responses'
 }
 
 { #category : #'gt - extensions' }
@@ -57,11 +58,23 @@ LeClientRequestFailure >> printOn: stream [
 ]
 
 { #category : #accessing }
-LeClientRequestFailure >> znClient [
-	^ znClient
+LeClientRequestFailure >> request [
+	<return: #ZnRequest>
+	^ request
 ]
 
 { #category : #accessing }
-LeClientRequestFailure >> znClient: anObject [
-	znClient := anObject
+LeClientRequestFailure >> request: anObject [
+	request := anObject
+]
+
+{ #category : #accessing }
+LeClientRequestFailure >> response [
+	<return: #ZnResponse>
+	^ response
+]
+
+{ #category : #accessing }
+LeClientRequestFailure >> response: anObject [
+	response := anObject
 ]

@@ -7,6 +7,10 @@ Class {
 { #category : #utilities }
 LeClientRequestUtility class >> responseForZnClient: aZnClient [
 	^ aZnClient response isSuccess
-		ifTrue: [ LeClientRequestSuccess new znClient: aZnClient ]
-		ifFalse: [ LeClientRequestFailure new znClient: aZnClient ]
+		ifTrue: [ LeClientRequestSuccess new
+				request: aZnClient request;
+				response: aZnClient response ]
+		ifFalse: [ LeClientRequestFailure new
+				request: aZnClient request;
+				response: aZnClient response ]
 ]

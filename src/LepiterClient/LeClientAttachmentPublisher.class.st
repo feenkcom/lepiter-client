@@ -18,6 +18,14 @@ LeClientAttachmentPublisher >> description [
 				'attachment' asPluralBasedOn: self commands size}
 ]
 
+{ #category : #'api - actions' }
+LeClientAttachmentPublisher >> execute [
+	| aResponse |
+	self commands do: #execute.
+	aResponse := LeClientCommandsResponse fromCommand: self.
+	self addResponse: aResponse
+]
+
 { #category : #accessing }
 LeClientAttachmentPublisher >> page [
 	<return: #LePage>
@@ -27,18 +35,6 @@ LeClientAttachmentPublisher >> page [
 { #category : #accessing }
 LeClientAttachmentPublisher >> page: aPage [
 	page := aPage
-]
-
-{ #category : #'private - actions' }
-LeClientAttachmentPublisher >> postForAttachment: aSnippetAttachment [
-	| aCreateAttachment |
-	
-	aCreateAttachment := LeClientCreateAttachment new
-		context: context;
-		serverDatabaseId: serverDatabaseId;
-		snippetAttachment: aSnippetAttachment.
-	
-	self addCommand: aCreateAttachment.
 ]
 
 { #category : #'api - actions' }
@@ -57,7 +53,7 @@ LeClientAttachmentPublisher >> prepare [
 { #category : #'private - actions' }
 LeClientAttachmentPublisher >> prepareForAttachment: aSnippetAttachment [
 	| aCommand |
-	aCommand := LeClientCreateAttachment new
+	aCommand := LeClientCheckAttachment new
 			context: context;
 			serverDatabaseId: serverDatabaseId;
 			snippetAttachment: aSnippetAttachment.

@@ -1,8 +1,8 @@
 Class {
 	#name : #LeClientResponses,
 	#superclass : #Object,
-	#traits : 'TGtApLepiterResponse',
-	#classTraits : 'TGtApLepiterResponse classTrait',
+	#traits : 'TLeClientResponse',
+	#classTraits : 'TLeClientResponse classTrait',
 	#instVars : [
 		'responses'
 	],

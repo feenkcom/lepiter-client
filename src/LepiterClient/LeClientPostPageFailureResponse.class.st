@@ -1,8 +1,8 @@
 Class {
 	#name : #LeClientPostPageFailureResponse,
 	#superclass : #Object,
-	#traits : 'TGtApLepiterResponse',
-	#classTraits : 'TGtApLepiterResponse classTrait',
+	#traits : 'TLeClientResponse',
+	#classTraits : 'TLeClientResponse classTrait',
 	#instVars : [
 		'page',
 		'serverDatabaseId',

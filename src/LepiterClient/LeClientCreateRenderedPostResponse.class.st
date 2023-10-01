@@ -1,8 +1,8 @@
 Class {
 	#name : #LeClientCreateRenderedPostResponse,
 	#superclass : #Object,
-	#traits : 'TGtApLepiterResponse',
-	#classTraits : 'TGtApLepiterResponse classTrait',
+	#traits : 'TLeClientResponse',
+	#classTraits : 'TLeClientResponse classTrait',
 	#instVars : [
 		'response',
 		'filePath',
