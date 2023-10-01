@@ -99,9 +99,7 @@ LeClientAttachmentPoster >> postCreateFile [
 		post;
 		response.
 		
-	anApResponse := aZnResponse isSuccess
-			ifTrue: [ LeClientRequestSuccess new znClient: aClient ]
-			ifFalse: [ LeClientRequestFailure new znClient: aClient ].
+	anApResponse := LeClientRequestUtility  responseForZnClient: aClient.
 
 	responses add: anApResponse.
 	

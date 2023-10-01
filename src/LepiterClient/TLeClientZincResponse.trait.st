@@ -17,7 +17,7 @@ TLeClientZincResponse >> contentType [
 
 { #category : #accessing }
 TLeClientZincResponse >> contents [
-	^ self znClient response contents
+	^ self response contents
 ]
 
 { #category : #printing }
