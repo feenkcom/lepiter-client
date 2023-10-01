@@ -8,8 +8,8 @@ LePage >> gtExportActionFor: anAction [
 		tooltip: 'Publish Post';
 		icon: BrGlamorousVectorIcons link;
 		content: [ :aButton | 
-			aFormCache ifNil: [ 
-				aFormCache := LeClientPublishPostForm new
-					page: self;
-					anchor: aButton ] ]
+			aFormCache
+				ifNil: [ aFormCache := LeClientPublishPostForm new
+							page: self;
+							anchor: aButton ] ]
 ]

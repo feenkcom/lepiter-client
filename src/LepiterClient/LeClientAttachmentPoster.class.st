@@ -28,8 +28,6 @@ LeClientAttachmentPoster >> checkAttachmentExists [
 
 	anApResponse := LeClientRequestUtility responseForZnClient: aZnClient.
 
-	responses add: anApResponse.
-
 	^ anApResponse
 ]
 
@@ -114,6 +112,7 @@ LeClientAttachmentPoster >> postForAttachment: aSnippetAttachment [
 	anAttachmentExistsResponse := self checkAttachmentExists.
 	
 	anAttachmentExistsResponse isSuccess ifTrue: [
+		responses add: anAttachmentExistsResponse.
 		^ anAttachmentExistsResponse
 	].
 	
