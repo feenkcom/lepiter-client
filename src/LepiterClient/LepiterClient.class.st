@@ -216,6 +216,19 @@ LepiterClient >> findPostByPage: aPage [
 	^ anApResponse
 ]
 
+{ #category : #accessing }
+LepiterClient >> getPostForPage: aPage [
+	| aZnClient |
+	aZnClient := ZnClient new beOneShot
+			url: self server , '/api/postByPage';
+			queryAt: 'page' put: aPage uid;
+			setBearerAuthentication: self token.
+
+	aZnClient get.
+
+	^ LeClientRequestUtility responseForZnClient: aZnClient
+]
+
 { #category : #'gt - extensions' }
 LepiterClient >> gtDatabasesFor: aView [
 	<gtView>
@@ -341,13 +354,17 @@ LepiterClient >> publishPostOfPage: aPage inDatabaseNamed: aDatabaseName authorN
 	aPageResponse isSuccess ifFalse: [ ^ aPageResponse ].
 
 	anInputPost := LeClientPost forPage: aPage.
-	aPostResponse := self
-			createPost: anInputPost
-			forPage: aPage
-			inDatabase: aServerDatabase lepiterDatabase asString.
-	aPostResponse isSuccess ifFalse: [ ^ aPostResponse ].	
-	
-	"I think it should not be a rawData and the #createPost:forPage:inDatabase:
+	aPostResponse := self getPostForPage: aPage.
+	aPostResponse := aPostResponse isSuccess
+			ifTrue: [ self
+					updatePost: anInputPost
+					forPage: aPage
+					inDatabase: aServerDatabase lepiterDatabase asString ]
+			ifFalse: [ self
+					createPost: anInputPost
+					forPage: aPage
+					inDatabase: aServerDatabase lepiterDatabase asString ].
+	aPostResponse isSuccess ifFalse: [ ^ aPostResponse ].	"I think it should not be a rawData and the #createPost:forPage:inDatabase:
 	must return properly initialized object."
 	anOutputPost := aPostResponse model.
 	anOutputPost serverDatabase: aServerDatabase.
@@ -388,6 +405,32 @@ LepiterClient >> token [
 { #category : #accessing }
 LepiterClient >> token: anObject [
 	token := anObject
+]
+
+{ #category : #accessing }
+LepiterClient >> updatePost: aPost forPage: aPage inDatabase: databaseId [
+	| aZnClient anEntity anApResponse aServerPost |
+	anEntity := ZnEntity
+			json: (STONJSON
+					toString: {'page' -> aPage uid asString.
+							'database' -> databaseId asString.
+							'title' -> aPost title.
+							'abstract' -> aPost abstract} asDictionary).
+	aZnClient := ZnClient new beOneShot
+			url: self server , '/api/updatePost';
+			entity: anEntity;
+			setBearerAuthentication: self token.
+	aZnClient post.
+
+	anApResponse := LeClientRequestUtility responseForZnClient: aZnClient.
+	anApResponse isSuccess ifFalse: [ ^ anApResponse ].
+
+	aServerPost := LeJsonV4 uniqueInstance
+			deserialize: aZnClient response entity string readStream.
+	aServerPost database: aPage database.
+
+	anApResponse model: aServerPost.
+	^ anApResponse
 ]
 
 { #category : #accessing }

@@ -10,6 +10,19 @@ Class {
 	#category : #'LepiterClient-Publishing'
 }
 
+{ #category : #'api - publishing' }
+LeClientPagePoster >> getPage [
+	| aClient |
+	aClient := ZnClient new beOneShot
+			url: self server , '/api/page';
+			queryAt: 'page' put: self page uid asString36;
+			setBearerAuthentication: self token.
+
+	aClient get.
+
+	^ LeClientRequestUtility responseForZnClient: aClient
+]
+
 { #category : #accessing }
 LeClientPagePoster >> page [
 	^ page
@@ -42,15 +55,28 @@ LeClientPagePoster >> post [
 
 { #category : #'api - publishing' }
 LeClientPagePoster >> postPage [
-	^ ZnClient new beOneShot
-		url: self server , '/api/createPage';
-		entity: (ZnEntity
-				json: (LeJsonV4 uniqueInstance
-						serialize: {'page' -> self page.
-								'database' -> self serverDatabaseId asString} asDictionary));
-		setBearerAuthentication: self token;
-		post;
-		response
+	| aPageResponse |
+	aPageResponse := self getPage.
+
+	^ aPageResponse isSuccess
+		ifTrue: [ ZnClient new beOneShot
+				url: self server , '/api/updatePage';
+				entity: (ZnEntity
+						json: (LeJsonV4 uniqueInstance
+								serialize: {'page' -> self page.
+										'database' -> self serverDatabaseId asString} asDictionary));
+				setBearerAuthentication: self token;
+				post;
+				response ]
+		ifFalse: [ ZnClient new beOneShot
+				url: self server , '/api/createPage';
+				entity: (ZnEntity
+						json: (LeJsonV4 uniqueInstance
+								serialize: {'page' -> self page.
+										'database' -> self serverDatabaseId asString} asDictionary));
+				setBearerAuthentication: self token;
+				post;
+				response ]
 ]
 
 { #category : #accessing }
