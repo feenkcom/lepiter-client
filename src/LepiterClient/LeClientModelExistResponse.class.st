@@ -34,6 +34,11 @@ LeClientModelExistResponse >> isSuccess [
 ]
 
 { #category : #accessing }
+LeClientModelExistResponse >> model [
+	^ self subresponse model
+]
+
+{ #category : #accessing }
 LeClientModelExistResponse >> request [
 	<return: #ZnRequest>
 	^ self subresponse request

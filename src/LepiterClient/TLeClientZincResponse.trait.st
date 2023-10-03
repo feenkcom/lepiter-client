@@ -32,6 +32,18 @@ TLeClientZincResponse >> entity [
 	^ self response entity
 ]
 
+{ #category : #'gt - extensions' }
+TLeClientZincResponse >> gtResponseJsonFor: aView [
+	<gtView>
+	self response ifNil: [ ^ aView empty ].
+
+	^ aView forward
+		title: 'Response';
+		priority: 80;
+		object: [ self response ];
+		view: #gtJsonFor:
+]
+
 { #category : #testing }
 TLeClientZincResponse >> hasEntity [
 	<return: #Boolean>
