@@ -36,7 +36,7 @@ LeClientResponses >> isSuccess [
 	^ self responses allSatisfy: #isSuccess
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 LeClientResponses >> responses [
 	^ responses
 ]

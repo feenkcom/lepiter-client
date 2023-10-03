@@ -1,7 +1,7 @@
 Class {
 	#name : #LeClientRequestUtility,
 	#superclass : #Object,
-	#category : #'LepiterClient-Publishing'
+	#category : #'LepiterClient-Utilities'
 }
 
 { #category : #utilities }

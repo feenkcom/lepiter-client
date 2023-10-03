@@ -11,14 +11,14 @@ Class {
 LeClientCreateFile >> blob [
 	<return: #String or: nil>
 	^ self
-		ifSuccessDo: [ :aResponse | aResponse model at: #blob ifAbsent: [ nil ] ]
-		ifFailureDo: [ :aResponse | nil ]
+		ifSuccess: [ :aResponse | aResponse model at: #blob ifAbsent: [ nil ] ]
+		ifFailure: [ :aResponse | nil ]
 		ifNone: [ nil ]
 ]
 
 { #category : #accessing }
 LeClientCreateFile >> description [
-	^ 'Publish attachment content: ' , self snippetAttachment name
+	^ 'Create attachment content: ' , self snippetAttachment name
 ]
 
 { #category : #'api - actions' }

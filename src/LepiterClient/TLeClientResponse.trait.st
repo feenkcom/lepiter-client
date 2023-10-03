@@ -16,6 +16,13 @@ TLeClientResponse >> description [
 ]
 
 { #category : #testing }
+TLeClientResponse >> ifSuccess: successBlock ifFailure: failureBlock ifNone: noneBlock [
+	^ self isSuccess
+		ifTrue: [ successBlock cull: self ]
+		ifFalse: [ failureBlock cull: self ]
+]
+
+{ #category : #testing }
 TLeClientResponse >> isSuccess [
 	^ false
 ]
@@ -23,4 +30,12 @@ TLeClientResponse >> isSuccess [
 { #category : #accessing }
 TLeClientResponse >> label [
 	^ self description asRopedText foreground: self color
+]
+
+{ #category : #accessing }
+TLeClientResponse >> subresponses [
+	"Return a collection of responses of commands that were execute as a part of this response."
+
+	<return: #Collection of: #TLeClientResponse>
+	^ #()
 ]

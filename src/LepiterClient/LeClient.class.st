@@ -29,9 +29,10 @@ LeClient >> exportPage: aPage inDatabase: aDatabaseId [
 	^ LeClientPagePublisher new
 		context: self context;
 		page: aPage;
-		serverDatabaseId: aDatabaseId;
+		serverDatabaseId: aDatabaseId asString;
 		prepare;
-		execute
+		execute;
+		yourself
 ]
 
 { #category : #'api - actions' }

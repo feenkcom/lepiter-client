@@ -44,6 +44,12 @@ TLeClientZincResponse >> isNoContent [
 	^ self response isNoContent
 ]
 
+{ #category : #testing }
+TLeClientZincResponse >> isNotFound [
+	<return: #Boolean>
+	^ self response isNotFound
+]
+
 { #category : #accessing }
 TLeClientZincResponse >> method [
 	<return: #ZnRequest>

@@ -27,7 +27,7 @@ LeClientClientExportPageSuccessResponse >> isSuccess [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 LeClientClientExportPageSuccessResponse >> responses [
 	^ responses
 ]

@@ -17,12 +17,13 @@ LeClientPagePublisher >> description [
 
 { #category : #'api - actions' }
 LeClientPagePublisher >> execute [
+	<return: #TLeClientResponse>
 	| aResponse |
 	self commands do: #execute.
 
 	self
-		ifSuccessDo: [ ^ self ]
-		ifFailureDo: [  "execute again" ]
+		ifSuccess: [ ^ self ]
+		ifFailure: [  "execute again" ]
 		ifNone: [  "execute" ].
 
 	aResponse := self context client
@@ -31,7 +32,9 @@ LeClientPagePublisher >> execute [
 			authenticated;
 			onSuccessLepiterModel;
 			post.
-	self addResponse: aResponse
+	LeClientCommandUtility addCommand: self subresponsesToResponse: aResponse.
+	self addResponse: aResponse.
+	^ aResponse
 ]
 
 { #category : #private }

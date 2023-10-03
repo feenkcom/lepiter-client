@@ -25,7 +25,8 @@ LeClientCommand >> execute [
 	"Perform a main command action.
 	It is assumed that #prepare was called prior this call."
 
-	self subclassResponsibility
+	<return: #TLeClientResponse>
+	^ self subclassResponsibility
 ]
 
 { #category : #'api - actions' }

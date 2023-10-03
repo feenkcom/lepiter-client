@@ -8,10 +8,21 @@ Class {
 		'entity',
 		'client',
 		'onSuccessModel',
-		'queries'
+		'queries',
+		'subresponses'
 	],
 	#category : #'LepiterClient-Publishing New'
 }
+
+{ #category : #'api - configuration' }
+LeClientZincClientBuilder >> addSubresponse: aResponse [
+	self addSubresponses: { aResponse }
+]
+
+{ #category : #'api - configuration' }
+LeClientZincClientBuilder >> addSubresponses: aCollection [
+	subresponses := aCollection
+]
 
 { #category : #'api - configuration' }
 LeClientZincClientBuilder >> authenticated [
@@ -58,6 +69,12 @@ LeClientZincClientBuilder >> entity [
 { #category : #'api - configuration' }
 LeClientZincClientBuilder >> entity: aZnEntity [
 	entity := aZnEntity
+]
+
+{ #category : #building }
+LeClientZincClientBuilder >> get [
+	<return: #TLeClientResponse>
+	^ self safe: [ client get ]
 ]
 
 { #category : #initialization }
@@ -161,6 +178,8 @@ LeClientZincClientBuilder >> safe: aBlock [
 	client ifNil: [ self build ].
 	aBlock value.
 	aResponse := LeClientRequestUtility responseForZnClient: client.
+	subresponses ifNotNil: [ :aCollection | 
+		aResponse subresponses: aCollection ].
 	(aResponse isSuccess and: [ onSuccessModel isNotNil ])
 		ifTrue: [ aResponse model: (onSuccessModel cull: client response) ].
 	^ aResponse

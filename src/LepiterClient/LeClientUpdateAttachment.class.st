@@ -1,46 +1,46 @@
 Class {
-	#name : #LeClientCreateAttachment,
+	#name : #LeClientUpdateAttachment,
 	#superclass : #LeClientCommand,
 	#instVars : [
 		'snippetAttachment',
-		'createFile',
-		'serverDatabaseId'
+		'serverDatabaseId',
+		'createFile'
 	],
 	#category : #'LepiterClient-Publishing New'
 }
 
 { #category : #accessing }
-LeClientCreateAttachment >> commands [
+LeClientUpdateAttachment >> commands [
 	^ LeClientCommandUtility collectionForCommand: createFile
 ]
 
 { #category : #private }
-LeClientCreateAttachment >> contentBlob [
+LeClientUpdateAttachment >> contentBlob [
 	^ createFile ifNotNil: [ :aCommand | aCommand blob ]
 ]
 
 { #category : #accessing }
-LeClientCreateAttachment >> description [
-	^ 'Create attachment: ' , self snippetAttachment name
+LeClientUpdateAttachment >> description [
+	^ 'Update attachment: ' , self snippetAttachment name
 ]
 
 { #category : #accessing }
-LeClientCreateAttachment >> execute [
+LeClientUpdateAttachment >> execute [
 	<return: #TLeClientResponse>
 	| aResponse |
 	self
 		assert: [ snippetAttachment isNotNil ]
 		description: [ 'Snippet attachment is not defined' ].
 
-	self contentBlob ifNil: [ self commands do: #execute ].
+	self contentBlob ifNil: [ createFile execute ].
 
 	aResponse := self contentBlob
 			ifNil: [ LeClientCannotExecute new ]
 			ifNotNil: [ self context client
-					endpoint: LeClientEndpoints apiCreateAttachment;
+					endpoint: LeClientEndpoints apiUpdateAttachment;
 					authenticated;
 					jsonObject: self jsonObject;
-					addSubresponse: (createFile lastResponse);
+					addSubresponse: createFile lastResponse;
 					post ].
 
 	self addResponse: aResponse.
@@ -48,7 +48,7 @@ LeClientCreateAttachment >> execute [
 ]
 
 { #category : #private }
-LeClientCreateAttachment >> jsonObject [
+LeClientUpdateAttachment >> jsonObject [
 	^ {'blob' -> self contentBlob.
 		'fileName' -> snippetAttachment basename.
 		'attachmentId' -> snippetAttachment uidString.
@@ -56,8 +56,10 @@ LeClientCreateAttachment >> jsonObject [
 ]
 
 { #category : #'api - actions' }
-LeClientCreateAttachment >> prepare [
-	createFile ifNotNil: [ ^ self ].
+LeClientUpdateAttachment >> prepare [
+	self commands size > 1 ifTrue: [  "Commands were already created"^ self ].	
+	
+	"TODO: we want to call the createFile command only if the content is different"
 
 	createFile := LeClientCreateFile new
 			context: context;
@@ -67,22 +69,22 @@ LeClientCreateAttachment >> prepare [
 ]
 
 { #category : #accessing }
-LeClientCreateAttachment >> serverDatabaseId [
+LeClientUpdateAttachment >> serverDatabaseId [
 	<return: #String>
 	^ serverDatabaseId
 ]
 
 { #category : #accessing }
-LeClientCreateAttachment >> serverDatabaseId: aString [
+LeClientUpdateAttachment >> serverDatabaseId: aString [
 	serverDatabaseId := aString
 ]
 
 { #category : #accessing }
-LeClientCreateAttachment >> snippetAttachment [
+LeClientUpdateAttachment >> snippetAttachment [
 	^ snippetAttachment
 ]
 
 { #category : #accessing }
-LeClientCreateAttachment >> snippetAttachment: anObject [
+LeClientUpdateAttachment >> snippetAttachment: anObject [
 	snippetAttachment := anObject
 ]

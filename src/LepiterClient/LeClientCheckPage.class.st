@@ -20,14 +20,14 @@ LeClientCheckPage >> execute [
 	<return: #TLeClientResponse>
 	| aResponse |
 	self
-		ifSuccessDo: [ ^ self ]
-		ifFailureDo: [  "execute again" ]
+		ifSuccess: [ ^ self ]
+		ifFailure: [  "execute again" ]
 		ifNone: [  "execute" ].
 
 	aResponse := self getPage.
 	aResponse isSuccess
 		ifFalse: [ self commands do: #execute.
-			aResponse := LeClientCommandsResponse fromCommand: self.
+			aResponse := LeClientMultiResponse fromCommand: self.
 			self addResponse: aResponse ].
 	^ aResponse
 ]

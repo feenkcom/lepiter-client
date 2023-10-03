@@ -1,29 +1,29 @@
 Class {
-	#name : #LeClientCommandsResponse,
+	#name : #LeClientMultiResponse,
 	#superclass : #Object,
 	#traits : 'TLeClientResponse',
 	#classTraits : 'TLeClientResponse classTrait',
 	#instVars : [
-		'responses'
+		'subresponses'
 	],
 	#category : #'LepiterClient-Responses'
 }
 
 { #category : #'instance creation' }
-LeClientCommandsResponse class >> fromCommand: aParentCommand [
+LeClientMultiResponse class >> fromCommand: aParentCommand [
 	| allResponses |
 	allResponses := aParentCommand commands
-			collect: [ :aCommand | aCommand lastResponse ifNil: [ LeClientNoResponse new ] ].
-	^ self new responses: allResponses
+			collect: [ :aCommand | aCommand lastResponse ].
+	^ self new subresponses: allResponses
 ]
 
 { #category : #accessing }
-LeClientCommandsResponse >> description [
+LeClientMultiResponse >> description [
 	^ String
 		streamContents: [ :aStream | 
 			| aSuccessCount aFailureCount |
-			aSuccessCount := self responses count: #isSuccess.
-			aFailureCount := self responses size - aSuccessCount.
+			aSuccessCount := self subresponses count: #isSuccess.
+			aFailureCount := self subresponses size - aSuccessCount.
 			aSuccessCount isZero
 				ifFalse: [ aStream print: aSuccessCount.
 					aStream nextPutAll: (' success' asPluralBasedOn: aSuccessCount) ].
@@ -33,17 +33,19 @@ LeClientCommandsResponse >> description [
 ]
 
 { #category : #testing }
-LeClientCommandsResponse >> isSuccess [
-	^ self responses allSatisfy: #isSuccess
+LeClientMultiResponse >> isSuccess [
+	^ self subresponses allSatisfy: #isSuccess
 ]
 
 { #category : #accessing }
-LeClientCommandsResponse >> responses [
+LeClientMultiResponse >> subresponses [
+	"Return a collection of responses of commands that were execute as a part of this response."
+
 	<return: #Collection of: #TLeClientResponse>
-	^ responses
+	^ subresponses 
 ]
 
 { #category : #accessing }
-LeClientCommandsResponse >> responses: aCollection [
-	responses := aCollection
+LeClientMultiResponse >> subresponses: aCollection [
+	subresponses := aCollection
 ]

@@ -20,10 +20,12 @@ LeClientAttachmentPublisher >> description [
 
 { #category : #'api - actions' }
 LeClientAttachmentPublisher >> execute [
+	<return: #TLeClientResponse>
 	| aResponse |
 	self commands do: #execute.
-	aResponse := LeClientCommandsResponse fromCommand: self.
-	self addResponse: aResponse
+	aResponse := LeClientMultiResponse fromCommand: self.
+	self addResponse: aResponse.
+	^ aResponse
 ]
 
 { #category : #accessing }
@@ -53,11 +55,22 @@ LeClientAttachmentPublisher >> prepare [
 { #category : #'private - actions' }
 LeClientAttachmentPublisher >> prepareForAttachment: aSnippetAttachment [
 	| aCommand |
-	aCommand := LeClientCheckAttachment new
+	aCommand := LeClientCondition new
+			description: 'Create or update attachment: ' , aSnippetAttachment name;
 			context: context;
-			serverDatabaseId: serverDatabaseId;
-			snippetAttachment: aSnippetAttachment.
-			
+			check: (LeClientCheckAttachmentExist new
+					context: context;
+					snippetAttachment: aSnippetAttachment;
+					serverDatabaseId: serverDatabaseId);
+			onSuccess: (LeClientUpdateAttachment new
+					context: context;
+					snippetAttachment: aSnippetAttachment;
+					serverDatabaseId: serverDatabaseId);
+			onNotFound: (LeClientCreateAttachment new
+					context: context;
+					snippetAttachment: aSnippetAttachment;
+					serverDatabaseId: serverDatabaseId).
+
 	self addCommand: aCommand
 ]
 

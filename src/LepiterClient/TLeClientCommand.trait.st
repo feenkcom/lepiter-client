@@ -31,7 +31,8 @@ TLeClientCommand >> execute [
 	"Perform a main command action.
 	It is assumed that #prepare was called prior this call."
 
-	self explicitRequirement
+	<return: #TLeClientResponse>
+	^ self explicitRequirement
 ]
 
 { #category : #'gt - extensions' }
@@ -53,36 +54,33 @@ TLeClientCommand >> gtCommandsFor: aView [
 { #category : #'gt - extensions' }
 TLeClientCommand >> gtResponsesFor: aView [
 	<gtView>
-	^ aView columnedList
+	^ aView columnedTree
 		title: 'Responses';
 		priority: 20;
 		items: [ self responses ];
+		expandAll;
+		children: #subresponses;
 		column: 'Description' text: #label;
 		actionUpdateButton
 ]
 
 { #category : #'api - responses' }
-TLeClientCommand >> ifSuccessDo: successBlock ifFailureDo: failureBlock ifNone: noneBlock [
+TLeClientCommand >> ifSuccess: successBlock ifFailure: failureBlock ifNone: noneBlock [
 	^ self lastResponse
-		ifNil: noneBlock
-		ifNotNil: [ :aResponse | 
-			aResponse isSuccess
-				ifTrue: [ successBlock cull: aResponse ]
-				ifFalse: [ failureBlock cull: aResponse ] ]
+		ifSuccess: successBlock
+		ifFailure: failureBlock
+		ifNone: noneBlock
 ]
 
 { #category : #'api - responses' }
 TLeClientCommand >> isSuccess [
-	^ self
-		ifSuccessDo: [ true ]
-		ifFailureDo: [ false ]
-		ifNone: [ false ]
+	^ self lastResponse isSuccess
 ]
 
 { #category : #'api - responses' }
 TLeClientCommand >> lastResponse [
-	<return: #TLeClientResponse or: nil>
-	^ self responses ifEmpty: [ nil ] ifNotEmpty: #last
+	<return: #TLeClientResponse>
+	^ self responses ifEmpty: [ LeClientNoResponse new ] ifNotEmpty: #last
 ]
 
 { #category : #'api - actions' }
