@@ -109,6 +109,23 @@ LepiterClient >> databases [
 ]
 
 { #category : #accessing }
+LepiterClient >> deleteAttachment: anAttachment fromDatabase: aDb [
+	| aClient aResponse |
+	aClient := ZnClient new beOneShot
+			url: self server , '/api/deleteAttachment';
+			entity: (ZnEntity
+					json: '{"attachment": "' , anAttachment uidString , '", "database": "'
+							, aDb ledatabase asString , '"}');
+			setBearerAuthentication: token.
+
+	aResponse := aClient
+			post;
+			response.
+
+	^ LeClientRequestUtility responseForZnClient: aClient
+]
+
+{ #category : #accessing }
 LepiterClient >> deletePage: aPage [
 	| aClient aResponse |
 	aClient := ZnClient new beOneShot
