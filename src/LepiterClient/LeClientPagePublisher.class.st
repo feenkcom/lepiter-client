@@ -83,11 +83,11 @@ LeClientPagePublisher >> prepareCreateOrUpdatePage [
 					context: context;
 					page: page;
 					serverDatabaseId: serverDatabaseId);
-			onSuccess: (LeClientUpdatePage new
+			onSuccess: (LeClientApiUpdatePage new
 					context: context;
 					page: page;
 					serverDatabaseId: serverDatabaseId);
-			onNotFound: (LeClientCreatePage new
+			onNotFound: (LeClientApiCreatePage new
 					context: context;
 					page: page;
 					serverDatabaseId: serverDatabaseId).

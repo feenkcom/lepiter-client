@@ -1,5 +1,5 @@
 Class {
-	#name : #LeClientGetAttachment,
+	#name : #LeClientApiAttachment,
 	#superclass : #LeClientCommand,
 	#instVars : [
 		'snippetAttachment',
@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #accessing }
-LeClientGetAttachment >> attachmentHash [
+LeClientApiAttachment >> attachmentHash [
 	<return: #ByteArray or: nil>
 	^ self lastResponse
 		ifExist: [ :aResponse | aResponse model at: #hash ifAbsent: [ nil ] ]
@@ -19,7 +19,7 @@ LeClientGetAttachment >> attachmentHash [
 ]
 
 { #category : #accessing }
-LeClientGetAttachment >> attachmentSize [
+LeClientApiAttachment >> attachmentSize [
 	<return: #Integer or: nil>
 	^ self lastResponse
 		ifExist: [ :aResponse | aResponse model at: #size ifAbsent: [ nil ] ]
@@ -29,12 +29,12 @@ LeClientGetAttachment >> attachmentSize [
 ]
 
 { #category : #accessing }
-LeClientGetAttachment >> description [
+LeClientApiAttachment >> description [
 	^ 'Check attachment exists: ' , self snippetAttachment name
 ]
 
 { #category : #'api - actions' }
-LeClientGetAttachment >> execute [
+LeClientApiAttachment >> execute [
 	<return: #TLeClientResponse>
 	| aResponse |
 	self
@@ -54,28 +54,28 @@ LeClientGetAttachment >> execute [
 ]
 
 { #category : #'api - actions' }
-LeClientGetAttachment >> prepare [
+LeClientApiAttachment >> prepare [
 	"nothing to do"
 
 	
 ]
 
 { #category : #accessing }
-LeClientGetAttachment >> serverDatabaseId [
+LeClientApiAttachment >> serverDatabaseId [
 	^ serverDatabaseId
 ]
 
 { #category : #accessing }
-LeClientGetAttachment >> serverDatabaseId: anObject [
+LeClientApiAttachment >> serverDatabaseId: anObject [
 	serverDatabaseId := anObject
 ]
 
 { #category : #accessing }
-LeClientGetAttachment >> snippetAttachment [
+LeClientApiAttachment >> snippetAttachment [
 	^ snippetAttachment
 ]
 
 { #category : #accessing }
-LeClientGetAttachment >> snippetAttachment: anObject [
+LeClientApiAttachment >> snippetAttachment: anObject [
 	snippetAttachment := anObject
 ]

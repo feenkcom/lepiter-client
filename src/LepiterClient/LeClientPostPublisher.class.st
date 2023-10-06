@@ -78,12 +78,14 @@ LeClientPostPublisher >> prepareCreateOrUpdatePost [
 			check: (LeClientCheckPostExist new
 					context: context;
 					page: page);
-			onSuccess: (LeClientUpdatePost new
-					context: context;
-					page: page;
-					post: post;
-					serverDatabaseId: serverDatabaseId);
-			onNotFound: (LeClientCreatePost new
+			onSuccess: (LeClientApiUpdatePost new
+						context: context;
+						page: page;
+						post: post;
+						serverDatabaseId: serverDatabaseId)
+				with: [ :aCheckResponse :aSuccessCommand | 
+					aSuccessCommand postId: aCheckResponse model uuid ];
+			onNotFound: (LeClientApiCreatePost new
 					context: context;
 					page: page;
 					post: post;

@@ -66,6 +66,16 @@ LeClientConditionResponse >> isSuccess [
 ]
 
 { #category : #accessing }
+LeClientConditionResponse >> model [
+	"Return a domain object or nil."
+
+	^ self
+		ifSuccess: #model
+		ifFailure: [ nil ]
+		ifNone: [ nil ]
+]
+
+{ #category : #accessing }
 LeClientConditionResponse >> relevant [
 	<return: #TLeClientResponse>
 	^ self subsequent ifNil: [ self check ]

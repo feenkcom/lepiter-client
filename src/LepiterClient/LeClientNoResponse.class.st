@@ -35,3 +35,10 @@ LeClientNoResponse >> ifExist: existBlock ifMissing: missingBlock ifFailure: fai
 LeClientNoResponse >> ifSuccess: successBlock ifFailure: failureBlock ifNone: noneBlock [
 	^ noneBlock value
 ]
+
+{ #category : #accessing }
+LeClientNoResponse >> model [
+	"Return a domain object or nil."
+
+	^ nil
+]

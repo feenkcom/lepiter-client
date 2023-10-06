@@ -33,6 +33,19 @@ LeClient >> createPost: aPost forPage: aPage inDatabase: aDatabaseId [
 		yourself
 ]
 
+{ #category : #'api - actions' }
+LeClient >> databases [
+	| aResponse |
+	aResponse := LeClientApiDatabases new
+			context: self context;
+			prepare;
+			execute.
+	^ aResponse
+		ifSuccess: #model
+		ifFailure: [ #() ]
+		ifNone: [ #() ]
+]
+
 { #category : #initialization }
 LeClient >> defaultContext [
 	^ LeClientContext new serverUrl: LeClientEndpoints serverUrl
@@ -57,6 +70,11 @@ LeClient >> login [
 		context: self context;
 		prepare;
 		execute
+]
+
+{ #category : #'api - actions' }
+LeClient >> lookupDatabase: aDbName [
+	^ self databases detect: [ :aDb | aDb name = aDbName ]
 ]
 
 { #category : #'api - configuration' }

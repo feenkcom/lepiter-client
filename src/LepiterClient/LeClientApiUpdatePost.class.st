@@ -1,5 +1,5 @@
 Class {
-	#name : #LeClientCreatePost,
+	#name : #LeClientApiUpdatePost,
 	#superclass : #LeClientCommand,
 	#instVars : [
 		'page',
@@ -13,12 +13,12 @@ Class {
 }
 
 { #category : #accessing }
-LeClientCreatePost >> description [
-	^ 'Create post: ' , self post title
+LeClientApiUpdatePost >> description [
+	^ 'Update post: ' , self post title
 ]
 
 { #category : #'api - actions' }
-LeClientCreatePost >> execute [
+LeClientApiUpdatePost >> execute [
 	<return: #TLeClientResponse>
 	| aResponse |
 	self
@@ -27,7 +27,7 @@ LeClientCreatePost >> execute [
 		ifNone: [  "execute" ].
 
 	aResponse := self context client
-			endpoint: LeClientEndpoints apiCreatePost;
+			endpoint: LeClientEndpoints apiUpdatePost;
 			jsonObject: self jsonObject;
 			authenticated;
 			onSuccessLepiterModel;
@@ -38,47 +38,59 @@ LeClientCreatePost >> execute [
 ]
 
 { #category : #private }
-LeClientCreatePost >> jsonObject [
-	^ {'database' -> serverDatabaseId asString.
-		'page' -> post page asString.
+LeClientApiUpdatePost >> jsonObject [
+	^ {'post' -> self postId.
 		'title' -> post title.
 		'abstract' -> post abstract.
 		'thumbnail' -> post thumbnail} asDictionary
 ]
 
 { #category : #accessing }
-LeClientCreatePost >> page [
+LeClientApiUpdatePost >> page [
 	^ page
 ]
 
 { #category : #accessing }
-LeClientCreatePost >> page: anObject [
+LeClientApiUpdatePost >> page: anObject [
 	page := anObject
 ]
 
 { #category : #accessing }
-LeClientCreatePost >> post [
+LeClientApiUpdatePost >> post [
 	^ post
 ]
 
 { #category : #'api - convenience' }
-LeClientCreatePost >> post: aClientPost [
+LeClientApiUpdatePost >> post: aClientPost [
 	post := aClientPost
 ]
 
+{ #category : #accessing }
+LeClientApiUpdatePost >> postId [
+	^ self post uuid ifNotNil: #asString
+]
+
+{ #category : #accessing }
+LeClientApiUpdatePost >> postId: anUUID [
+	self
+		assert: [ anUUID isKindOf: UUID ]
+		description: [ 'Post ID must be an UUID instance: {1}' format: {anUUID} ].
+	^ self post uuid: anUUID
+]
+
 { #category : #'api - actions' }
-LeClientCreatePost >> prepare [
+LeClientApiUpdatePost >> prepare [
 	"nothing to prepare"
 
 	
 ]
 
 { #category : #accessing }
-LeClientCreatePost >> serverDatabaseId [
+LeClientApiUpdatePost >> serverDatabaseId [
 	^ serverDatabaseId
 ]
 
 { #category : #accessing }
-LeClientCreatePost >> serverDatabaseId: anObject [
+LeClientApiUpdatePost >> serverDatabaseId: anObject [
 	serverDatabaseId := anObject
 ]

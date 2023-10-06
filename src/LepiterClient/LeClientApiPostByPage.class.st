@@ -1,5 +1,5 @@
 Class {
-	#name : #LeClientPostByPage,
+	#name : #LeClientApiPostByPage,
 	#superclass : #LeClientCommand,
 	#instVars : [
 		'page'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #'api - actions' }
-LeClientPostByPage >> execute [
+LeClientApiPostByPage >> execute [
 	<return: #TLeClientResponse>
 	| aResponse |
 	aResponse := self context client
@@ -22,18 +22,18 @@ LeClientPostByPage >> execute [
 ]
 
 { #category : #accessing }
-LeClientPostByPage >> page [
+LeClientApiPostByPage >> page [
 	<return: #LePage>
 	^ page
 ]
 
 { #category : #accessing }
-LeClientPostByPage >> page: aPage [
+LeClientApiPostByPage >> page: aPage [
 	page := aPage
 ]
 
 { #category : #'api - actions' }
-LeClientPostByPage >> prepare [
+LeClientApiPostByPage >> prepare [
 	"do nothing"
 
 	

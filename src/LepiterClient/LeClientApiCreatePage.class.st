@@ -1,5 +1,5 @@
 Class {
-	#name : #LeClientCreatePage,
+	#name : #LeClientApiCreatePage,
 	#superclass : #LeClientCommand,
 	#instVars : [
 		'page',
@@ -9,12 +9,12 @@ Class {
 }
 
 { #category : #accessing }
-LeClientCreatePage >> description [
+LeClientApiCreatePage >> description [
 	^ 'Create page: ' , self page title
 ]
 
 { #category : #'api - actions' }
-LeClientCreatePage >> execute [
+LeClientApiCreatePage >> execute [
 	<return: #TLeClientResponse>
 	| aResponse |
 	self
@@ -34,34 +34,34 @@ LeClientCreatePage >> execute [
 ]
 
 { #category : #private }
-LeClientCreatePage >> lepiterObject [
+LeClientApiCreatePage >> lepiterObject [
 	^ {'page' -> self page.
 		'database' -> self serverDatabaseId asString} asDictionary
 ]
 
 { #category : #accessing }
-LeClientCreatePage >> page [
+LeClientApiCreatePage >> page [
 	^ page
 ]
 
 { #category : #accessing }
-LeClientCreatePage >> page: anObject [
+LeClientApiCreatePage >> page: anObject [
 	page := anObject
 ]
 
 { #category : #'api - actions' }
-LeClientCreatePage >> prepare [
+LeClientApiCreatePage >> prepare [
 	"nothing to prepare"
 
 	
 ]
 
 { #category : #accessing }
-LeClientCreatePage >> serverDatabaseId [
+LeClientApiCreatePage >> serverDatabaseId [
 	^ serverDatabaseId
 ]
 
 { #category : #accessing }
-LeClientCreatePage >> serverDatabaseId: anObject [
+LeClientApiCreatePage >> serverDatabaseId: anObject [
 	serverDatabaseId := anObject
 ]

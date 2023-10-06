@@ -46,6 +46,13 @@ TLeClientResponse >> label [
 ]
 
 { #category : #accessing }
+TLeClientResponse >> model [
+	"Return a domain object or nil."
+
+	^ self explicitRequirement
+]
+
+{ #category : #accessing }
 TLeClientResponse >> subresponses [
 	"Return a collection of responses of commands that were execute as a part of this response."
 

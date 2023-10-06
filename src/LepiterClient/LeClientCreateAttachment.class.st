@@ -59,7 +59,7 @@ LeClientCreateAttachment >> jsonObject [
 LeClientCreateAttachment >> prepare [
 	createFile ifNotNil: [ ^ self ].
 
-	createFile := LeClientCreateFile new
+	createFile := LeClientApiCreateFile new
 			context: context;
 			snippetAttachment: snippetAttachment.
 

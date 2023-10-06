@@ -39,10 +39,19 @@ LeClientCheckPostExist >> page: anObject [
 	page := anObject
 ]
 
+{ #category : #accessing }
+LeClientCheckPostExist >> postId [
+	<return: #UUID or: nil>
+	^ self
+		ifSuccess: [ :aResponse | aResponse model uuid ]
+		ifFailure: [ nil ]
+		ifNone: [ nil ]
+]
+
 { #category : #'api - actions' }
 LeClientCheckPostExist >> prepare [
 	getPost ifNotNil: [ ^ self ].
-	getPost := LeClientPostByPage new
+	getPost := LeClientApiPostByPage new
 			context: context;
 			page: page
 ]

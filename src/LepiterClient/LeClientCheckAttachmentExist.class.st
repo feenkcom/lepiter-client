@@ -52,7 +52,7 @@ LeClientCheckAttachmentExist >> execute [
 { #category : #'api - actions' }
 LeClientCheckAttachmentExist >> prepare [
 	getAttachment ifNotNil: [ ^ self ].
-	getAttachment := LeClientGetAttachment new
+	getAttachment := LeClientApiAttachment new
 			context: context;
 			snippetAttachment: snippetAttachment;
 			serverDatabaseId: serverDatabaseId

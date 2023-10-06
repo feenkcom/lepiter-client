@@ -5,7 +5,8 @@ Class {
 		'check',
 		'onSuccess',
 		'onNotFound',
-		'description'
+		'description',
+		'successPreExecutionBlock'
 	],
 	#category : #'LepiterClient-Publishing New'
 }
@@ -43,7 +44,9 @@ LeClientCondition >> execute [
 	checkResponse := self check execute.
 
 	checkResponse
-		ifExist: [ successResponse := onSuccess execute ]
+		ifExist: [ successPreExecutionBlock ifNotNil: [ 
+				successPreExecutionBlock cull: checkResponse cull: onSuccess ].
+			successResponse := onSuccess execute ]
 		ifMissing: [ notFoundResponse := onNotFound execute ]
 		ifFailure: [  "may happen" ]
 		ifNone: [  "must not happen" ].
@@ -77,6 +80,12 @@ LeClientCondition >> onSuccess [
 { #category : #accessing }
 LeClientCondition >> onSuccess: aCommand [
 	onSuccess := aCommand
+]
+
+{ #category : #accessing }
+LeClientCondition >> onSuccess: aCommand with: aBlock [
+	onSuccess := aCommand.
+	successPreExecutionBlock := aBlock
 ]
 
 { #category : #'api - actions' }

@@ -1,5 +1,5 @@
 Class {
-	#name : #LeClientUpdatePost,
+	#name : #LeClientApiCreatePost,
 	#superclass : #LeClientCommand,
 	#instVars : [
 		'page',
@@ -13,12 +13,12 @@ Class {
 }
 
 { #category : #accessing }
-LeClientUpdatePost >> description [
-	^ 'Update post: ' , self post title
+LeClientApiCreatePost >> description [
+	^ 'Create post: ' , self post title
 ]
 
 { #category : #'api - actions' }
-LeClientUpdatePost >> execute [
+LeClientApiCreatePost >> execute [
 	<return: #TLeClientResponse>
 	| aResponse |
 	self
@@ -27,7 +27,7 @@ LeClientUpdatePost >> execute [
 		ifNone: [  "execute" ].
 
 	aResponse := self context client
-			endpoint: LeClientEndpoints apiUpdatePost;
+			endpoint: LeClientEndpoints apiCreatePost;
 			jsonObject: self jsonObject;
 			authenticated;
 			onSuccessLepiterModel;
@@ -38,7 +38,7 @@ LeClientUpdatePost >> execute [
 ]
 
 { #category : #private }
-LeClientUpdatePost >> jsonObject [
+LeClientApiCreatePost >> jsonObject [
 	^ {'database' -> serverDatabaseId asString.
 		'page' -> post page asString.
 		'title' -> post title.
@@ -47,38 +47,38 @@ LeClientUpdatePost >> jsonObject [
 ]
 
 { #category : #accessing }
-LeClientUpdatePost >> page [
+LeClientApiCreatePost >> page [
 	^ page
 ]
 
 { #category : #accessing }
-LeClientUpdatePost >> page: anObject [
+LeClientApiCreatePost >> page: anObject [
 	page := anObject
 ]
 
 { #category : #accessing }
-LeClientUpdatePost >> post [
+LeClientApiCreatePost >> post [
 	^ post
 ]
 
 { #category : #'api - convenience' }
-LeClientUpdatePost >> post: aClientPost [
+LeClientApiCreatePost >> post: aClientPost [
 	post := aClientPost
 ]
 
 { #category : #'api - actions' }
-LeClientUpdatePost >> prepare [
+LeClientApiCreatePost >> prepare [
 	"nothing to prepare"
 
 	
 ]
 
 { #category : #accessing }
-LeClientUpdatePost >> serverDatabaseId [
+LeClientApiCreatePost >> serverDatabaseId [
 	^ serverDatabaseId
 ]
 
 { #category : #accessing }
-LeClientUpdatePost >> serverDatabaseId: anObject [
+LeClientApiCreatePost >> serverDatabaseId: anObject [
 	serverDatabaseId := anObject
 ]

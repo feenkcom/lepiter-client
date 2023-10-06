@@ -1,5 +1,5 @@
 Class {
-	#name : #LeClientUpdatePage,
+	#name : #LeClientApiUpdatePage,
 	#superclass : #LeClientCommand,
 	#instVars : [
 		'page',
@@ -9,12 +9,12 @@ Class {
 }
 
 { #category : #accessing }
-LeClientUpdatePage >> description [
+LeClientApiUpdatePage >> description [
 	^ 'Update page: ' , self page title
 ]
 
 { #category : #'api - actions' }
-LeClientUpdatePage >> execute [
+LeClientApiUpdatePage >> execute [
 	<return: #TLeClientResponse>
 	| aResponse |
 	self
@@ -34,34 +34,34 @@ LeClientUpdatePage >> execute [
 ]
 
 { #category : #private }
-LeClientUpdatePage >> lepiterObject [
+LeClientApiUpdatePage >> lepiterObject [
 	^ {'page' -> self page.
 		'database' -> self serverDatabaseId asString} asDictionary
 ]
 
 { #category : #accessing }
-LeClientUpdatePage >> page [
+LeClientApiUpdatePage >> page [
 	^ page
 ]
 
 { #category : #accessing }
-LeClientUpdatePage >> page: anObject [
+LeClientApiUpdatePage >> page: anObject [
 	page := anObject
 ]
 
 { #category : #'api - actions' }
-LeClientUpdatePage >> prepare [
+LeClientApiUpdatePage >> prepare [
 	"nothing to prepare"
 
 	
 ]
 
 { #category : #accessing }
-LeClientUpdatePage >> serverDatabaseId [
+LeClientApiUpdatePage >> serverDatabaseId [
 	^ serverDatabaseId
 ]
 
 { #category : #accessing }
-LeClientUpdatePage >> serverDatabaseId: anObject [
+LeClientApiUpdatePage >> serverDatabaseId: anObject [
 	serverDatabaseId := anObject
 ]

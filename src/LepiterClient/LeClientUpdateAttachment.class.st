@@ -61,7 +61,7 @@ LeClientUpdateAttachment >> prepare [
 	
 	"TODO: we want to call the createFile command only if the content is different"
 
-	createFile := LeClientCreateFile new
+	createFile := LeClientApiCreateFile new
 			context: context;
 			snippetAttachment: snippetAttachment.
 
