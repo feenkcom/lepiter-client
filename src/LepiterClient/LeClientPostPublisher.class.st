@@ -11,6 +11,11 @@ Class {
 }
 
 { #category : #accessing }
+LeClientPostPublisher >> description [
+	^ 'Publish post: ' , self page title
+]
+
+{ #category : #accessing }
 LeClientPostPublisher >> page [
 	<return: #LePage>
 	^ page
@@ -29,21 +34,10 @@ LeClientPostPublisher >> prepare [
 	self commands do: #prepare
 ]
 
-{ #category : #private }
-LeClientPostPublisher >> prepareAttachments [
-	| anAttachmentPublisher |
-	anAttachmentPublisher := LeClientAttachmentPublisher new
-			context: context;
-			page: page;
-			serverDatabaseId: serverDatabaseId.
-
-	self addCommand: anAttachmentPublisher
-]
-
 { #category : #'api - actions' }
 LeClientPostPublisher >> preparePage [
 	| aPagePublisher |
-	aPagePublisher := LeClientCheckPage new
+	aPagePublisher := LeClientPagePublisher new
 		context: context;
 		page: page;
 		serverDatabaseId: serverDatabaseId.

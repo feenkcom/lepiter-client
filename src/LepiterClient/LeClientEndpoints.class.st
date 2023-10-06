@@ -40,6 +40,11 @@ LeClientEndpoints class >> apiUpdateAttachment [
 ]
 
 { #category : #accessing }
+LeClientEndpoints class >> apiUpdatePage [
+	^ '/api/updatePage'
+]
+
+{ #category : #accessing }
 LeClientEndpoints class >> serverUrl [
 	^ 'https://lepiter.io' asZnUrl
 ]
