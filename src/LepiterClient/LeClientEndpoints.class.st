@@ -65,6 +65,24 @@ LeClientEndpoints class >> apiUpdatePost [
 ]
 
 { #category : #accessing }
+LeClientEndpoints class >> gtEndpointsFor: aView [
+	<gtClassView>
+	^ aView columnedList
+		title: 'Endpoints';
+		priority: 30;
+		items: [ (self classSide methods select: [ :each | each numArgs = 0 ])
+				sort: [ :a :b | a selector < b selector ] ];
+		column: 'Endpoint' text: [ :aMethod | self perform: aMethod selector ];
+		send: [ :aMethod | 
+			| aString |
+			aString := (self perform: aMethod selector) asString.
+			(aString beginsWith: '/') ifTrue: [ aString := aString allButFirst ].
+			aMethod selector gtSenders
+				| (aString gtSubstringLiteralCaseSensitiveMatch
+						& self classSide gtMethodsInClass not) ]
+]
+
+{ #category : #accessing }
 LeClientEndpoints class >> serverUrl [
 	^ 'https://lepiter.io' asZnUrl
 ]
