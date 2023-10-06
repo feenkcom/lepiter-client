@@ -11,7 +11,7 @@ Class {
 
 { #category : #accessing }
 LeClientUpdateAttachment >> commands [
-	^ LeClientCommandUtility collectionForCommand: createFile
+	^ LeClientUtility collectionWithoutNilItemFrom: createFile
 ]
 
 { #category : #private }

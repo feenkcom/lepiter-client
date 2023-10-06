@@ -23,7 +23,7 @@ LeClientCondition >> check: aCommand [
 
 { #category : #accessing }
 LeClientCondition >> commands [
-	^ LeClientCommandUtility collectionForCommands: { check. onSuccess. onNotFound }
+	^ LeClientUtility collectionWithoutNilItemsFrom: { check. onSuccess. onNotFound }
 ]
 
 { #category : #accessing }

@@ -25,6 +25,11 @@ LeClientEndpoints class >> apiCreatePage [
 ]
 
 { #category : #accessing }
+LeClientEndpoints class >> apiCreatePost [
+	^ '/api/createPost'
+]
+
+{ #category : #accessing }
 LeClientEndpoints class >> apiLoginUser [
 	^ '/api/loginUser'
 ]
@@ -35,6 +40,11 @@ LeClientEndpoints class >> apiPage [
 ]
 
 { #category : #accessing }
+LeClientEndpoints class >> apiPostByPage [
+	^ '/api/postByPage'
+]
+
+{ #category : #accessing }
 LeClientEndpoints class >> apiUpdateAttachment [
 	^ '/api/updateAttachment'
 ]
@@ -42,6 +52,11 @@ LeClientEndpoints class >> apiUpdateAttachment [
 { #category : #accessing }
 LeClientEndpoints class >> apiUpdatePage [
 	^ '/api/updatePage'
+]
+
+{ #category : #accessing }
+LeClientEndpoints class >> apiUpdatePost [
+	^ '/api/updatePost'
 ]
 
 { #category : #accessing }

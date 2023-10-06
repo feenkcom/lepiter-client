@@ -5,14 +5,14 @@ Class {
 		'page',
 		'serverDatabaseId',
 		'attachmentPublisher',
-		'createPage'
+		'createOrUpdatePage'
 	],
 	#category : #'LepiterClient-Publishing New'
 }
 
 { #category : #accessing }
 LeClientPagePublisher >> commands [
-	^ LeClientCommandUtility collectionForCommands: {attachmentPublisher. createPage}
+	^ LeClientUtility collectionWithoutNilItemsFrom: {attachmentPublisher. createOrUpdatePage}
 ]
 
 { #category : #accessing }
@@ -25,18 +25,17 @@ LeClientPagePublisher >> execute [
 	<return: #TLeClientResponse>
 	| aResponse anAttachmentResponse aPageResponse |
 	self
-		ifSuccess: [ ^ self ]
+		ifSuccess: [ ^ self lastResponse ]
 		ifFailure: [  "execute again" ]
 		ifNone: [  "execute" ].
 
 	anAttachmentResponse := attachmentPublisher execute.
 	anAttachmentResponse
-		ifSuccess: [ aPageResponse := createPage execute ]
+		ifSuccess: [ aPageResponse := createOrUpdatePage execute ]
 		ifFailure: [ aPageResponse := LeClientNoResponse new ]
 		ifNone: [ aPageResponse := LeClientNoResponse new ].
-	aResponse := LeClientMultiResponse new
-			subresponses: {anAttachmentResponse.
-					aPageResponse}.
+	aResponse := LeClientMultiResponse new 
+		subresponses: {anAttachmentResponse. aPageResponse}.
 	self addResponse: aResponse.
 	^ aResponse
 ]
@@ -77,7 +76,7 @@ LeClientPagePublisher >> prepareAttachments [
 
 { #category : #private }
 LeClientPagePublisher >> prepareCreateOrUpdatePage [
-	createPage := LeClientCondition new
+	createOrUpdatePage := LeClientCondition new
 			description: 'Create or update page: ' , page title;
 			context: context;
 			check: (LeClientCheckPageExist new
@@ -93,7 +92,7 @@ LeClientPagePublisher >> prepareCreateOrUpdatePage [
 					page: page;
 					serverDatabaseId: serverDatabaseId).
 
-	createPage prepare
+	createOrUpdatePage prepare
 ]
 
 { #category : #accessing }

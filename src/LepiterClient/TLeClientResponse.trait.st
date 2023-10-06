@@ -15,6 +15,19 @@ TLeClientResponse >> description [
 	^ self printString
 ]
 
+{ #category : #'gt - extensions' }
+TLeClientResponse >> gtResponsesFor: aView [
+	<gtView>
+	^ aView columnedTree
+		title: 'Responses';
+		priority: 20;
+		items: [ { self } ];
+		expandAll;
+		children: #subresponses;
+		column: 'Description' text: #label;
+		actionUpdateButton
+]
+
 { #category : #testing }
 TLeClientResponse >> ifSuccess: successBlock ifFailure: failureBlock ifNone: noneBlock [
 	^ self isSuccess

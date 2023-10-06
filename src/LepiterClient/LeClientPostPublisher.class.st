@@ -1,18 +1,45 @@
 Class {
 	#name : #LeClientPostPublisher,
 	#superclass : #LeClientCommand,
-	#traits : 'TLeClientWithCommands',
-	#classTraits : 'TLeClientWithCommands classTrait',
 	#instVars : [
 		'page',
-		'serverDatabaseId'
+		'serverDatabaseId',
+		'createOrUpdatePost',
+		'pagePublisher',
+		'post'
 	],
 	#category : #'LepiterClient-Publishing New'
 }
 
 { #category : #accessing }
+LeClientPostPublisher >> commands [
+	^ LeClientUtility collectionWithoutNilItemsFrom: {pagePublisher. createOrUpdatePost}
+]
+
+{ #category : #accessing }
 LeClientPostPublisher >> description [
 	^ 'Publish post: ' , self page title
+]
+
+{ #category : #'api - actions' }
+LeClientPostPublisher >> execute [
+	<return: #TLeClientResponse>
+	| aPageResponse aPostResponse aResponse |
+	self
+		ifSuccess: [ ^ self lastResponse ]
+		ifFailure: [  "execute again" ]
+		ifNone: [  "execute" ].
+	
+	aPageResponse := pagePublisher execute.
+	aPageResponse
+		ifSuccess: [ aPostResponse := createOrUpdatePost execute ]
+		ifFailure: [ aPostResponse := LeClientNoResponse new ]
+		ifNone: [ aPostResponse := LeClientNoResponse new ].
+		
+	aResponse := LeClientMultiResponse new 
+		subresponses: {aPageResponse. aPostResponse}.
+	self addResponse: aResponse.
+	^ aResponse
 ]
 
 { #category : #accessing }
@@ -26,23 +53,52 @@ LeClientPostPublisher >> page: aPage [
 	page := aPage
 ]
 
-{ #category : #'api - actions' }
-LeClientPostPublisher >> prepare [
-	self page ifNil: [  "Command is not ready for initialization"^ self ].
+{ #category : #accessing }
+LeClientPostPublisher >> post [
+	<return: #LeClientPost>
+	^ post
+]
 
-	self preparePage.
-	self commands do: #prepare
+{ #category : #accessing }
+LeClientPostPublisher >> post: aPost [
+	post := aPost
 ]
 
 { #category : #'api - actions' }
+LeClientPostPublisher >> prepare [
+	self preparePage.
+	self prepareCreateOrUpdatePost
+]
+
+{ #category : #private }
+LeClientPostPublisher >> prepareCreateOrUpdatePost [
+	createOrUpdatePost := LeClientCondition new
+			description: 'Create or update post: ' , page title;
+			context: context;
+			check: (LeClientCheckPostExist new
+					context: context;
+					page: page);
+			onSuccess: (LeClientUpdatePost new
+					context: context;
+					page: page;
+					post: post;
+					serverDatabaseId: serverDatabaseId);
+			onNotFound: (LeClientCreatePost new
+					context: context;
+					page: page;
+					post: post;
+					serverDatabaseId: serverDatabaseId).
+
+	createOrUpdatePost prepare
+]
+
+{ #category : #private }
 LeClientPostPublisher >> preparePage [
-	| aPagePublisher |
-	aPagePublisher := LeClientPagePublisher new
-		context: context;
-		page: page;
-		serverDatabaseId: serverDatabaseId.
-		
-	self addCommand: aPagePublisher
+	pagePublisher := LeClientPagePublisher new
+			context: context;
+			page: page;
+			serverDatabaseId: serverDatabaseId.
+	pagePublisher prepare
 ]
 
 { #category : #accessing }

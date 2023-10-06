@@ -18,6 +18,21 @@ LeClient >> context: aContext [
 	context := aContext
 ]
 
+{ #category : #'api - actions' }
+LeClient >> createPost: aPost forPage: aPage inDatabase: aDatabaseId [
+	"It creates or updates a post. It also create or update the given page."
+
+	<return: #TLeClientCommand>
+	^ LeClientPostPublisher new
+		context: self context;
+		post: aPost;
+		page: aPage;
+		serverDatabaseId: aDatabaseId asString;
+		prepare;
+		execute;
+		yourself
+]
+
 { #category : #initialization }
 LeClient >> defaultContext [
 	^ LeClientContext new serverUrl: LeClientEndpoints serverUrl
