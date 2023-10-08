@@ -83,6 +83,11 @@ TLeClientCommand >> lastResponse [
 	^ self responses ifEmpty: [ LeClientNoResponse new ] ifNotEmpty: #last
 ]
 
+{ #category : #'api - responses' }
+TLeClientCommand >> model [
+	^ self lastResponse model
+]
+
 { #category : #'api - actions' }
 TLeClientCommand >> prepare [
 	"Prepare (initialize) this command.

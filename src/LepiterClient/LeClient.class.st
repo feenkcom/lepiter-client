@@ -64,6 +64,17 @@ LeClient >> exportPage: aPage inDatabase: aDatabaseId [
 ]
 
 { #category : #'api - actions' }
+LeClient >> findPostByPage: aPage [
+	<return: #TLeClientCommand>
+	^ LeClientApiPostByPage new
+		context: context;
+		page: aPage;
+		prepare;
+		execute;
+		yourself
+]
+
+{ #category : #'api - actions' }
 LeClient >> login [
 	<return: #TLeClientCommand>
 	^ LeClientLogin new

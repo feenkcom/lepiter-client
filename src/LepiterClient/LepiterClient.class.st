@@ -213,7 +213,7 @@ LepiterClient >> exportPage: aPage inDatabase: aDatabaseId [
 
 { #category : #accessing }
 LepiterClient >> findPostByPage: aPage [
-	| anEntity aClient aResponse anApResponse |
+	| aClient aResponse anApResponse |
 	aClient := ZnClient new beOneShot
 			url: self server , '/api/postByPage';
 			queryAt: 'page' put:  aPage uid asString36;
