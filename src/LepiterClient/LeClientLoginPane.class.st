@@ -16,8 +16,13 @@ LeClientLoginPane >> asElement [
 ]
 
 { #category : #accessing }
+LeClientLoginPane >> defaultServer [
+	^ 'https://lepiter.io'
+]
+
+{ #category : #accessing }
 LeClientLoginPane >> initialize [
-	self server: ''.
+	self server: self defaultServer.
 	self username: ''.
 	self password: ''
 ]
@@ -28,15 +33,13 @@ LeClientLoginPane >> magritteAcceptAction [
 	^ super magritteAcceptAction
 		onSuccessCallback: (GtMagritteCallback new
 				action: [ :aModel :aButton :aMemento :aDescription | 
-					| loginResult |
-					loginResult := STONJSON
-							fromString: (ZnEasy
-									post: self server , '/api/loginUser'
-									data: (ZnEntity
-											json: (STONJSON
-													toString: {'username' -> self username.
-															'password' -> self password} asDictionary))) entity string.
-					self onLogin value: self server -> (loginResult at: 'token') ])
+					| client |
+					client := LepiterClient new
+							server: self server;
+							username: self username;
+							password: self password;
+							login.
+					self onLogin value: client ])
 ]
 
 { #category : #accessing }
@@ -81,7 +84,7 @@ LeClientLoginPane >> server: anObject [
 { #category : #accessing }
 LeClientLoginPane >> serverDescription [
 	<magritteDescription>
-	^ MAStringDescription new
+	^ MAStringDescription new beReadOnly
 		priority: 1;
 		label: 'Server';
 		accessor: #server

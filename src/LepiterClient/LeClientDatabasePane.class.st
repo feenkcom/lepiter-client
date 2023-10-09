@@ -2,8 +2,7 @@ Class {
 	#name : #LeClientDatabasePane,
 	#superclass : #BrVerticalPane,
 	#instVars : [
-		'server',
-		'token',
+		'client',
 		'databaseList',
 		'databases',
 		'databaseDetails',
@@ -13,6 +12,17 @@ Class {
 	],
 	#category : #'LepiterClient-UI'
 }
+
+{ #category : #accessing }
+LeClientDatabasePane >> client [
+	^ client
+]
+
+{ #category : #accessing }
+LeClientDatabasePane >> client: anObject [
+	client := anObject.
+	self refreshDatabaseList
+]
 
 { #category : #accessing }
 LeClientDatabasePane >> initialize [
@@ -38,20 +48,20 @@ LeClientDatabasePane >> initializeDatabaseList [
 		title: 'Name';
 		width: 100;
 		cellStencil: [ :each | BrLabel new aptitude: BrGlamorousLabelAptitude new ];
-		dataBinder: [ :aLabel :eachItem | aLabel text: (eachItem at: 'name') ].
+		dataBinder: [ :aLabel :eachItem | aLabel text: eachItem name ].
 
 
 	databaseList column
 		title: 'Description';
 		matchParent;
 		cellStencil: [ :each | BrLabel new aptitude: BrGlamorousLabelAptitude new ];
-		dataBinder: [ :aLabel :eachItem | aLabel text: (eachItem at: 'description') ].
+		dataBinder: [ :aLabel :eachItem | aLabel text: eachItem description ].
 
 	databaseList column
 		title: 'Location';
 		width: 150;
 		cellStencil: [ :each | BrLabel new aptitude: BrGlamorousLabelAptitude new ];
-		dataBinder: [ :aLabel :eachItem | aLabel text: self server , '/' , (eachItem at: 'slug') ].
+		dataBinder: [ :aLabel :eachItem | aLabel text: '/' , eachItem slug ].
 
 	databaseList addAptitude: BrColumnedListHeaderAptitude.
 
@@ -96,12 +106,7 @@ LeClientDatabasePane >> refreshDatabaseDetails [
 
 { #category : #accessing }
 LeClientDatabasePane >> refreshDatabaseList [
-	databases := STONJSON
-			fromString: (ZnClient new beOneShot
-					url: self server , '/api/databases';
-					setBearerAuthentication: self token;
-					get;
-					response) entity string.
+	databases := self client databases.
 
 	databaseList items: databases
 ]
@@ -123,25 +128,4 @@ LeClientDatabasePane >> selectDatabase: aDb [
 			at: 'posts'.
 			
 	self refreshDatabaseDetails
-]
-
-{ #category : #accessing }
-LeClientDatabasePane >> server [
-	^ server
-]
-
-{ #category : #accessing }
-LeClientDatabasePane >> server: anObject [
-	server := anObject
-]
-
-{ #category : #accessing }
-LeClientDatabasePane >> token [
-	^ token
-]
-
-{ #category : #accessing }
-LeClientDatabasePane >> token: anObject [
-	token := anObject.
-	self refreshDatabaseList
 ]
