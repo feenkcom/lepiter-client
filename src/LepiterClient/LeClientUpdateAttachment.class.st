@@ -11,7 +11,7 @@ Class {
 
 { #category : #accessing }
 LeClientUpdateAttachment >> commands [
-	^ LeClientCommandUtility collectionForCommand: createFile
+	^ LeClientUtility collectionWithoutNilItemFrom: createFile
 ]
 
 { #category : #private }
@@ -61,7 +61,7 @@ LeClientUpdateAttachment >> prepare [
 	
 	"TODO: we want to call the createFile command only if the content is different"
 
-	createFile := LeClientCreateFile new
+	createFile := LeClientApiCreateFile new
 			context: context;
 			snippetAttachment: snippetAttachment.
 

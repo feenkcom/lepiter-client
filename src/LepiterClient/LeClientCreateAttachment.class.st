@@ -11,7 +11,7 @@ Class {
 
 { #category : #accessing }
 LeClientCreateAttachment >> commands [
-	^ LeClientCommandUtility collectionForCommand: createFile
+	^ LeClientUtility collectionWithoutNilItemFrom: createFile
 ]
 
 { #category : #private }
@@ -59,7 +59,7 @@ LeClientCreateAttachment >> jsonObject [
 LeClientCreateAttachment >> prepare [
 	createFile ifNotNil: [ ^ self ].
 
-	createFile := LeClientCreateFile new
+	createFile := LeClientApiCreateFile new
 			context: context;
 			snippetAttachment: snippetAttachment.
 

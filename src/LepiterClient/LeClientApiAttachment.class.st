@@ -1,16 +1,15 @@
 Class {
-	#name : #LeClientCheckAttachmentExist,
+	#name : #LeClientApiAttachment,
 	#superclass : #LeClientCommand,
 	#instVars : [
 		'snippetAttachment',
-		'serverDatabaseId',
-		'getAttachment'
+		'serverDatabaseId'
 	],
 	#category : #'LepiterClient-Publishing New'
 }
 
 { #category : #accessing }
-LeClientCheckAttachmentExist >> attachmentHash [
+LeClientApiAttachment >> attachmentHash [
 	<return: #ByteArray or: nil>
 	^ self lastResponse
 		ifExist: [ :aResponse | aResponse model at: #hash ifAbsent: [ nil ] ]
@@ -20,7 +19,7 @@ LeClientCheckAttachmentExist >> attachmentHash [
 ]
 
 { #category : #accessing }
-LeClientCheckAttachmentExist >> attachmentSize [
+LeClientApiAttachment >> attachmentSize [
 	<return: #Integer or: nil>
 	^ self lastResponse
 		ifExist: [ :aResponse | aResponse model at: #size ifAbsent: [ nil ] ]
@@ -30,50 +29,53 @@ LeClientCheckAttachmentExist >> attachmentSize [
 ]
 
 { #category : #accessing }
-LeClientCheckAttachmentExist >> description [
+LeClientApiAttachment >> description [
 	^ 'Check attachment exists: ' , self snippetAttachment name
 ]
 
 { #category : #'api - actions' }
-LeClientCheckAttachmentExist >> execute [
+LeClientApiAttachment >> execute [
 	<return: #TLeClientResponse>
-	| aGetResponse aResponse |
+	| aResponse |
 	self
 		assert: [ snippetAttachment isNotNil ]
 		description: [ 'Snippet attachment is not defined' ].
 
-	aGetResponse := getAttachment execute.
-	aResponse := LeClientModelExistResponse new subresponse: aGetResponse.
+	aResponse := self context client
+			endpoint: LeClientEndpoints apiAttachment;
+			authenticated;
+			entity: (ZnEntity bytes: snippetAttachment contents);
+			queryAt: #attachmentId put: snippetAttachment uidString;
+			queryAt: #database put: serverDatabaseId;
+			onSuccessLepiterModel;
+			get.
 	self addResponse: aResponse.
-
 	^ aResponse
 ]
 
 { #category : #'api - actions' }
-LeClientCheckAttachmentExist >> prepare [
-	getAttachment ifNotNil: [ ^ self ].
-	getAttachment := LeClientApiAttachment new
-			context: context;
-			snippetAttachment: snippetAttachment;
-			serverDatabaseId: serverDatabaseId
+LeClientApiAttachment >> prepare [
+	"nothing to do"
+
+	
 ]
 
 { #category : #accessing }
-LeClientCheckAttachmentExist >> serverDatabaseId [
+LeClientApiAttachment >> serverDatabaseId [
 	^ serverDatabaseId
 ]
 
 { #category : #accessing }
-LeClientCheckAttachmentExist >> serverDatabaseId: anObject [
+LeClientApiAttachment >> serverDatabaseId: anObject [
 	serverDatabaseId := anObject
 ]
 
 { #category : #accessing }
-LeClientCheckAttachmentExist >> snippetAttachment [
+LeClientApiAttachment >> snippetAttachment [
 	^ snippetAttachment
 ]
 
 { #category : #accessing }
-LeClientCheckAttachmentExist >> snippetAttachment: anObject [
+LeClientApiAttachment >> snippetAttachment: anObject [
 	snippetAttachment := anObject
 ]

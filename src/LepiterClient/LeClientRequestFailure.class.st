@@ -36,6 +36,13 @@ LeClientRequestFailure >> gtResponseJsonFor: aView [
 		view: #gtJsonFor:
 ]
 
+{ #category : #accessing }
+LeClientRequestFailure >> model [
+	"Return a domain object or nil."
+
+	^ nil
+]
+
 { #category : #printing }
 LeClientRequestFailure >> printOn: stream [
 	super printOn: stream.

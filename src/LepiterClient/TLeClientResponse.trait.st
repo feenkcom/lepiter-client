@@ -15,6 +15,19 @@ TLeClientResponse >> description [
 	^ self printString
 ]
 
+{ #category : #'gt - extensions' }
+TLeClientResponse >> gtResponsesFor: aView [
+	<gtView>
+	^ aView columnedTree
+		title: 'Responses';
+		priority: 20;
+		items: [ { self } ];
+		expandAll;
+		children: #subresponses;
+		column: 'Description' text: #label;
+		actionUpdateButton
+]
+
 { #category : #testing }
 TLeClientResponse >> ifSuccess: successBlock ifFailure: failureBlock ifNone: noneBlock [
 	^ self isSuccess
@@ -30,6 +43,13 @@ TLeClientResponse >> isSuccess [
 { #category : #accessing }
 TLeClientResponse >> label [
 	^ self description asRopedText foreground: self color
+]
+
+{ #category : #accessing }
+TLeClientResponse >> model [
+	"Return a domain object or nil."
+
+	^ self explicitRequirement
 ]
 
 { #category : #accessing }

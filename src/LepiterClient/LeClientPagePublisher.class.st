@@ -1,14 +1,19 @@
 Class {
 	#name : #LeClientPagePublisher,
 	#superclass : #LeClientCommand,
-	#traits : 'TLeClientWithCommands',
-	#classTraits : 'TLeClientWithCommands classTrait',
 	#instVars : [
 		'page',
-		'serverDatabaseId'
+		'serverDatabaseId',
+		'attachmentPublisher',
+		'createOrUpdatePage'
 	],
 	#category : #'LepiterClient-Publishing New'
 }
+
+{ #category : #accessing }
+LeClientPagePublisher >> commands [
+	^ LeClientUtility collectionWithoutNilItemsFrom: {attachmentPublisher. createOrUpdatePage}
+]
 
 { #category : #accessing }
 LeClientPagePublisher >> description [
@@ -18,21 +23,19 @@ LeClientPagePublisher >> description [
 { #category : #'api - actions' }
 LeClientPagePublisher >> execute [
 	<return: #TLeClientResponse>
-	| aResponse |
-	self commands do: #execute.
-
+	| aResponse anAttachmentResponse aPageResponse |
 	self
-		ifSuccess: [ ^ self ]
+		ifSuccess: [ ^ self lastResponse ]
 		ifFailure: [  "execute again" ]
 		ifNone: [  "execute" ].
 
-	aResponse := self context client
-			endpoint: LeClientEndpoints apiCreatePage;
-			lepiterObject: self lepiterObject;
-			authenticated;
-			onSuccessLepiterModel;
-			post.
-	LeClientCommandUtility addCommand: self subresponsesToResponse: aResponse.
+	anAttachmentResponse := attachmentPublisher execute.
+	anAttachmentResponse
+		ifSuccess: [ aPageResponse := createOrUpdatePage execute ]
+		ifFailure: [ aPageResponse := LeClientNoResponse new ]
+		ifNone: [ aPageResponse := LeClientNoResponse new ].
+	aResponse := LeClientMultiResponse new 
+		subresponses: {anAttachmentResponse. aPageResponse}.
 	self addResponse: aResponse.
 	^ aResponse
 ]
@@ -59,18 +62,37 @@ LeClientPagePublisher >> prepare [
 	self page ifNil: [  "Command is not ready for initialization"^ self ].
 
 	self prepareAttachments.
-	self commands do: #prepare
+	self prepareCreateOrUpdatePage.
 ]
 
 { #category : #private }
 LeClientPagePublisher >> prepareAttachments [
-	| anAttachmentPublisher |
-	anAttachmentPublisher := LeClientAttachmentPublisher new
+	attachmentPublisher := LeClientAttachmentPublisher new
 			context: context;
 			page: page;
 			serverDatabaseId: serverDatabaseId.
+	attachmentPublisher prepare
+]
 
-	self addCommand: anAttachmentPublisher
+{ #category : #private }
+LeClientPagePublisher >> prepareCreateOrUpdatePage [
+	createOrUpdatePage := LeClientCondition new
+			description: 'Create or update page: ' , page title;
+			context: context;
+			check: (LeClientCheckPageExist new
+					context: context;
+					page: page;
+					serverDatabaseId: serverDatabaseId);
+			onSuccess: (LeClientApiUpdatePage new
+					context: context;
+					page: page;
+					serverDatabaseId: serverDatabaseId);
+			onNotFound: (LeClientApiCreatePage new
+					context: context;
+					page: page;
+					serverDatabaseId: serverDatabaseId).
+
+	createOrUpdatePage prepare
 ]
 
 { #category : #accessing }

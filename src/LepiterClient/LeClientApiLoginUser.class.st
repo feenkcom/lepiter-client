@@ -1,11 +1,11 @@
 Class {
-	#name : #LeClientLogin,
+	#name : #LeClientApiLoginUser,
 	#superclass : #LeClientCommand,
 	#category : #'LepiterClient-Publishing New'
 }
 
 { #category : #'api - actions' }
-LeClientLogin >> execute [
+LeClientApiLoginUser >> execute [
 	| aResponse |
 	aResponse := self context client
 			endpoint: LeClientEndpoints apiLoginUser;
@@ -22,13 +22,13 @@ LeClientLogin >> execute [
 ]
 
 { #category : #private }
-LeClientLogin >> jsonObject [
+LeClientApiLoginUser >> jsonObject [
 	^ {'username' -> self context username.
 		'password' -> self context password} asDictionary
 ]
 
 { #category : #'api - actions' }
-LeClientLogin >> prepare [
+LeClientApiLoginUser >> prepare [
 	"do nothing"
 
 	

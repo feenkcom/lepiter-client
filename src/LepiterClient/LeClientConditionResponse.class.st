@@ -54,7 +54,7 @@ LeClientConditionResponse >> description [
 
 { #category : #testing }
 LeClientConditionResponse >> ifSuccess: successBlock ifFailure: failureBlock ifNone: noneBlock [
-	^ self subsequent
+	^ self relevant
 		ifSuccess: successBlock
 		ifFailure: failureBlock
 		ifNone: noneBlock
@@ -62,7 +62,23 @@ LeClientConditionResponse >> ifSuccess: successBlock ifFailure: failureBlock ifN
 
 { #category : #testing }
 LeClientConditionResponse >> isSuccess [
-	^ self subsequent isSuccess
+	^ self relevant isSuccess
+]
+
+{ #category : #accessing }
+LeClientConditionResponse >> model [
+	"Return a domain object or nil."
+
+	^ self
+		ifSuccess: #model
+		ifFailure: [ nil ]
+		ifNone: [ nil ]
+]
+
+{ #category : #accessing }
+LeClientConditionResponse >> relevant [
+	<return: #TLeClientResponse>
+	^ self subsequent ifNil: [ self check ]
 ]
 
 { #category : #accessing }
@@ -70,12 +86,12 @@ LeClientConditionResponse >> subresponses [
 	"Return a collection of responses of commands that were execute as a part of this response."
 
 	<return: #Collection of: #TLeClientResponse>
-	^ {check. subsequent}
+	^ LeClientUtility collectionWithoutNilItemsFrom: {check. subsequent}
 ]
 
 { #category : #accessing }
 LeClientConditionResponse >> subsequent [
-	<return: #TLeClientResponse>
+	<return: #TLeClientResponse or: nil>
 	^ subsequent
 ]
 

@@ -1,5 +1,5 @@
 Class {
-	#name : #LeClientCreateFile,
+	#name : #LeClientApiCreateFile,
 	#superclass : #LeClientCommand,
 	#instVars : [
 		'snippetAttachment'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #accessing }
-LeClientCreateFile >> blob [
+LeClientApiCreateFile >> blob [
 	<return: #String or: nil>
 	^ self
 		ifSuccess: [ :aResponse | aResponse model at: #blob ifAbsent: [ nil ] ]
@@ -17,12 +17,12 @@ LeClientCreateFile >> blob [
 ]
 
 { #category : #accessing }
-LeClientCreateFile >> description [
+LeClientApiCreateFile >> description [
 	^ 'Create attachment content: ' , self snippetAttachment name
 ]
 
 { #category : #'api - actions' }
-LeClientCreateFile >> execute [
+LeClientApiCreateFile >> execute [
 	<return: #TLeClientResponse>
 	| aResponse |
 	self
@@ -41,16 +41,16 @@ LeClientCreateFile >> execute [
 ]
 
 { #category : #'api - actions' }
-LeClientCreateFile >> prepare [
+LeClientApiCreateFile >> prepare [
 	"do nothing"
 ]
 
 { #category : #accessing }
-LeClientCreateFile >> snippetAttachment [
+LeClientApiCreateFile >> snippetAttachment [
 	^ snippetAttachment
 ]
 
 { #category : #accessing }
-LeClientCreateFile >> snippetAttachment: anObject [
+LeClientApiCreateFile >> snippetAttachment: anObject [
 	snippetAttachment := anObject
 ]

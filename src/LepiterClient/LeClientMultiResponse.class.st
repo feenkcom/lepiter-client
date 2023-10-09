@@ -33,8 +33,28 @@ LeClientMultiResponse >> description [
 ]
 
 { #category : #testing }
+LeClientMultiResponse >> ifSuccess: successBlock ifFailure: failureBlock ifNone: noneBlock [
+	^ self subresponses
+		ifEmpty: noneBlock
+		ifNotEmpty: [ self isSuccess
+				ifTrue: [ successBlock cull: self ]
+				ifFalse: [ failureBlock cull: self ] ]
+]
+
+{ #category : #testing }
 LeClientMultiResponse >> isSuccess [
-	^ self subresponses allSatisfy: #isSuccess
+	^ self subresponses isNotEmpty
+		and: [ self subresponses allSatisfy: #isSuccess ]
+]
+
+{ #category : #accessing }
+LeClientMultiResponse >> model [
+	"Return a domain object or nil."
+
+	^ self
+		ifSuccess: [ self subresponses last model ]
+		ifFailure: [ nil ]
+		ifNone: [ nil ]
 ]
 
 { #category : #accessing }
