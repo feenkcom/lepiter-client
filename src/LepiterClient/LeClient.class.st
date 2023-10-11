@@ -52,6 +52,40 @@ LeClient >> defaultContext [
 ]
 
 { #category : #'api - actions' }
+LeClient >> deleteAttachment: anAttachment fromDatabase: aDb [
+	<return: #TLeClientCommand>
+	^ LeClientApiDeleteAttachment new
+		context: self context;
+		snippetAttachment: anAttachment;
+		serverDatabaseId: aDb ledatabase asString;
+		prepare;
+		execute;
+		yourself
+]
+
+{ #category : #'api - actions' }
+LeClient >> deletePage: aPage [
+	<return: #TLeClientCommand>
+	^ LeClientApiDeletePage new
+		context: self context;
+		page: aPage;
+		prepare;
+		execute;
+		yourself
+]
+
+{ #category : #'api - actions' }
+LeClient >> deletePost: aPost [
+	<return: #TLeClientCommand>
+	^ LeClientApiDeletePost new
+		context: self context;
+		post: aPost;
+		prepare;
+		execute;
+		yourself
+]
+
+{ #category : #'api - actions' }
 LeClient >> exportPage: aPage inDatabase: aDatabaseId [
 	<return: #TLeClientCommand>
 	^ LeClientPagePublisher new
@@ -80,7 +114,8 @@ LeClient >> login [
 	^ LeClientApiLoginUser new
 		context: self context;
 		prepare;
-		execute
+		execute;
+		yourself
 ]
 
 { #category : #'api - actions' }

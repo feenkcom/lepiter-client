@@ -6,6 +6,7 @@ Class {
 
 { #category : #'api - actions' }
 LeClientApiLoginUser >> execute [
+	<return: #TLeClientResponse>
 	| aResponse |
 	aResponse := self context client
 			endpoint: LeClientEndpoints apiLoginUser;
@@ -19,6 +20,7 @@ LeClientApiLoginUser >> execute [
 				aJsonObject ];
 			post.
 	self addResponse: aResponse.
+	^ aResponse
 ]
 
 { #category : #private }

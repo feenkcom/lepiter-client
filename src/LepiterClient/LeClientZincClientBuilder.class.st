@@ -33,6 +33,7 @@ LeClientZincClientBuilder >> authenticated [
 LeClientZincClientBuilder >> build [
 	<return: #ZnClient>
 	client := ZnClient new.
+	client beOneShot.
 	client url: self url.
 	isAuthenticated ifTrue: [ client setBearerAuthentication: self context token ].
 	entity ifNotNil: [ client entity: entity ]
@@ -182,6 +183,7 @@ LeClientZincClientBuilder >> safe: aBlock [
 		aResponse subresponses: aCollection ].
 	(aResponse isSuccess and: [ onSuccessModel isNotNil ])
 		ifTrue: [ aResponse model: (onSuccessModel cull: client response) ].
+	client close.
 	^ aResponse
 ]
 

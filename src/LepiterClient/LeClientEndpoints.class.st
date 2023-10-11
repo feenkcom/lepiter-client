@@ -40,6 +40,21 @@ LeClientEndpoints class >> apiDatabases [
 ]
 
 { #category : #accessing }
+LeClientEndpoints class >> apiDeleteAttachment [
+	^ '/api/deleteAttachment'
+]
+
+{ #category : #accessing }
+LeClientEndpoints class >> apiDeletePage [
+	^ '/api/deletePage'
+]
+
+{ #category : #accessing }
+LeClientEndpoints class >> apiDeletePost [
+	^ '/api/deletePost'
+]
+
+{ #category : #accessing }
 LeClientEndpoints class >> apiLoginUser [
 	^ '/api/loginUser'
 ]
