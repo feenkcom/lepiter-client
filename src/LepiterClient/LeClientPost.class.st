@@ -11,7 +11,8 @@ Class {
 		'uuid',
 		'publishedUser',
 		'database',
-		'serverDatabase'
+		'serverDatabase',
+		'client'
 	],
 	#category : #'LepiterClient-Model'
 }
@@ -63,6 +64,16 @@ LeClientPost >> abstract [
 { #category : #accessing }
 LeClientPost >> abstract: anObject [
 	abstract := anObject
+]
+
+{ #category : #accessing }
+LeClientPost >> client [
+	^ client
+]
+
+{ #category : #accessing }
+LeClientPost >> client: anObject [
+	client := anObject
 ]
 
 { #category : #accessing }

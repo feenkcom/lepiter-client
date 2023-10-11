@@ -6,7 +6,11 @@ Class {
 		'thumbElement',
 		'descriptionElement',
 		'dateAndAuthorElement',
-		'publishedIndicator'
+		'publishedIndicator',
+		'toolbarElement',
+		'publishButton',
+		'deleteButton',
+		'post'
 	],
 	#category : #'LepiterClient-UI'
 }
@@ -48,6 +52,26 @@ LeClientPostCardElement >> buildTitleElement [
 ]
 
 { #category : #accessing }
+LeClientPostCardElement >> buildToolbarElement [
+	^ toolbarElement := BrToolbar new
+			aptitude: (BrGlamorousToolbarAptitude new spacing: 5);
+			fitContent;
+			margin: (BlInsets bottom: 5)";
+			addChild: (publishButton := BrButton new
+						aptitude: BrGlamorousButtonWithIconAptitude;
+						beSmallSize;
+						icon: BrGlamorousVectorIcons accept;
+						label: 'Publish';
+						action: [ self publish ])";
+			addChild: (deleteButton := BrButton new
+						aptitude: BrGlamorousButtonWithIconAptitude;
+						beSmallSize;
+						icon: BrGlamorousVectorIcons cancel;
+						label: 'Delete';
+						action: [ self delete ])
+]
+
+{ #category : #accessing }
 LeClientPostCardElement >> dateAndAuthorElement [
 	^ dateAndAuthorElement := BrLabel new
 			aptitude: (BrGlamorousLabelAptitude new foreground: BrGlamorousColors formLabelTextColor)
@@ -62,6 +86,14 @@ LeClientPostCardElement >> dateAndAuthorFrom: aPost [
 				text: 'Published by ' asRopedText , aPost publishedUser asRopedText bold
 						, ' at ' asRopedText
 						, aPost publishedAt printToMinute asRopedText bold ]
+]
+
+{ #category : #accessing }
+LeClientPostCardElement >> delete [
+	self post client deletePost: self post.
+	self post publishedAt: nil.
+	self post publishedUser: nil.
+	self post publishedFile: nil
 ]
 
 { #category : #accessing }
@@ -93,6 +125,7 @@ LeClientPostCardElement >> initialize [
 	contentContainer addChild: self buildThumbElement.
 	contentContainer addChild: self buildDescriptionElement.
 	contentContainer addChild: self dateAndAuthorElement.
+	contentContainer addChild: self buildToolbarElement.
 
 	self addChild: self buildPublishedIndicator.
 	self addChild: contentContainer
@@ -101,17 +134,39 @@ LeClientPostCardElement >> initialize [
 { #category : #accessing }
 LeClientPostCardElement >> isPublished: aBoolean [
 	aBoolean
-		ifTrue: [ publishedIndicator visibility: BlVisibility visible ]
-		ifFalse: [ publishedIndicator visibility: BlVisibility gone ]
+		ifTrue: [ publishedIndicator visibility: BlVisibility visible.
+			"publishButton visibility: BlVisibility gone."
+			deleteButton visibility: BlVisibility visible ]
+		ifFalse: [ publishedIndicator visibility: BlVisibility gone.
+			"publishButton visibility: BlVisibility visible."
+			deleteButton visibility: BlVisibility gone ]
+]
+
+{ #category : #accessing }
+LeClientPostCardElement >> post [
+	^ post
 ]
 
 { #category : #accessing }
 LeClientPostCardElement >> post: aPost [
+	post := aPost.
 	self title: aPost title.
 	self thumb: aPost thumbnail.
 	self description: aPost abstract.
 	self dateAndAuthorFrom: aPost.
 	self isPublished: aPost isPublished.
+]
+
+{ #category : #accessing }
+LeClientPostCardElement >> publish [
+	| aRenderedPostResponse |
+	aRenderedPostResponse := self post client createRenderedPost: self post.
+	aRenderedPostResponse isSuccess ifFalse: [ ^ aRenderedPostResponse ].
+
+	^ self post client
+		publishPost: self post
+		withAuthor: ''
+		andFile: aRenderedPostResponse filePath
 ]
 
 { #category : #accessing }

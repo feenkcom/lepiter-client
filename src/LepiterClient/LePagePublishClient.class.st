@@ -67,7 +67,7 @@ LePagePublishClient >> gtPublishFor: aView [
 					serverPostResponse := self client findPostByPage: self page.
 
 					serverPostResponse isSuccess
-						ifTrue: [ self post: serverPostResponse model ] ] ];
+						ifTrue: [ self post: (serverPostResponse model client: self client) ] ] ];
 		view: #gtMagritteFor:
 ]
 
