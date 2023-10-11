@@ -77,7 +77,7 @@ LeClient >> findPostByPage: aPage [
 { #category : #'api - actions' }
 LeClient >> login [
 	<return: #TLeClientCommand>
-	^ LeClientLogin new
+	^ LeClientApiLoginUser new
 		context: self context;
 		prepare;
 		execute
