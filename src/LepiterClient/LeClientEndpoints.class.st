@@ -30,6 +30,11 @@ LeClientEndpoints class >> apiCreatePost [
 ]
 
 { #category : #accessing }
+LeClientEndpoints class >> apiCreateRenderedPost [
+	^ '/api/createRenderedPost'
+]
+
+{ #category : #accessing }
 LeClientEndpoints class >> apiDatabases [
 	^ '/api/databases'
 ]
