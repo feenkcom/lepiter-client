@@ -5,16 +5,31 @@ Class {
 		'databaseCommand',
 		'page',
 		'postPublisher',
-		'post'
+		'post',
+		'renderedPost',
+		'publishPost',
+		'authorName'
 	],
 	#category : #'LepiterClient-Publishing New'
 }
 
 { #category : #accessing }
+LeClientRenderedPostOfPagePublisher >> authorName [
+	^ authorName
+]
+
+{ #category : #accessing }
+LeClientRenderedPostOfPagePublisher >> authorName: anObject [
+	authorName := anObject
+]
+
+{ #category : #accessing }
 LeClientRenderedPostOfPagePublisher >> commands [
 	^ LeClientUtility
 		collectionWithoutNilItemsFrom: {databaseCommand.
-				postPublisher}
+				postPublisher.
+				renderedPost.
+				publishPost}
 ]
 
 { #category : #accessing }
@@ -24,25 +39,52 @@ LeClientRenderedPostOfPagePublisher >> databaseName: aDatabaseName [
 			databaseName: aDatabaseName
 ]
 
+{ #category : #accessing }
+LeClientRenderedPostOfPagePublisher >> description [
+	^ String
+		streamContents: [ :aStream | 
+			aStream
+				nextPutAll: 'Publish page as post: ';
+				nextPutAll: (page ifNotNil: #title ifNil: [ '<undefined>' ]) ]
+]
+
 { #category : #'api - actions' }
 LeClientRenderedPostOfPagePublisher >> execute [
-	| aDbResponse aPostResponse |
+	| aDbResponse aPostResponse aRenderedPostResponse aPublishPostResponse aResponse |
 	self
 		ifSuccess: [ :aPreviousResponse | ^ aPreviousResponse ]
 		ifFailure: [  "repeat" ]
 		ifNone: [  "execute" ].
 
 	aDbResponse := databaseCommand execute.
-
 	aPostResponse := aDbResponse
 			ifSuccess: [ postPublisher
 					serverDatabaseId: aDbResponse databaseId;
 					execute ]
-			ifFailure: [ LeClientCannotExecute new subresponse: aDbResponse ]
-			ifNone: [ LeClientCannotExecute new subresponse: aDbResponse ].
+			ifFailure: [ LeClientCannotExecute new ]
+			ifNone: [ LeClientCannotExecute new ].
+	aRenderedPostResponse := aPostResponse
+			ifSuccess: [ renderedPost
+					post: aPostResponse model;
+					execute ]
+			ifFailure: [ LeClientCannotExecute new ]
+			ifNone: [ LeClientCannotExecute new ].
+	aPublishPostResponse := aRenderedPostResponse
+			ifSuccess: [ publishPost
+					post: aRenderedPostResponse post;
+					filePath: aRenderedPostResponse filePath;
+					execute ]
+			ifFailure: [ LeClientCannotExecute new ]
+			ifNone: [ LeClientCannotExecute new ].
 
-	self addResponse: aPostResponse.
-	^ aPostResponse
+	aResponse := LeClientMultiResponse new
+			subresponses: {aDbResponse.
+					aPostResponse.
+					aRenderedPostResponse.
+					aPublishPostResponse}.
+
+	self addResponse: aResponse.
+	^ aResponse
 ]
 
 { #category : #accessing }
@@ -78,8 +120,18 @@ LeClientRenderedPostOfPagePublisher >> prepare [
 		context: self context;
 		prepare.
 	postPublisher := LeClientPostPublisher new
-		context: self context;
-		post: post;
-		page: page;
-		prepare
+			context: self context;
+			post: post;
+			page: page;
+			prepare.
+	renderedPost := LeClientRenderedPostPublisher new
+			context: self context;
+			post: post;
+			page: page;
+			prepare.
+	publishPost := LeClientApiPublishPost new
+			context: self context;
+			post: post;
+			authorName: authorName;
+			prepare
 ]

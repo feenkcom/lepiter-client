@@ -34,7 +34,7 @@ LeClientRenderedPostPublisher >> commands [
 
 { #category : #accessing }
 LeClientRenderedPostPublisher >> description [
-	^ 'Publish rendered post: ' , self post title
+	^ 'Export and publish rendered post: ' , self post title
 ]
 
 { #category : #'api - actions' }
@@ -60,10 +60,10 @@ LeClientRenderedPostPublisher >> execute [
 			ifFailure: [ LeClientCannotExecute new ]
 			ifNone: [ LeClientCannotExecute new ].
 
-	aResponse := LeClientMultiResponse new
-			subresponses: {anExportResponse.
-					aResourcesResponse.
-					aCreateRenderedPostResponse}.
+	aResponse := LeClientRenderedPostResponse new
+		exportResponse: anExportResponse;
+		resourcesResponse: aResourcesResponse;
+		createRenderedPostResponse: aCreateRenderedPostResponse.
 	self addResponse: aResponse.
 	^ aResponse
 ]
@@ -75,6 +75,11 @@ LeClientRenderedPostPublisher >> filePath [
 		ifSuccess: [ createRenderedPost filePath asFileReference asPath ]
 		ifFailure: [ nil ]
 		ifNone: [ nil ]
+]
+
+{ #category : #private }
+LeClientRenderedPostPublisher >> onPostChanged [
+	createRenderedPost ifNotNil: [ :aCommand | aCommand post: post ]
 ]
 
 { #category : #accessing }
@@ -100,7 +105,8 @@ LeClientRenderedPostPublisher >> post [
 
 { #category : #accessing }
 LeClientRenderedPostPublisher >> post: aPost [
-	post := aPost
+	post := aPost.
+	self onPostChanged
 ]
 
 { #category : #'api - convenience' }
@@ -170,7 +176,7 @@ LeClientRenderedPostPublisher >> serverDatabase: aLeClientDatabase [
 LeClientRenderedPostPublisher >> serverPost [
 	<return: #LeClientPost>
 	^ self
-		ifSuccess: [ :aLastResponse | aLastResponse model ]
+		ifSuccess: [ :aLastResponse | aLastResponse model post ]
 		ifFailure: [ nil ]
 		ifNone: [ nil ]
 ]

@@ -49,6 +49,12 @@ LeClientCheckAttachmentExist >> execute [
 	^ aResponse
 ]
 
+{ #category : #private }
+LeClientCheckAttachmentExist >> onServerDatabaseIdChange [
+	getAttachment
+		ifNotNil: [ :aCommand | aCommand serverDatabaseId: serverDatabaseId ]
+]
+
 { #category : #'api - actions' }
 LeClientCheckAttachmentExist >> prepare [
 	getAttachment ifNotNil: [ ^ self ].
@@ -65,7 +71,8 @@ LeClientCheckAttachmentExist >> serverDatabaseId [
 
 { #category : #accessing }
 LeClientCheckAttachmentExist >> serverDatabaseId: anObject [
-	serverDatabaseId := anObject
+	serverDatabaseId := anObject.
+	self onServerDatabaseIdChange
 ]
 
 { #category : #accessing }

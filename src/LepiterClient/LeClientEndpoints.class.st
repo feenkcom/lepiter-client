@@ -70,6 +70,11 @@ LeClientEndpoints class >> apiPostByPage [
 ]
 
 { #category : #accessing }
+LeClientEndpoints class >> apiPublishPost [
+	^ '/api/publishPost'
+]
+
+{ #category : #accessing }
 LeClientEndpoints class >> apiUpdateAttachment [
 	^ '/api/updateAttachment'
 ]

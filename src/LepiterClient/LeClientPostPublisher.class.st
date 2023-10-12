@@ -42,6 +42,16 @@ LeClientPostPublisher >> execute [
 	^ aResponse
 ]
 
+{ #category : #private }
+LeClientPostPublisher >> onServerDatabaseIdChange [
+	createOrUpdatePost
+		ifNotNil: [ :aCommand | 
+			aCommand onSuccess serverDatabaseId: serverDatabaseId.
+			aCommand onNotFound serverDatabaseId: serverDatabaseId ].
+	pagePublisher
+		ifNotNil: [ :aCommand | aCommand serverDatabaseId: serverDatabaseId ]
+]
+
 { #category : #accessing }
 LeClientPostPublisher >> page [
 	<return: #LePage>
@@ -111,5 +121,6 @@ LeClientPostPublisher >> serverDatabaseId [
 
 { #category : #accessing }
 LeClientPostPublisher >> serverDatabaseId: aString [
-	serverDatabaseId := aString
+	serverDatabaseId := aString.
+	self onServerDatabaseIdChange
 ]

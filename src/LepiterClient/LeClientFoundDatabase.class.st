@@ -13,22 +13,24 @@ Class {
 
 { #category : #accessing }
 LeClientFoundDatabase >> database [
+	<return: #LeClientDatabase>
 	^ database
 ]
 
 { #category : #accessing }
-LeClientFoundDatabase >> database: anObject [
-	database := anObject
+LeClientFoundDatabase >> database: aLeClientDatabase [
+	database := aLeClientDatabase
 ]
 
 { #category : #accessing }
 LeClientFoundDatabase >> databaseId [
 	<return: #String>
-	^ self database uuid asString
+	^ self database ledatabase asString
 ]
 
 { #category : #accessing }
 LeClientFoundDatabase >> databaseName [
+	<return: #String>
 	^ databaseName
 ]
 

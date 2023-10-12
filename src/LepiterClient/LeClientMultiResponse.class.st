@@ -26,9 +26,11 @@ LeClientMultiResponse >> description [
 			aFailureCount := self subresponses size - aSuccessCount.
 			aSuccessCount isZero
 				ifFalse: [ aStream print: aSuccessCount.
-					aStream nextPutAll: (' success' asPluralBasedOn: aSuccessCount) ].
+					aStream nextPutAll: ' success'.
+					aSuccessCount = 1 ifFalse: [ aStream nextPutAll: 'es' ] ].
 			aFailureCount isZero
-				ifFalse: [ aStream print: aFailureCount.
+				ifFalse: [ aSuccessCount isZero ifFalse: [ aStream space ].
+					aStream print: aFailureCount.
 					aStream nextPutAll: (' failure' asPluralBasedOn: aFailureCount) ] ]
 ]
 

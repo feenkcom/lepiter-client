@@ -46,6 +46,17 @@ LeClientPagePublisher >> lepiterObject [
 		'database' -> self serverDatabaseId asString} asDictionary
 ]
 
+{ #category : #private }
+LeClientPagePublisher >> onServerDatabaseIdChange [
+	createOrUpdatePage
+		ifNotNil: [ :aCommand | 
+			aCommand check serverDatabaseId: serverDatabaseId.
+			aCommand onSuccess serverDatabaseId: serverDatabaseId.
+			aCommand onNotFound serverDatabaseId: serverDatabaseId ].
+	attachmentPublisher
+		ifNotNil: [ :aCommand | aCommand serverDatabaseId: serverDatabaseId ]
+]
+
 { #category : #accessing }
 LeClientPagePublisher >> page [
 	<return: #LePage>
@@ -103,5 +114,6 @@ LeClientPagePublisher >> serverDatabaseId [
 
 { #category : #accessing }
 LeClientPagePublisher >> serverDatabaseId: aString [
-	serverDatabaseId := aString
+	serverDatabaseId := aString.
+	self onServerDatabaseIdChange
 ]

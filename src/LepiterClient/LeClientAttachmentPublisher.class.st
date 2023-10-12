@@ -28,6 +28,15 @@ LeClientAttachmentPublisher >> execute [
 	^ aResponse
 ]
 
+{ #category : #private }
+LeClientAttachmentPublisher >> onServerDatabaseIdChange [
+	self commands
+		do: [ :aCommand | 
+			aCommand check serverDatabaseId: serverDatabaseId.
+			aCommand onSuccess serverDatabaseId: serverDatabaseId.
+			aCommand onNotFound serverDatabaseId: serverDatabaseId ]
+]
+
 { #category : #accessing }
 LeClientAttachmentPublisher >> page [
 	<return: #LePage>
@@ -52,7 +61,7 @@ LeClientAttachmentPublisher >> prepare [
 	self commands do: #prepare
 ]
 
-{ #category : #'private - actions' }
+{ #category : #private }
 LeClientAttachmentPublisher >> prepareForAttachment: aSnippetAttachment [
 	| aCommand |
 	aCommand := LeClientCondition new
@@ -82,5 +91,6 @@ LeClientAttachmentPublisher >> serverDatabaseId [
 
 { #category : #accessing }
 LeClientAttachmentPublisher >> serverDatabaseId: anObject [
-	serverDatabaseId := anObject
+	serverDatabaseId := anObject.
+	self onServerDatabaseIdChange
 ]

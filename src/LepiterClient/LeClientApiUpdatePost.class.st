@@ -57,6 +57,7 @@ LeClientApiUpdatePost >> page: anObject [
 
 { #category : #accessing }
 LeClientApiUpdatePost >> post [
+	<return: #LeClientPost>
 	^ post
 ]
 

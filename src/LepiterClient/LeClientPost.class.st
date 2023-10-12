@@ -84,9 +84,7 @@ LeClientPost >> database [
 
 { #category : #accessing }
 LeClientPost >> database: anObject [
-	self
-		assert: anObject isString
-		description: [ 'Post database must be a string: {1}' format: {anObject} ].
+	LeClientUtility  assertDatabaseId: anObject.
 	database := anObject
 ]
 

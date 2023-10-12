@@ -23,6 +23,15 @@ LeClientDatabaseNameSearcher >> databaseName: anObject [
 	databaseName := anObject
 ]
 
+{ #category : #accessing }
+LeClientDatabaseNameSearcher >> description [
+	^ String
+		streamContents: [ :aStream | 
+			aStream
+				nextPutAll: 'Get database named: ';
+				nextPutAll: (databaseName ifNil: [ '<undefined>' ]) ]
+]
+
 { #category : #'api - actions' }
 LeClientDatabaseNameSearcher >> execute [
 	<return: #TLeClientResponse>

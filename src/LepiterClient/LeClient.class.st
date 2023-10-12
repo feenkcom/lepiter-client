@@ -166,33 +166,28 @@ LeClient >> password: anUrl [
 ]
 
 { #category : #'api - actions' }
+LeClient >> publishPost: aPost withAuthor: anAuthorName andFile: aFilePath [
+	^ LeClientApiPublishPost new
+		context: self context;
+		post: aPost;
+		authorName: anAuthorName;
+		filePath: aFilePath;
+		prepare;
+		execute;
+		yourself
+]
+
+{ #category : #'api - actions' }
 LeClient >> publishPostOfPage: aPage inDatabaseNamed: aDatabaseName authorName: anAuthorName [
-	| aServerDatabase aPageResponse aPostResponse anInputPost anOutputPost aRenderedPostResponse |
-	aServerDatabase := self lookupDatabase: aDatabaseName.
-
-	aPageResponse := self
-			exportPage: aPage
-			inDatabase: aServerDatabase lepiterDatabase.
-	aPageResponse isSuccess ifFalse: [ ^ aPageResponse ].
-
-	anInputPost := LeClientPost forPage: aPage.
-	aPostResponse := self getPostForPage: aPage.
-	aPostResponse := self
-			createPost: anInputPost
-			forPage: aPage
-			inDatabase: aServerDatabase lepiterDatabase asString.
-	aPostResponse isSuccess ifFalse: [ ^ aPostResponse ].	"I think it should not be a rawData and the #createPost:forPage:inDatabase:
-	must return properly initialized object."
-	anOutputPost := aPostResponse model.
-	anOutputPost serverDatabase: aServerDatabase.
-
-	aRenderedPostResponse := self createRenderedPost: anOutputPost page: aPage.
-	aRenderedPostResponse isSuccess ifFalse: [ ^ aRenderedPostResponse ].
-
-	^ self
-		publishPost: anOutputPost
-		withAuthor: anAuthorName
-		andFile: aRenderedPostResponse filePath
+	^ LeClientRenderedPostOfPagePublisher new
+		context: self context;
+		page: aPage;
+		post: (LeClientPost forPage: aPage);
+		databaseName: aDatabaseName;
+		authorName: anAuthorName;
+		prepare;
+		execute;
+		yourself
 ]
 
 { #category : #'api - configuration' }

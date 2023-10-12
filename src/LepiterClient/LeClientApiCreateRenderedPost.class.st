@@ -38,7 +38,10 @@ LeClientApiCreateRenderedPost >> execute [
 			endpoint: LeClientEndpoints apiCreateRenderedPost;
 			jsonObject: self jsonObject;
 			authenticated;
-			onSuccessLepiterModel;
+			onSuccessLepiterModel: [ :aClientPost | 
+				LeClientRenderedPost new
+					post: aClientPost;
+					filePath: filePath ];
 			post.
 
 	self addResponse: aResponse.

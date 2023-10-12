@@ -4,6 +4,11 @@ Class {
 	#category : #'LepiterClient-Publishing New'
 }
 
+{ #category : #accessing }
+LeClientApiDatabases >> description [
+	^ 'Get databases'
+]
+
 { #category : #'api - actions' }
 LeClientApiDatabases >> execute [
 	<return: #TLeClientResponse>

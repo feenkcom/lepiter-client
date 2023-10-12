@@ -75,7 +75,7 @@ LeClientCreateAttachment >> serverDatabaseId [
 
 { #category : #accessing }
 LeClientCreateAttachment >> serverDatabaseId: aString [
-	serverDatabaseId := aString
+	serverDatabaseId := aString.
 ]
 
 { #category : #accessing }
