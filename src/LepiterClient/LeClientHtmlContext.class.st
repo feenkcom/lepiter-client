@@ -20,10 +20,11 @@ LeClientHtmlContext >> pagePath: anObject [
 
 { #category : #accessing }
 LeClientHtmlContext >> serverDatabase [
+	<return: #LeClientDatabase>
 	^ serverDatabase
 ]
 
 { #category : #accessing }
-LeClientHtmlContext >> serverDatabase: anObject [
-	serverDatabase := anObject
+LeClientHtmlContext >> serverDatabase: aLeClientDatabase [
+	serverDatabase := aLeClientDatabase
 ]

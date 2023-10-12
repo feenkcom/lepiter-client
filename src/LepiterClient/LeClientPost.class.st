@@ -42,6 +42,7 @@ LeClientPost class >> forPage: aPage [
 LeClientPost class >> leJsonV4AttributeMapping [
 	^ {#title -> #title.
 		#abstract -> #abstract.
+		#database -> #database.
 		#page -> #page.
 		#thumbnail -> #thumbnail.
 		#uuid -> #uuid.
@@ -214,12 +215,13 @@ LeClientPost >> publishedUser: anObject [
 
 { #category : #accessing }
 LeClientPost >> serverDatabase [
+	<return: #LeClientDatabase>
 	^ serverDatabase
 ]
 
 { #category : #accessing }
-LeClientPost >> serverDatabase: anObject [
-	serverDatabase := anObject
+LeClientPost >> serverDatabase: aLeClientDatabase [
+	serverDatabase := aLeClientDatabase
 ]
 
 { #category : #accessing }

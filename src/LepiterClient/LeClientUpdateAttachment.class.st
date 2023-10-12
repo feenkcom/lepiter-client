@@ -81,6 +81,7 @@ LeClientUpdateAttachment >> serverDatabaseId: aString [
 
 { #category : #accessing }
 LeClientUpdateAttachment >> snippetAttachment [
+	<return: #LeSnippetAttachment>
 	^ snippetAttachment
 ]
 

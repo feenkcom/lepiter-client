@@ -72,6 +72,7 @@ LeClientApiAttachment >> serverDatabaseId: anObject [
 
 { #category : #accessing }
 LeClientApiAttachment >> snippetAttachment [
+	<return: #LeSnippetAttachment>
 	^ snippetAttachment
 ]
 

@@ -34,7 +34,6 @@ LepiterClient >> createPost: aPost forPage: aPage inDatabase: databaseId [
 	anApResponse isSuccess ifFalse: [ ^ anApResponse ].
 
 	aServerPost := LeJsonV4 uniqueInstance deserialize: aZnClient response entity string readStream.
-	aServerPost database: aPage database.
 	
 	anApResponse model: aServerPost.
 	^ anApResponse

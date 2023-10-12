@@ -11,6 +11,7 @@ LeClientUtility class >> collectionWithoutNilItemFrom: anItemOrNil [
 
 { #category : #utilities }
 LeClientUtility class >> collectionWithoutNilItemsFrom: aCollection [
+	aCollection ifNil: [ ^ #() ].
 	^ Array
 		new: (aCollection count: #isNotNil)
 		streamContents: [ :aStream | 

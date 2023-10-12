@@ -142,7 +142,7 @@ LeClientDatabase >> lepiterDatabase [
 
 { #category : #accessing }
 LeClientDatabase >> location [
-	^ self server , '/' , self slug
+	^ self server asZnUrl / self slug
 ]
 
 { #category : #accessing }
@@ -173,7 +173,7 @@ LeClientDatabase >> posts [
 { #category : #accessing }
 LeClientDatabase >> refreshPages [
 	^ pages := (ZnClient new beOneShot
-			url: self server , '/api/pages?database=' , self ledatabase asString;
+			url: self server asZnUrl / '/api/pages' ? ('database' -> self ledatabase asString);
 			setBearerAuthentication: self token;
 			get;
 			response) entity string

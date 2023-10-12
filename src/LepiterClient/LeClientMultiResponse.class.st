@@ -62,10 +62,10 @@ LeClientMultiResponse >> subresponses [
 	"Return a collection of responses of commands that were execute as a part of this response."
 
 	<return: #Collection of: #TLeClientResponse>
-	^ subresponses 
+	^ subresponses ifNil: [ #() ]
 ]
 
 { #category : #accessing }
 LeClientMultiResponse >> subresponses: aCollection [
-	subresponses := aCollection
+	subresponses := LeClientUtility collectionWithoutNilItemsFrom: aCollection
 ]

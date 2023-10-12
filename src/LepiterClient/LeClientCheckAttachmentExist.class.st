@@ -70,6 +70,7 @@ LeClientCheckAttachmentExist >> serverDatabaseId: anObject [
 
 { #category : #accessing }
 LeClientCheckAttachmentExist >> snippetAttachment [
+	<return: #LeSnippetAttachment>
 	^ snippetAttachment
 ]
 

@@ -80,6 +80,7 @@ LeClientCreateAttachment >> serverDatabaseId: aString [
 
 { #category : #accessing }
 LeClientCreateAttachment >> snippetAttachment [
+	<return: #LeSnippetAttachment>
 	^ snippetAttachment
 ]
 

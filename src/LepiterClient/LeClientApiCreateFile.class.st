@@ -2,7 +2,7 @@ Class {
 	#name : #LeClientApiCreateFile,
 	#superclass : #LeClientCommand,
 	#instVars : [
-		'snippetAttachment'
+		'contentsProvider'
 	],
 	#category : #'LepiterClient-Publishing New'
 }
@@ -17,8 +17,20 @@ LeClientApiCreateFile >> blob [
 ]
 
 { #category : #accessing }
+LeClientApiCreateFile >> contentsProvider [
+	<return: #TLeClientContentsProvider>
+	^ contentsProvider
+]
+
+{ #category : #accessing }
+LeClientApiCreateFile >> contentsProvider: aTLeClientContentsProvider [
+	contentsProvider := aTLeClientContentsProvider
+]
+
+{ #category : #accessing }
 LeClientApiCreateFile >> description [
-	^ 'Create attachment content: ' , self snippetAttachment name
+	^ 'Create content: '
+		, (self contentsProvider ifNotNil: #name ifNil: [ '<undefined>' ])
 ]
 
 { #category : #'api - actions' }
@@ -26,14 +38,22 @@ LeClientApiCreateFile >> execute [
 	<return: #TLeClientResponse>
 	| aResponse |
 	self
-		assert: [ snippetAttachment isNotNil ]
-		description: [ 'Snippet attachment is not defined' ].
+		ifSuccess: [ :aPreviousResponse | ^ aPreviousResponse ]
+		ifFailure: [  "repeat" ]
+		ifNone: [  "execute" ].
+	
+	self
+		assert: [ contentsProvider isNotNil ]
+		description: [ 'contents provider is not defined' ].
 
 	aResponse := self context client
 			endpoint: LeClientEndpoints apiCreateFile;
 			authenticated;
-			entity: (ZnEntity bytes: snippetAttachment contents);
-			onSuccessJsonModel;
+			bytes: contentsProvider bytes;
+			onSuccessJsonModel: [ :aDictionary |
+				LeClientCreateFile new
+					jsonObject: aDictionary;
+					contentsProvider: contentsProvider ];
 			post.
 
 	self addResponse: aResponse.
@@ -45,12 +65,14 @@ LeClientApiCreateFile >> prepare [
 	"do nothing"
 ]
 
-{ #category : #accessing }
-LeClientApiCreateFile >> snippetAttachment [
-	^ snippetAttachment
+{ #category : #'api - convenience' }
+LeClientApiCreateFile >> resource: aTLeExportResource [
+	contentsProvider := LeClientExportResourceContents new
+			resource: aTLeExportResource
 ]
 
-{ #category : #accessing }
-LeClientApiCreateFile >> snippetAttachment: anObject [
-	snippetAttachment := anObject
+{ #category : #'api - convenience' }
+LeClientApiCreateFile >> snippetAttachment: aSnippetAttachment [
+	contentsProvider := LeClientSnippetAttachmentContents new
+			snippetAttachment: aSnippetAttachment
 ]

@@ -119,6 +119,20 @@ LeClient >> getPostForPage: aPage [
 		yourself
 ]
 
+{ #category : #'gt - extensions' }
+LeClient >> gtDatabasesFor: aView [
+	<gtView>
+	self token ifNil: [ ^ aView empty ].
+
+	^ aView columnedList
+		priority: 1;
+		title: 'Databases';
+		items: [ self databases ];
+		column: 'Name' text: #name;
+		column: 'Description' text: #description weight: 2;
+		column: 'Location' text: #location
+]
+
 { #category : #'api - actions' }
 LeClient >> login [
 	<return: #TLeClientCommand>

@@ -39,6 +39,13 @@ LeClientZincClientBuilder >> build [
 	entity ifNotNil: [ client entity: entity ]
 ]
 
+{ #category : #'api - configuration' }
+LeClientZincClientBuilder >> bytes: aByteArray [
+	| anEntity |
+	anEntity := ZnEntity bytes: aByteArray.
+	self entity: anEntity
+]
+
 { #category : #accessing }
 LeClientZincClientBuilder >> context [
 	<return: #LeClientContext>

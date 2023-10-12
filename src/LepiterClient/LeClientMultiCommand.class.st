@@ -1,0 +1,64 @@
+Class {
+	#name : #LeClientMultiCommand,
+	#superclass : #LeClientCommand,
+	#instVars : [
+		'commands',
+		'name'
+	],
+	#category : #'LepiterClient-Publishing New'
+}
+
+{ #category : #accessing }
+LeClientMultiCommand >> commands [
+	^ commands ifNil: [ #() ]
+]
+
+{ #category : #accessing }
+LeClientMultiCommand >> commands: anObject [
+	commands := anObject
+]
+
+{ #category : #accessing }
+LeClientMultiCommand >> description [
+	^ String
+		streamContents: [ :aStream | 
+			self name
+				ifNotNil: [ :aName | 
+					aStream
+						nextPutAll: aName asString;
+						nextPutAll: ': ' ].
+			aStream
+				print: self commands size;
+				space.
+			aStream nextPutAll: ('action' asPluralBasedOn: self commands size) ]
+]
+
+{ #category : #'api - actions' }
+LeClientMultiCommand >> execute [
+	<return: #TLeClientResponse>
+	| allResponses aResponse |
+	self
+		ifSuccess: [ :aPreviousResponse | ^ aPreviousResponse ]
+		ifFailure: [  "repeat" ]
+		ifNone: [  "execute" ].
+
+	allResponses := commands collect: #execute.
+	aResponse := LeClientMultiResponse new subresponses: allResponses.
+	self addResponse: aResponse.
+	^ aResponse
+]
+
+{ #category : #accessing }
+LeClientMultiCommand >> name [
+	^ name
+]
+
+{ #category : #accessing }
+LeClientMultiCommand >> name: anObject [
+	name := anObject
+]
+
+{ #category : #'api - actions' }
+LeClientMultiCommand >> prepare [
+	commands do: #prepare
+]
