@@ -18,7 +18,7 @@ LeClientApiCreatePage >> execute [
 	<return: #TLeClientResponse>
 	| aResponse |
 	self
-		ifSuccess: [ ^ self ]
+		ifSuccess: [ :aPreviousResponse | ^ aPreviousResponse ]
 		ifFailure: [  "execute again" ]
 		ifNone: [  "execute" ].
 

@@ -12,7 +12,7 @@ LeClientApiDeletePost >> execute [
 	<return: #TLeClientResponse>
 	| aResponse |
 	self
-		ifSuccess: [ ^ self ]
+		ifSuccess: [ :aPreviousResponse | ^ aPreviousResponse ]
 		ifFailure: [  "repeat" ]
 		ifNone: [  "execute" ].
 

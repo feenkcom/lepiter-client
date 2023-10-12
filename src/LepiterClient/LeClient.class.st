@@ -109,6 +109,17 @@ LeClient >> findPostByPage: aPage [
 ]
 
 { #category : #'api - actions' }
+LeClient >> getPostForPage: aPage [
+	<return: #TLeClientCommand>
+	^ LeClientApiPostByPage new
+		context: self context;
+		page: aPage;
+		prepare;
+		execute;
+		yourself
+]
+
+{ #category : #'api - actions' }
 LeClient >> login [
 	<return: #TLeClientCommand>
 	^ LeClientApiLoginUser new

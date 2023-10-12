@@ -35,7 +35,8 @@ LeClientCreateAttachment >> execute [
 	self contentBlob ifNil: [ self commands do: #execute ].
 
 	aResponse := self contentBlob
-			ifNil: [ LeClientCannotExecute new ]
+			ifNil: [ LeClientCannotExecute new 
+				subresponse: createFile lastResponse ]
 			ifNotNil: [ self context client
 					endpoint: LeClientEndpoints apiCreateAttachment;
 					authenticated;

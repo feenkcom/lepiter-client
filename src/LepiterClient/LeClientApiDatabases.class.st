@@ -11,9 +11,10 @@ LeClientApiDatabases >> execute [
 	aResponse := self context client
 			endpoint: LeClientEndpoints apiDatabases;
 			authenticated;
-			onSuccessLepiterModel: [ :aCollection "set context" | 
+			onSuccessLepiterModel: [ :aCollection | 
 				aCollection
 					do: [ :aDatabase | 
+						"set context"
 						aDatabase
 							server: self context serverUrl;
 							token: self context token ] ];
