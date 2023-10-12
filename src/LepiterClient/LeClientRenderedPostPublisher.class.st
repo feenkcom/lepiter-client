@@ -3,15 +3,10 @@ Class {
 	#superclass : #LeClientCommand,
 	#instVars : [
 		'page',
-		'htmlContext',
-		'pageLinks',
 		'serverDatabase',
-		'htmlSequencer',
-		'htmlExporter',
 		'post',
 		'resourcesCommand',
 		'createRenderedPost',
-		'pageOutputResponse',
 		'postExporter'
 	],
 	#category : #'LepiterClient-Publishing New'
@@ -71,6 +66,15 @@ LeClientRenderedPostPublisher >> execute [
 					aCreateRenderedPostResponse}.
 	self addResponse: aResponse.
 	^ aResponse
+]
+
+{ #category : #'api - responses' }
+LeClientRenderedPostPublisher >> filePath [
+	<return: #RelativePath>
+	^ self
+		ifSuccess: [ createRenderedPost filePath asFileReference asPath ]
+		ifFailure: [ nil ]
+		ifNone: [ nil ]
 ]
 
 { #category : #accessing }
@@ -160,4 +164,13 @@ LeClientRenderedPostPublisher >> serverDatabase [
 { #category : #accessing }
 LeClientRenderedPostPublisher >> serverDatabase: aLeClientDatabase [
 	serverDatabase := aLeClientDatabase
+]
+
+{ #category : #'api - responses' }
+LeClientRenderedPostPublisher >> serverPost [
+	<return: #LeClientPost>
+	^ self
+		ifSuccess: [ :aLastResponse | aLastResponse model ]
+		ifFailure: [ nil ]
+		ifNone: [ nil ]
 ]
