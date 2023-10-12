@@ -16,6 +16,14 @@ LeClientExportResourceContents >> basename [
 ]
 
 { #category : #accessing }
+LeClientExportResourceContents >> bytes [
+	<return: #ByteArray>
+	^ self resource state isReady
+		ifTrue: [ self resource reference binaryContents ]
+		ifFalse: [ nil ]
+]
+
+{ #category : #accessing }
 LeClientExportResourceContents >> name [
 	<return: #String>
 	^ self resource pathName

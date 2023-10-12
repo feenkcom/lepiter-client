@@ -15,6 +15,17 @@ LeClientPageOutputResponse >> contents [
 	^ resource contents
 ]
 
+{ #category : #accessing }
+LeClientPageOutputResponse >> description [
+	^ 'ready'
+]
+
+{ #category : #accessing }
+LeClientPageOutputResponse >> filePath [
+	<return: #String>
+	^ resource pageLink fileName
+]
+
 { #category : #testing }
 LeClientPageOutputResponse >> isSuccess [
 	^ true
@@ -24,7 +35,8 @@ LeClientPageOutputResponse >> isSuccess [
 LeClientPageOutputResponse >> model [
 	"Return a domain object or nil."
 
-	^ self resource
+	<return: #LeExportPageOutputResource>
+	^ resource
 ]
 
 { #category : #accessing }

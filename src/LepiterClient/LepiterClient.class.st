@@ -40,7 +40,7 @@ LepiterClient >> createPost: aPost forPage: aPage inDatabase: databaseId [
 ]
 
 { #category : #accessing }
-LepiterClient >> createRenderedPost: aServerPost [
+LepiterClient >> createRenderedPost: aServerPost page: aLePage [
 	| postUuid postDirectory filePath figureCode anEntity aClient aResponse anApResponse basename |
 	postUuid := aServerPost uuid.
 	postDirectory := (FileLocator temp asFileReference
@@ -380,12 +380,14 @@ LepiterClient >> publishPostOfPage: aPage inDatabaseNamed: aDatabaseName authorN
 					createPost: anInputPost
 					forPage: aPage
 					inDatabase: aServerDatabase lepiterDatabase asString ].
-	aPostResponse isSuccess ifFalse: [ ^ aPostResponse ].	"I think it should not be a rawData and the #createPost:forPage:inDatabase:
+	aPostResponse isSuccess ifFalse: [ ^ aPostResponse ].	
+	
+	"I think it should not be a rawData and the #createPost:forPage:inDatabase:
 	must return properly initialized object."
 	anOutputPost := aPostResponse model.
 	anOutputPost serverDatabase: aServerDatabase.
 
-	aRenderedPostResponse := self createRenderedPost: anOutputPost.
+	aRenderedPostResponse := self createRenderedPost: anOutputPost page: aPage.
 	aRenderedPostResponse isSuccess ifFalse: [ ^ aRenderedPostResponse ].
 
 	^ self

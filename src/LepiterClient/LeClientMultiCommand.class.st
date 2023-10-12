@@ -14,8 +14,8 @@ LeClientMultiCommand >> commands [
 ]
 
 { #category : #accessing }
-LeClientMultiCommand >> commands: anObject [
-	commands := anObject
+LeClientMultiCommand >> commands: aCollection [
+	commands := LeClientUtility collectionWithoutNilItemsFrom: aCollection
 ]
 
 { #category : #accessing }

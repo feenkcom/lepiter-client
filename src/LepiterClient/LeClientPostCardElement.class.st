@@ -160,7 +160,9 @@ LeClientPostCardElement >> post: aPost [
 { #category : #accessing }
 LeClientPostCardElement >> publish [
 	| aRenderedPostResponse |
-	aRenderedPostResponse := self post client createRenderedPost: self post.
+	aRenderedPostResponse := self post client
+			createRenderedPost: self post
+			page: nil.
 	aRenderedPostResponse isSuccess ifFalse: [ ^ aRenderedPostResponse ].
 
 	^ self post client

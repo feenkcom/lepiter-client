@@ -11,7 +11,7 @@ Class {
 LeClientApiCreateFile >> blob [
 	<return: #String or: nil>
 	^ self
-		ifSuccess: [ :aResponse | aResponse model at: #blob ifAbsent: [ nil ] ]
+		ifSuccess: [ :aResponse | aResponse model ifNotNil: #blob ]
 		ifFailure: [ :aResponse | nil ]
 		ifNone: [ nil ]
 ]
