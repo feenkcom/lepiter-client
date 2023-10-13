@@ -7,7 +7,8 @@ Class {
 		'pageLinks',
 		'page',
 		'serverDatabase',
-		'htmlExporter'
+		'htmlExporter',
+		'pagePath'
 	],
 	#category : #'LepiterClient-Publishing New'
 }
@@ -63,6 +64,11 @@ LeClientPostExporter >> exportPage [
 	^ aPageOutputResponse
 ]
 
+{ #category : #private }
+LeClientPostExporter >> onServerDatabaseChanged [
+	htmlContext ifNotNil: [ :aContext | aContext serverDatabase: serverDatabase ]
+]
+
 { #category : #accessing }
 LeClientPostExporter >> page [
 	<return: #LePage>
@@ -91,6 +97,7 @@ LeClientPostExporter >> prepareHtmlContext [
 			pageLinks: pageLinks;
 			sequencer: htmlSequencer;
 			database: page database;
+			pagePath: pagePath;
 			serverDatabase: serverDatabase
 ]
 
@@ -138,5 +145,6 @@ LeClientPostExporter >> serverDatabase [
 
 { #category : #accessing }
 LeClientPostExporter >> serverDatabase: aLeClientDatabase [
-	serverDatabase := aLeClientDatabase
+	serverDatabase := aLeClientDatabase.
+	self onServerDatabaseChanged.
 ]

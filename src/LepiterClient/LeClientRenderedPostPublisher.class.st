@@ -82,6 +82,11 @@ LeClientRenderedPostPublisher >> onPostChanged [
 	createRenderedPost ifNotNil: [ :aCommand | aCommand post: post ]
 ]
 
+{ #category : #private }
+LeClientRenderedPostPublisher >> onServerDatabaseChanged [
+	postExporter ifNotNil: [ :aCommand | aCommand serverDatabase: serverDatabase ]
+]
+
 { #category : #accessing }
 LeClientRenderedPostPublisher >> page [
 	<return: #LePage>
@@ -173,7 +178,8 @@ LeClientRenderedPostPublisher >> serverDatabase [
 
 { #category : #accessing }
 LeClientRenderedPostPublisher >> serverDatabase: aLeClientDatabase [
-	serverDatabase := aLeClientDatabase
+	serverDatabase := aLeClientDatabase.
+	self onServerDatabaseChanged
 ]
 
 { #category : #'api - responses' }

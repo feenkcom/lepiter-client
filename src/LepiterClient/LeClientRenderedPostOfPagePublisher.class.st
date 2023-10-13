@@ -66,6 +66,7 @@ LeClientRenderedPostOfPagePublisher >> execute [
 	aRenderedPostResponse := aPostResponse
 			ifSuccess: [ renderedPost
 					post: aPostResponse model;
+					serverDatabase: aDbResponse database;
 					execute ]
 			ifFailure: [ LeClientCannotExecute new ]
 			ifNone: [ LeClientCannotExecute new ].
