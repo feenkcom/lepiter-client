@@ -1,39 +1,39 @@
 Class {
-	#name : #LeClientDatabaseNameSearcher,
+	#name : #LeClientOrganizationNameSearcher,
 	#superclass : #LeClientCommand,
 	#instVars : [
-		'databaseName',
-		'apiDatabases'
+		'apiDatabases',
+		'organizationName'
 	],
 	#category : #'LepiterClient-Publishing New'
 }
 
 { #category : #accessing }
-LeClientDatabaseNameSearcher >> commands [
+LeClientOrganizationNameSearcher >> commands [
 	^ LeClientUtility collectionWithoutNilItemFrom: apiDatabases
 ]
 
 { #category : #accessing }
-LeClientDatabaseNameSearcher >> databaseName [
-	^ databaseName
+LeClientOrganizationNameSearcher >> databaseName [
+	^ organizationName
 ]
 
 { #category : #accessing }
-LeClientDatabaseNameSearcher >> databaseName: anObject [
-	databaseName := anObject
+LeClientOrganizationNameSearcher >> databaseName: anObject [
+	organizationName := anObject
 ]
 
 { #category : #accessing }
-LeClientDatabaseNameSearcher >> description [
+LeClientOrganizationNameSearcher >> description [
 	^ String
 		streamContents: [ :aStream | 
 			aStream
-				nextPutAll: 'Get database named: ';
-				nextPutAll: (databaseName ifNil: [ '<undefined>' ]) ]
+				nextPutAll: 'Get organization named: ';
+				nextPutAll: (organizationName ifNil: [ '<undefined>' ]) ]
 ]
 
 { #category : #'api - actions' }
-LeClientDatabaseNameSearcher >> execute [
+LeClientOrganizationNameSearcher >> execute [
 	<return: #TLeClientResponse>
 	| aDbsResponse aResponse |
 	self
@@ -45,14 +45,14 @@ LeClientDatabaseNameSearcher >> execute [
 
 	aResponse := aDbsResponse
 			ifSuccess: [ aDbsResponse model
-					detect: [ :eachDb | eachDb name = databaseName ]
+					detect: [ :eachDb | eachDb name = organizationName ]
 					ifFound: [ :aDb | 
-						LeClientFoundDatabase new
+						LeClientFoundOrganization new
 							database: aDb;
-							databaseName: databaseName;
+							databaseName: organizationName;
 							subresponse: aDbsResponse ]
-					ifNone: [ LeClientNoneDatabase new
-							databaseName: databaseName;
+					ifNone: [ LeClientNoneOrganization new
+							databaseName: organizationName;
 							subresponse: aDbsResponse ] ]
 			ifFailure: [ LeClientCannotExecute new subresponse: aDbsResponse ]
 			ifNone: [ LeClientCannotExecute new subresponse: aDbsResponse ].
@@ -61,7 +61,7 @@ LeClientDatabaseNameSearcher >> execute [
 ]
 
 { #category : #'api - actions' }
-LeClientDatabaseNameSearcher >> prepare [
+LeClientOrganizationNameSearcher >> prepare [
 	apiDatabases := LeClientApiDatabases new context: self context.
 	apiDatabases prepare
 ]

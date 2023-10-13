@@ -1,5 +1,5 @@
 Class {
-	#name : #LeClientFoundDatabase,
+	#name : #LeClientFoundOrganization,
 	#superclass : #Object,
 	#traits : 'TLeClientResponse',
 	#classTraits : 'TLeClientResponse classTrait',
@@ -12,57 +12,57 @@ Class {
 }
 
 { #category : #accessing }
-LeClientFoundDatabase >> database [
+LeClientFoundOrganization >> database [
 	<return: #LeClientOrganization>
 	^ database
 ]
 
 { #category : #accessing }
-LeClientFoundDatabase >> database: aLeClientDatabase [
+LeClientFoundOrganization >> database: aLeClientDatabase [
 	database := aLeClientDatabase
 ]
 
 { #category : #accessing }
-LeClientFoundDatabase >> databaseId [
+LeClientFoundOrganization >> databaseId [
 	<return: #String>
 	^ self database ledatabase asString
 ]
 
 { #category : #accessing }
-LeClientFoundDatabase >> databaseName [
+LeClientFoundOrganization >> databaseName [
 	<return: #String>
 	^ databaseName
 ]
 
 { #category : #accessing }
-LeClientFoundDatabase >> databaseName: anObject [
+LeClientFoundOrganization >> databaseName: anObject [
 	databaseName := anObject
 ]
 
 { #category : #accessing }
-LeClientFoundDatabase >> description [
+LeClientFoundOrganization >> description [
 	^ 'found'
 ]
 
 { #category : #testing }
-LeClientFoundDatabase >> isSuccess [
+LeClientFoundOrganization >> isSuccess [
 	^ true
 ]
 
 { #category : #accessing }
-LeClientFoundDatabase >> model [
+LeClientFoundOrganization >> model [
 	"Return a domain object or nil."
 
 	^ self database
 ]
 
 { #category : #accessing }
-LeClientFoundDatabase >> subresponse: anObject [
+LeClientFoundOrganization >> subresponse: anObject [
 	subresponse := anObject
 ]
 
 { #category : #accessing }
-LeClientFoundDatabase >> subresponses [
+LeClientFoundOrganization >> subresponses [
 	"Return a collection of responses of commands that were execute as a part of this response."
 
 	<return: #Collection of: #TLeClientResponse>

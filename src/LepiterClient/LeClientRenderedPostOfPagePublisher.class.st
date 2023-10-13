@@ -34,7 +34,7 @@ LeClientRenderedPostOfPagePublisher >> commands [
 
 { #category : #accessing }
 LeClientRenderedPostOfPagePublisher >> databaseName: aDatabaseName [
-	databaseCommand := LeClientDatabaseNameSearcher new
+	databaseCommand := LeClientOrganizationNameSearcher new
 			context: self context;
 			databaseName: aDatabaseName
 ]

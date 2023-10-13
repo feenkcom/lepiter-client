@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 LeClientApiDatabases >> description [
-	^ 'Get databases'
+	^ 'Get organizations'
 ]
 
 { #category : #'api - actions' }

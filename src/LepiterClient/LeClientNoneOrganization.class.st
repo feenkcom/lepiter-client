@@ -1,5 +1,5 @@
 Class {
-	#name : #LeClientNoneDatabase,
+	#name : #LeClientNoneOrganization,
 	#superclass : #Object,
 	#traits : 'TLeClientResponse',
 	#classTraits : 'TLeClientResponse classTrait',
@@ -11,34 +11,34 @@ Class {
 }
 
 { #category : #accessing }
-LeClientNoneDatabase >> databaseName [
+LeClientNoneOrganization >> databaseName [
 	^ databaseName
 ]
 
 { #category : #accessing }
-LeClientNoneDatabase >> databaseName: anObject [
+LeClientNoneOrganization >> databaseName: anObject [
 	databaseName := anObject
 ]
 
 { #category : #accessing }
-LeClientNoneDatabase >> description [
+LeClientNoneOrganization >> description [
 	^ 'not found'
 ]
 
 { #category : #accessing }
-LeClientNoneDatabase >> model [
+LeClientNoneOrganization >> model [
 	"Return a domain object or nil."
 
 	^ nil
 ]
 
 { #category : #accessing }
-LeClientNoneDatabase >> subresponse: anObject [
+LeClientNoneOrganization >> subresponse: anObject [
 	subresponse := anObject
 ]
 
 { #category : #accessing }
-LeClientNoneDatabase >> subresponses [
+LeClientNoneOrganization >> subresponses [
 	"Return a collection of responses of commands that were execute as a part of this response."
 
 	<return: #Collection of: #TLeClientResponse>
