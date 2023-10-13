@@ -218,15 +218,19 @@ LeClientPublishPostForm >> publish [
 	aClient := LepiterClient new
 			server: server;
 			username: username;
-			password: password;
-			login.
+			password: password.
+	result := aResult := aClient login
+				ifSuccess: [ 
+					| aCommand |
+					aCommand := aClient
+						publishPostOfPage: self page
+						inDatabaseNamed: self database
+						authorName: self author.
+					aCommand lastResponse ]
+				ifFailure: [ :aFailure | aFailure ]
+				ifNone: [ LeClientNoResponse new ].
 
-	result := aResult := aClient
-			publishPostOfPage: self page
-			inDatabaseNamed: self database
-			authorName: self author.
-
-	result isSuccess
+	aResult isSuccess
 		ifFalse: [ LeClientRequestError new
 				client: aClient;
 				result: aResult;

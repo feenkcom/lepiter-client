@@ -37,9 +37,11 @@ LeClientLoginPane >> magritteAcceptAction [
 					client := LepiterClient new
 							server: self server;
 							username: self username;
-							password: self password;
-							login.
-					self onLogin value: client ])
+							password: self password.
+					client login
+						ifSuccess: [ self onLogin value: client ]
+						ifFailure: [  ]
+						ifNone: [  ] ])
 ]
 
 { #category : #accessing }
