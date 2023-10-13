@@ -191,6 +191,12 @@ LepiterClient >> publishPostOfPage: aPage inDatabaseNamed: aDatabaseName authorN
 ]
 
 { #category : #'api - configuration' }
+LepiterClient >> server [
+	<return: #ZnUrl>
+	^ self context serverUrl
+]
+
+{ #category : #'api - configuration' }
 LepiterClient >> server: anUrl [
 	self serverUrl: anUrl
 ]
