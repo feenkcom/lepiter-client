@@ -26,6 +26,13 @@ LeClientNoneDatabase >> description [
 ]
 
 { #category : #accessing }
+LeClientNoneDatabase >> model [
+	"Return a domain object or nil."
+
+	^ nil
+]
+
+{ #category : #accessing }
 LeClientNoneDatabase >> subresponse: anObject [
 	subresponse := anObject
 ]

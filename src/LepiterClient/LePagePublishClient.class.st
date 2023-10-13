@@ -7,10 +7,16 @@ Class {
 		'client',
 		'page',
 		'post',
-		'server'
+		'server',
+		'allResults'
 	],
 	#category : #'LepiterClient-UI'
 }
+
+{ #category : #private }
+LePagePublishClient >> addResult: aResult [
+	allResults add: aResult
+]
 
 { #category : #accessing }
 LePagePublishClient >> client [
@@ -21,6 +27,22 @@ LePagePublishClient >> client [
 LePagePublishClient >> client: aClient [
 	client := aClient.
 	self server: aClient server
+]
+
+{ #category : #accessing }
+LePagePublishClient >> gtCommandsFor: aView [
+	<gtView>
+	^ aView columnedTree
+		title: 'Results';
+		priority: 80;
+		items: [ allResults ifNil: [ #() ] ];
+		children: #commands;
+		expandAll;
+		column: 'Description' text: #description;
+		column: 'Response'
+			text: [ :aCommand | aCommand lastResponse ifNotNil: #label ]
+			width: 120;
+		actionUpdateButton
 ]
 
 { #category : #accessing }
@@ -62,10 +84,11 @@ LePagePublishClient >> gtPublishFor: aView [
 		object: [ LeClientPublishPageForm new
 				client: self client;
 				page: self page;
-				onPublish: [ :aPost | 
+				onPublish: [ :aResult | 
 					| serverPostResponse |
+					self addResult: aResult.
 					serverPostResponse := self client findPostByPage: self page.
-
+					self addResult: serverPostResponse.
 					serverPostResponse isSuccess
 						ifTrue: [ self post: (serverPostResponse model client: self client) ] ] ];
 		view: #gtMagritteFor:
@@ -73,7 +96,8 @@ LePagePublishClient >> gtPublishFor: aView [
 
 { #category : #accessing }
 LePagePublishClient >> initialize [
-	super initialize
+	super initialize.
+	allResults := OrderedCollection new
 ]
 
 { #category : #accessing }

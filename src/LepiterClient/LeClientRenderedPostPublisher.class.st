@@ -141,13 +141,17 @@ LeClientRenderedPostPublisher >> prepareHtmlResource: aResource [
 
 { #category : #private }
 LeClientRenderedPostPublisher >> prepareHtmlResources [
-	| resourceCommandsAndNils |
+	| commandsAndNils onlyCommands |
 	resourcesCommand ifNotNil: [ ^ self ].
-	resourceCommandsAndNils := postExporter resources
+	commandsAndNils := postExporter resources
 			collect: [ :aResource | self prepareHtmlResource: aResource ].
-	resourcesCommand := LeClientMultiCommand new
-			name: 'Publish resources';
-			commands: (resourceCommandsAndNils reject: #isNil).
+	onlyCommands := commandsAndNils reject: #isNil.
+
+	resourcesCommand := onlyCommands
+		ifNotEmpty: [ LeClientMultiCommand new
+					name: 'Publish resources';
+					commands: onlyCommands ]
+		ifEmpty: [ LeClientNoActionCommand ready ].
 	resourcesCommand prepare
 ]
 

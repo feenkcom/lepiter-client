@@ -11,19 +11,6 @@ Class {
 }
 
 { #category : #'gt - extensions' }
-LeClientRequestFailure >> gtRequestJsonFor: aView [
-	<gtView>
-	self isNoContent ifTrue: [ ^ aView empty ].
-	self contentType main = 'application' ifFalse: [ ^ aView empty ].
-	self contentType sub = 'json' ifFalse: [ ^ aView empty ].
-	^ aView forward
-		title: 'Request';
-		priority: 5;
-		object: [ self request ];
-		view: #gtJsonFor:
-]
-
-{ #category : #'gt - extensions' }
 LeClientRequestFailure >> gtResponseJsonFor: aView [
 	<gtView>
 	self isNoContent ifTrue: [ ^ aView empty ].

@@ -7,6 +7,11 @@ Class {
 	#category : #'LepiterClient-Publishing New'
 }
 
+{ #category : #accessing }
+LeClientApiPostByPage >> description [
+	^ 'Get post by page: ' , (page ifNotNil: #title ifNil: [ '<undefined>' ])
+]
+
 { #category : #'api - actions' }
 LeClientApiPostByPage >> execute [
 	<return: #TLeClientResponse>

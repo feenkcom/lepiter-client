@@ -24,6 +24,8 @@ LeClientMultiResponse >> description [
 			| aSuccessCount aFailureCount |
 			aSuccessCount := self subresponses count: #isSuccess.
 			aFailureCount := self subresponses size - aSuccessCount.
+			self subresponses size isZero
+				ifTrue: [ aStream nextPutAll: 'missing responses' ].
 			aSuccessCount isZero
 				ifFalse: [ aStream print: aSuccessCount.
 					aStream nextPutAll: ' success'.

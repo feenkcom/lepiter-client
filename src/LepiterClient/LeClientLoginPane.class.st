@@ -12,7 +12,7 @@ Class {
 
 { #category : #accessing }
 LeClientLoginPane >> asElement [
-	^ self asGtMagritteViewModel asElement
+	^ self asGtMagritteViewModel asElement padding: (BlInsets all: 10)
 ]
 
 { #category : #accessing }
@@ -33,15 +33,18 @@ LeClientLoginPane >> magritteAcceptAction [
 	^ super magritteAcceptAction
 		onSuccessCallback: (GtMagritteCallback new
 				action: [ :aModel :aButton :aMemento :aDescription | 
-					| client |
-					client := LepiterClient new
+					| aClient aCommand |
+					aClient := LepiterClient new
 							server: self server;
 							username: self username;
 							password: self password.
-					client login
-						ifSuccess: [ self onLogin value: client ]
-						ifFailure: [  ]
-						ifNone: [  ] ])
+					aCommand := aClient login.
+					aCommand isSuccess
+						ifTrue: [ self onLogin value: aClient ]
+						ifFalse: [ LeClientRequestError new
+								client: aClient;
+								result: aCommand;
+								signal ] ])
 ]
 
 { #category : #accessing }
@@ -86,7 +89,7 @@ LeClientLoginPane >> server: anObject [
 { #category : #accessing }
 LeClientLoginPane >> serverDescription [
 	<magritteDescription>
-	^ MAStringDescription new beReadOnly
+	^ MAStringDescription new
 		priority: 1;
 		label: 'Server';
 		accessor: #server

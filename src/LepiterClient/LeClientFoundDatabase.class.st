@@ -50,6 +50,13 @@ LeClientFoundDatabase >> isSuccess [
 ]
 
 { #category : #accessing }
+LeClientFoundDatabase >> model [
+	"Return a domain object or nil."
+
+	^ self database
+]
+
+{ #category : #accessing }
 LeClientFoundDatabase >> subresponse: anObject [
 	subresponse := anObject
 ]

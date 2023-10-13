@@ -33,6 +33,20 @@ TLeClientZincResponse >> entity [
 ]
 
 { #category : #'gt - extensions' }
+TLeClientZincResponse >> gtRequestJsonFor: aView [
+	<gtView>
+	self request entity ifNil: [ ^ aView empty ].
+	self request contentType ifNil: [ ^ aView empty ].
+	self request contentType main = 'application' ifFalse: [ ^ aView empty ].
+	self request contentType sub = 'json' ifFalse: [ ^ aView empty ].
+	^ aView forward
+		title: 'Request';
+		priority: 70;
+		object: [ self request ];
+		view: #gtJsonFor:
+]
+
+{ #category : #'gt - extensions' }
 TLeClientZincResponse >> gtResponseJsonFor: aView [
 	<gtView>
 	self response ifNil: [ ^ aView empty ].
