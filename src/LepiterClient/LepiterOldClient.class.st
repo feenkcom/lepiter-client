@@ -246,23 +246,23 @@ LepiterOldClient >> getPostForPage: aPage [
 ]
 
 { #category : #'gt - extensions' }
-LepiterOldClient >> gtDatabasesFor: aView [
+LepiterOldClient >> gtMagritteFor: aView [
+	<gtView>
+	^ (super gtMagritteFor: aView) title: 'Login'
+]
+
+{ #category : #'gt - extensions' }
+LepiterOldClient >> gtOrganizationsFor: aView [
 	<gtView>
 	self token ifNil: [ ^ aView empty ].
 
 	^ aView columnedList
 		priority: 1;
-		title: 'Databases';
+		title: 'Organizations';
 		items: [ self databases ];
 		column: 'Name' text: #name;
 		column: 'Description' text: #description;
 		column: 'Location' text: #location
-]
-
-{ #category : #'gt - extensions' }
-LepiterOldClient >> gtMagritteFor: aView [
-	<gtView>
-	^ (super gtMagritteFor: aView) title: 'Login'
 ]
 
 { #category : #accessing }

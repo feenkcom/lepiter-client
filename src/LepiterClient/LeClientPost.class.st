@@ -213,7 +213,7 @@ LeClientPost >> publishedUser: anObject [
 
 { #category : #accessing }
 LeClientPost >> serverDatabase [
-	<return: #LeClientDatabase>
+	<return: #LeClientOrganization>
 	^ serverDatabase
 ]
 

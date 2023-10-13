@@ -20,6 +20,15 @@ LeClientUtility class >> assertDatabaseId: aDatabaseId [
 ]
 
 { #category : #utilities }
+LeClientUtility class >> assertUUID: anUUID [
+	self assert: [ anUUID isNotNil ] description: [ 'UUID must be non-nil' ].
+
+	self
+		assert: [ anUUID isKindOf: UUID ]
+		description: [ 'UUID must be kind of UUID: {1}' format: {anUUID} ]
+]
+
+{ #category : #utilities }
 LeClientUtility class >> collectionWithoutNilItemFrom: anItemOrNil [
 	^ anItemOrNil ifNotNil: [ :anItem | {anItem} ] ifNil: [ #() ]
 ]

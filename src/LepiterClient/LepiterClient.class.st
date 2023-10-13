@@ -132,13 +132,13 @@ LepiterClient >> getPostForPage: aPage [
 ]
 
 { #category : #'gt - extensions' }
-LepiterClient >> gtDatabasesFor: aView [
+LepiterClient >> gtOrganizationsFor: aView [
 	<gtView>
 	self token ifNil: [ ^ aView empty ].
 
 	^ aView columnedList
 		priority: 1;
-		title: 'Databases';
+		title: 'Organizations';
 		items: [ self databases ];
 		column: 'Name' text: #name;
 		column: 'Description' text: #description weight: 2;

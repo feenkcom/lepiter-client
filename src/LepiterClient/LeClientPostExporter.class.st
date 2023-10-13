@@ -139,7 +139,7 @@ LeClientPostExporter >> resources [
 
 { #category : #accessing }
 LeClientPostExporter >> serverDatabase [
-	<return: #LeClientDatabase>
+	<return: #LeClientOrganization>
 	^ serverDatabase
 ]
 

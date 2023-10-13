@@ -13,7 +13,7 @@ Class {
 
 { #category : #accessing }
 LeClientFoundDatabase >> database [
-	<return: #LeClientDatabase>
+	<return: #LeClientOrganization>
 	^ database
 ]
 

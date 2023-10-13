@@ -1,5 +1,5 @@
 Class {
-	#name : #LeClientDatabase,
+	#name : #LeClientOrganization,
 	#superclass : #Object,
 	#instVars : [
 		'server',
@@ -17,7 +17,7 @@ Class {
 }
 
 { #category : #accessing }
-LeClientDatabase class >> leJsonV4AttributeMapping [
+LeClientOrganization class >> leJsonV4AttributeMapping [
 	^ {#name -> #name.
 		#id -> #id.
 		#slug -> #slug.
@@ -26,22 +26,22 @@ LeClientDatabase class >> leJsonV4AttributeMapping [
 ]
 
 { #category : #accessing }
-LeClientDatabase class >> leJsonV4Name [
+LeClientOrganization class >> leJsonV4Name [
 	^ #apServerDatabase
 ]
 
 { #category : #accessing }
-LeClientDatabase >> description [
+LeClientOrganization >> description [
 	^ description
 ]
 
 { #category : #accessing }
-LeClientDatabase >> description: anObject [
+LeClientOrganization >> description: anObject [
 	description := anObject
 ]
 
 { #category : #accessing }
-LeClientDatabase >> formatDictionary [
+LeClientOrganization >> formatDictionary [
 	^ {#name -> self name.
 		#id -> self id.
 		#slug -> self slug.
@@ -49,7 +49,7 @@ LeClientDatabase >> formatDictionary [
 ]
 
 { #category : #accessing }
-LeClientDatabase >> gtOverviewFor: aView [
+LeClientOrganization >> gtOverviewFor: aView [
 	<gtView>
 	^ aView columnedList
 		title: 'Overview';
@@ -64,7 +64,7 @@ LeClientDatabase >> gtOverviewFor: aView [
 ]
 
 { #category : #accessing }
-LeClientDatabase >> gtPagesFor: aView [
+LeClientOrganization >> gtPagesFor: aView [
 	<gtView>
 	self server ifNil: [ ^ aView empty ].
 
@@ -95,7 +95,7 @@ LeClientDatabase >> gtPagesFor: aView [
 ]
 
 { #category : #accessing }
-LeClientDatabase >> gtPostsFor: aView [
+LeClientOrganization >> gtPostsFor: aView [
 	<gtView>
 	self server ifNil: [ ^ aView empty ].
 
@@ -116,62 +116,71 @@ LeClientDatabase >> gtPostsFor: aView [
 ]
 
 { #category : #accessing }
-LeClientDatabase >> id [
+LeClientOrganization >> id [
 	^ id
 ]
 
 { #category : #accessing }
-LeClientDatabase >> id: anObject [
+LeClientOrganization >> id: anObject [
 	id := anObject
 ]
 
 { #category : #accessing }
-LeClientDatabase >> ledatabase [
+LeClientOrganization >> ledatabase [
+	"Return UUID of a lepiter database instance"
+
+	<return: #UUID>
 	^ ledatabase
 ]
 
 { #category : #accessing }
-LeClientDatabase >> ledatabase: anObject [
-	ledatabase := anObject
+LeClientOrganization >> ledatabase: anUUID [
+	"Set ID of a lepiter database instance.
+	This is the {{gtClass:LeDatabase}} used on the server.
+	NOTE: I think users do not need to know about it. 
+	The information should remain on the server side."
+	
+	LeClientUtility assertUUID: anUUID.
+	ledatabase := anUUID
 ]
 
 { #category : #accessing }
-LeClientDatabase >> lepiterDatabase [
+LeClientOrganization >> lepiterDatabase [
 	^ self ledatabase
 ]
 
 { #category : #accessing }
-LeClientDatabase >> location [
+LeClientOrganization >> location [
 	^ self server asZnUrl / self slug
 ]
 
 { #category : #accessing }
-LeClientDatabase >> name [
+LeClientOrganization >> name [
 	^ name
 ]
 
 { #category : #accessing }
-LeClientDatabase >> name: anObject [
+LeClientOrganization >> name: anObject [
 	name := anObject
 ]
 
 { #category : #accessing }
-LeClientDatabase >> pageByUuid: aUuid [
+LeClientOrganization >> pageByUuid: aUuid [
 	^ self pages detect: [ :aPage | aPage uid = aUuid ]
 ]
 
 { #category : #accessing }
-LeClientDatabase >> pages [
+LeClientOrganization >> pages [
 	^ pages ifNil: [ self refreshPages ]
 ]
 
 { #category : #accessing }
-LeClientDatabase >> posts [
+LeClientOrganization >> posts [
 	^ posts ifNil: [ self refreshPosts ]
 ]
 
 { #category : #accessing }
-LeClientDatabase >> refreshPages [
+LeClientOrganization >> refreshPages [
 	^ pages := (ZnClient new beOneShot
 			url: self server asZnUrl / '/api/pages' ? ('database' -> self ledatabase asString);
 			setBearerAuthentication: self token;
@@ -181,7 +190,7 @@ LeClientDatabase >> refreshPages [
 ]
 
 { #category : #accessing }
-LeClientDatabase >> refreshPosts [
+LeClientOrganization >> refreshPosts [
 	^ posts := (((ZnClient new beOneShot
 			url: self server , '/api/posts?database=' , self ledatabase asString;
 			get;
@@ -191,41 +200,41 @@ LeClientDatabase >> refreshPosts [
 ]
 
 { #category : #accessing }
-LeClientDatabase >> server [
+LeClientOrganization >> server [
 	^ server
 ]
 
 { #category : #accessing }
-LeClientDatabase >> server: anObject [
+LeClientOrganization >> server: anObject [
 	server := anObject
 ]
 
 { #category : #accessing }
-LeClientDatabase >> slug [
+LeClientOrganization >> slug [
 	^ slug
 ]
 
 { #category : #accessing }
-LeClientDatabase >> slug: anObject [
+LeClientOrganization >> slug: anObject [
 	slug := anObject
 ]
 
 { #category : #accessing }
-LeClientDatabase >> token [
+LeClientOrganization >> token [
 	^ token
 ]
 
 { #category : #accessing }
-LeClientDatabase >> token: anObject [
+LeClientOrganization >> token: anObject [
 	token := anObject
 ]
 
 { #category : #accessing }
-LeClientDatabase >> user [
+LeClientOrganization >> user [
 	^ user
 ]
 
 { #category : #accessing }
-LeClientDatabase >> user: anObject [
+LeClientOrganization >> user: anObject [
 	user := anObject
 ]

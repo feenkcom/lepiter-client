@@ -172,7 +172,7 @@ LeClientRenderedPostPublisher >> preparePostExporter [
 
 { #category : #accessing }
 LeClientRenderedPostPublisher >> serverDatabase [
-	<return: #LeClientDatabase>
+	<return: #LeClientOrganization>
 	^ serverDatabase
 ]
 

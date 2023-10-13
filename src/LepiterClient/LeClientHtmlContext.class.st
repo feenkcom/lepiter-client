@@ -20,7 +20,7 @@ LeClientHtmlContext >> pagePath: anObject [
 
 { #category : #accessing }
 LeClientHtmlContext >> serverDatabase [
-	<return: #LeClientDatabase>
+	<return: #LeClientOrganization>
 	^ serverDatabase
 ]
 
