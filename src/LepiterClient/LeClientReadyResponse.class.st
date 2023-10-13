@@ -9,6 +9,11 @@ Class {
 	#category : #'LepiterClient-Responses'
 }
 
+{ #category : #accessing }
+LeClientReadyResponse >> description [
+	^ 'ready'
+]
+
 { #category : #testing }
 LeClientReadyResponse >> isSuccess [
 	^ true

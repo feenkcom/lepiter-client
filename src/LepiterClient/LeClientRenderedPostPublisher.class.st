@@ -148,10 +148,10 @@ LeClientRenderedPostPublisher >> prepareHtmlResources [
 	onlyCommands := commandsAndNils reject: #isNil.
 
 	resourcesCommand := onlyCommands
-		ifNotEmpty: [ LeClientMultiCommand new
+			ifNotEmpty: [ LeClientMultiCommand new
 					name: 'Publish resources';
 					commands: onlyCommands ]
-		ifEmpty: [ LeClientNoActionCommand ready ].
+			ifEmpty: [ LeClientNoActionCommand ready: 'No resources to publish' ].
 	resourcesCommand prepare
 ]
 
