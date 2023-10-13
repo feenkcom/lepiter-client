@@ -115,7 +115,6 @@ LeClientPostExporter >> prepareHtmlPageLinks [
 
 { #category : #private }
 LeClientPostExporter >> prepareHtmlResources [
-	LeHtmlAssetsUtility addGtBookAssetsInto: htmlContext resources.
 	htmlExporter buildResources
 ]
 
