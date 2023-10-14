@@ -11,6 +11,12 @@ Class {
 	#category : #'LepiterClient-Responses'
 }
 
+{ #category : #'gt - extensions' }
+LeClientRequestSuccess >> hasResponse [
+	<return: #Boolean>
+	^ true
+]
+
 { #category : #testing }
 LeClientRequestSuccess >> isSuccess [
 	^ true

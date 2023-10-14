@@ -23,6 +23,12 @@ LeClientRequestFailure >> gtResponseJsonFor: aView [
 		view: #gtJsonFor:
 ]
 
+{ #category : #'gt - extensions' }
+LeClientRequestFailure >> hasResponse [
+	<return: #Boolean>
+	^ true
+]
+
 { #category : #accessing }
 LeClientRequestFailure >> model [
 	"Return a domain object or nil."

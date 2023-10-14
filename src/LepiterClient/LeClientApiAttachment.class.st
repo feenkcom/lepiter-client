@@ -15,6 +15,7 @@ LeClientApiAttachment >> attachmentHash [
 		ifExist: [ :aResponse | aResponse model at: #hash ifAbsent: [ nil ] ]
 		ifMissing: [ nil ]
 		ifFailure: [ nil ]
+		ifException: [ nil ]
 		ifNone: [ nil ]
 ]
 
@@ -25,6 +26,7 @@ LeClientApiAttachment >> attachmentSize [
 		ifExist: [ :aResponse | aResponse model at: #size ifAbsent: [ nil ] ]
 		ifMissing: [ nil ]
 		ifFailure: [ nil ]
+		ifException: [ nil ]
 		ifNone: [ nil ]
 ]
 

@@ -20,10 +20,13 @@ TLeClientZincResponse >> contents [
 	^ self response contents
 ]
 
-{ #category : #printing }
+{ #category : #accessing }
 TLeClientZincResponse >> description [
-	^ String streamContents: [ :stream | 
-			self statusLine printCodeAndReasonOn: stream ]
+	^ String
+		streamContents: [ :stream | 
+			self hasResponse
+				ifTrue: [ self statusLine printCodeAndReasonOn: stream ]
+				ifFalse: [ stream nextPutAll: '<missing response>' ] ]
 ]
 
 { #category : #accessing }
@@ -49,6 +52,7 @@ TLeClientZincResponse >> gtRequestJsonFor: aView [
 { #category : #'gt - extensions' }
 TLeClientZincResponse >> gtResponseJsonFor: aView [
 	<gtView>
+	self hasResponse ifFalse: [ ^ aView empty ]. 
 	self response ifNil: [ ^ aView empty ].
 
 	^ aView forward
@@ -62,6 +66,12 @@ TLeClientZincResponse >> gtResponseJsonFor: aView [
 TLeClientZincResponse >> hasEntity [
 	<return: #Boolean>
 	^ self response hasEntity
+]
+
+{ #category : #'gt - extensions' }
+TLeClientZincResponse >> hasResponse [
+	<return: #Boolean>
+	^ self explicitRequirement
 ]
 
 { #category : #testing }

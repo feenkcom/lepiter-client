@@ -22,6 +22,11 @@ LeClientAttachmentPublisher >> description [
 LeClientAttachmentPublisher >> execute [
 	<return: #TLeClientResponse>
 	| aResponse |
+	self
+		ifSuccess: [ :aPreviousResponse | ^ aPreviousResponse ]
+		ifFailure: [  "repeat" ]
+		ifNone: [  "execute" ].
+
 	self commands do: #execute.
 	aResponse := LeClientMultiResponse fromCommand: self.
 	self addResponse: aResponse.
@@ -58,7 +63,9 @@ LeClientAttachmentPublisher >> prepare [
 	snippetAttachments
 		do: [ :eachAttachment | self prepareForAttachment: eachAttachment ].
 
-	self commands do: #prepare
+	self commands do: #prepare.
+	
+	self commands ifEmpty: [ self addResponse: LeClientReadyResponse new ]
 ]
 
 { #category : #private }

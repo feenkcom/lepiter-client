@@ -1,8 +1,8 @@
 Class {
-	#name : #LeClientRequestException,
+	#name : #LeClientRequestExceptionResponse,
 	#superclass : #Object,
-	#traits : 'TLeClientResponse',
-	#classTraits : 'TLeClientResponse classTrait',
+	#traits : 'TLeClientResponse + TLeClientExceptionViews',
+	#classTraits : 'TLeClientResponse classTrait + TLeClientExceptionViews classTrait',
 	#instVars : [
 		'exception',
 		'request',
@@ -12,23 +12,23 @@ Class {
 }
 
 { #category : #accessing }
-LeClientRequestException >> description [
+LeClientRequestExceptionResponse >> description [
 	^ 'exception'
 ]
 
 { #category : #accessing }
-LeClientRequestException >> exception [
+LeClientRequestExceptionResponse >> exception [
 	<return: #Exception>
 	^ exception
 ]
 
 { #category : #accessing }
-LeClientRequestException >> exception: anException [
+LeClientRequestExceptionResponse >> exception: anException [
 	exception := anException
 ]
 
 { #category : #'api - convenience' }
-LeClientRequestException >> freeze: anException [
+LeClientRequestExceptionResponse >> freeze: anException [
 	| anExceptionCopy |
 	anExceptionCopy := anException copy.
 
@@ -37,7 +37,18 @@ LeClientRequestException >> freeze: anException [
 ]
 
 { #category : #'gt - extensions' }
-LeClientRequestException >> gtRequestJsonFor: aView [
+LeClientRequestExceptionResponse >> gtExceptionMessageTextFor: aView [
+	<gtView>
+	self exception ifNil: [ ^ aView empty ].
+	^ aView forward
+		title: 'Exception message';
+		priority: 15;
+		object: [ self exception ];
+		view: #gtMessageTextFor:
+]
+
+{ #category : #'gt - extensions' }
+LeClientRequestExceptionResponse >> gtRequestJsonFor: aView [
 	<gtView>
 	self request entity ifNil: [ ^ aView empty ].
 	self request contentType ifNil: [ ^ aView empty ].
@@ -50,33 +61,44 @@ LeClientRequestException >> gtRequestJsonFor: aView [
 		view: #gtJsonFor:
 ]
 
+{ #category : #testing }
+LeClientRequestExceptionResponse >> hasResponse [
+	<return: #Boolean>
+	^ false
+]
+
+{ #category : #testing }
+LeClientRequestExceptionResponse >> isException [
+	^ true
+]
+
 { #category : #accessing }
-LeClientRequestException >> model [
+LeClientRequestExceptionResponse >> model [
 	"Return a domain object or nil."
 
 	^ nil
 ]
 
 { #category : #accessing }
-LeClientRequestException >> request [
+LeClientRequestExceptionResponse >> request [
 	<return: #ZnRequest>
 	^ request
 ]
 
 { #category : #accessing }
-LeClientRequestException >> request: aRequest [
+LeClientRequestExceptionResponse >> request: aRequest [
 	request := aRequest
 ]
 
 { #category : #accessing }
-LeClientRequestException >> subresponses [
+LeClientRequestExceptionResponse >> subresponses [
 	"Return a collection of responses of commands that were execute as a part of this response."
 
 	<return: #Collection of: #TLeClientResponse>
-	^ subresponses
+	^ subresponses ifNil: [ #() ]
 ]
 
 { #category : #accessing }
-LeClientRequestException >> subresponses: anObject [
+LeClientRequestExceptionResponse >> subresponses: anObject [
 	subresponses := anObject
 ]

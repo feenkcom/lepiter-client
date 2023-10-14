@@ -44,11 +44,12 @@ LeClientCondition >> execute [
 	checkResponse := self check execute.
 
 	checkResponse
-		ifExist: [ successPreExecutionBlock ifNotNil: [ 
-				successPreExecutionBlock cull: checkResponse cull: onSuccess ].
+		ifExist: [ successPreExecutionBlock
+				ifNotNil: [ successPreExecutionBlock cull: checkResponse cull: onSuccess ].
 			successResponse := onSuccess execute ]
 		ifMissing: [ notFoundResponse := onNotFound execute ]
 		ifFailure: [  "may happen" ]
+		ifException: [ "may happen" ]
 		ifNone: [  "must not happen" ].
 
 

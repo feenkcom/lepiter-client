@@ -27,7 +27,7 @@ LeClientNoResponse >> description [
 ]
 
 { #category : #testing }
-LeClientNoResponse >> ifExist: existBlock ifMissing: missingBlock ifFailure: failureBlock ifNone: noneBlock [
+LeClientNoResponse >> ifExist: existBlock ifMissing: missingBlock ifFailure: failureBlock ifException: exceptionBlock ifNone: noneBlock [
 	^ noneBlock value
 ]
 

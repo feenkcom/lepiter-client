@@ -40,6 +40,7 @@ LeClientConditionResponse >> color [
 		ifExist: [ self subsequent color ]
 		ifMissing: [ self subsequent color ]
 		ifFailure: [ BrGlamorousColors errorBackgroundColor ]
+		ifException: [ BrGlamorousColors errorBackgroundColor ]
 		ifNone: [ LeClientNoResponse defaultColor ]
 ]
 
@@ -49,6 +50,7 @@ LeClientConditionResponse >> description [
 		ifExist: [ self subsequent description ]
 		ifMissing: [ self subsequent description ]
 		ifFailure: [ self check description ]
+		ifException: [ self check description ]
 		ifNone: [ LeClientNoResponse defaultDescription ]
 ]
 

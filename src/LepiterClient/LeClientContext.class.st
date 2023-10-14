@@ -27,6 +27,21 @@ LeClientContext >> password: aString [
 ]
 
 { #category : #accessing }
+LeClientContext >> printOn: aStream [
+	super printOn: aStream.
+
+	self serverUrl ifNil: [ ^ self ].
+	self username ifNil: [ ^ self ].
+
+	aStream
+		nextPut: $(;
+		nextPutAll: self username asString;
+		nextPutAll: ' at ';
+		print: self serverUrl;
+		nextPut: $)
+]
+
+{ #category : #accessing }
 LeClientContext >> serverUrl [
 	<return: #ZnUrl>
 	^ serverUrl

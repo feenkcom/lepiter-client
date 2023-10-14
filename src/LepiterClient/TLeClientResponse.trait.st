@@ -36,6 +36,11 @@ TLeClientResponse >> ifSuccess: successBlock ifFailure: failureBlock ifNone: non
 ]
 
 { #category : #testing }
+TLeClientResponse >> isException [
+	^ false
+]
+
+{ #category : #testing }
 TLeClientResponse >> isSuccess [
 	^ false
 ]

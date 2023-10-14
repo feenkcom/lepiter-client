@@ -188,7 +188,7 @@ LeClientZincClientBuilder >> safe: aBlock [
 	aResponse := LeClientRequestUtility responseForZnClient: client ]
 		on: NetworkError , InvalidSocketStatusException , PrimitiveFailed
 		do: [ :anException | 
-			aResponse := LeClientRequestException new
+			aResponse := LeClientRequestExceptionResponse new
 				request: client request;
 				freeze: anException ].
 

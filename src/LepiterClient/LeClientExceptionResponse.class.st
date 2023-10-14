@@ -35,6 +35,11 @@ LeClientExceptionResponse >> freeze: anException [
 	self exception: anExceptionCopy
 ]
 
+{ #category : #testing }
+LeClientExceptionResponse >> isException [
+	^ true
+]
+
 { #category : #accessing }
 LeClientExceptionResponse >> model [
 	"Return a domain object or nil."
