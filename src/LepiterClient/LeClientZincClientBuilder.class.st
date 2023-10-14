@@ -184,13 +184,18 @@ LeClientZincClientBuilder >> safe: aBlock [
 	<return: #TLeClientResponse>
 	| aResponse |
 	client ifNil: [ self build ].
-	aBlock value.
-	aResponse := LeClientRequestUtility responseForZnClient: client.
-	subresponses ifNotNil: [ :aCollection | 
-		aResponse subresponses: aCollection ].
+	[ aBlock value.
+	aResponse := LeClientRequestUtility responseForZnClient: client ]
+		on: NetworkError , InvalidSocketStatusException , PrimitiveFailed
+		do: [ :anException | 
+			aResponse := LeClientRequestException new
+				request: client request;
+				freeze: anException ].
+
+	client close.
+	subresponses ifNotNil: [ :aCollection | aResponse subresponses: aCollection ].
 	(aResponse isSuccess and: [ onSuccessModel isNotNil ])
 		ifTrue: [ aResponse model: (onSuccessModel cull: client response) ].
-	client close.
 	^ aResponse
 ]
 
