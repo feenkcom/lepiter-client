@@ -22,7 +22,7 @@ LeClientApiCreatePage >> execute [
 		ifFailure: [  "execute again" ]
 		ifNone: [  "execute" ].
 
-	aResponse := self context client
+	aResponse := self context zinc
 			endpoint: LeClientEndpoints apiCreatePage;
 			lepiterObject: self lepiterObject;
 			authenticated;

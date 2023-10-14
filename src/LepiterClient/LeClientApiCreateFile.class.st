@@ -41,16 +41,16 @@ LeClientApiCreateFile >> execute [
 		ifSuccess: [ :aPreviousResponse | ^ aPreviousResponse ]
 		ifFailure: [  "repeat" ]
 		ifNone: [  "execute" ].
-	
+
 	self
 		assert: [ contentsProvider isNotNil ]
 		description: [ 'contents provider is not defined' ].
 
-	aResponse := self context client
+	aResponse := self context zinc
 			endpoint: LeClientEndpoints apiCreateFile;
 			authenticated;
 			bytes: contentsProvider bytes;
-			onSuccessJsonModel: [ :aDictionary |
+			onSuccessJsonModel: [ :aDictionary | 
 				LeClientCreateFile new
 					jsonObject: aDictionary;
 					contentsProvider: contentsProvider ];

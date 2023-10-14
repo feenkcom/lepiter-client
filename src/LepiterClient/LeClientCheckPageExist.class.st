@@ -17,7 +17,7 @@ LeClientCheckPageExist >> description [
 LeClientCheckPageExist >> execute [
 	<return: #TLeClientResponse>
 	| aResponse |
-	aResponse := self context client
+	aResponse := self context zinc
 			endpoint: LeClientEndpoints apiPage;
 			authenticated;
 			queryAt: #page put: page uidString;

@@ -13,13 +13,13 @@ LeClientApiDatabases >> description [
 LeClientApiDatabases >> execute [
 	<return: #TLeClientResponse>
 	| aResponse |
-	aResponse := self context client
+	aResponse := self context zinc
 			endpoint: LeClientEndpoints apiDatabases;
 			authenticated;
 			onSuccessLepiterModel: [ :aCollection | 
 				aCollection
 					do: [ :aDatabase | 
-						"set context"
+						"TODO: set context instead"
 						aDatabase
 							server: self context serverUrl;
 							token: self context token ] ];

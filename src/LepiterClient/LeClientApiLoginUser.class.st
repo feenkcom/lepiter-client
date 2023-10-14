@@ -8,7 +8,7 @@ Class {
 LeClientApiLoginUser >> execute [
 	<return: #TLeClientResponse>
 	| aResponse |
-	aResponse := self context client
+	aResponse := self context zinc
 			endpoint: LeClientEndpoints apiLoginUser;
 			noAuthentication;
 			jsonObject: self jsonObject;

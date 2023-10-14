@@ -26,7 +26,7 @@ LeClientApiUpdatePost >> execute [
 		ifFailure: [  "execute again" ]
 		ifNone: [  "execute" ].
 
-	aResponse := self context client
+	aResponse := self context zinc
 			endpoint: LeClientEndpoints apiUpdatePost;
 			jsonObject: self jsonObject;
 			authenticated;

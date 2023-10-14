@@ -36,7 +36,7 @@ LeClientUpdateAttachment >> execute [
 
 	aResponse := self contentBlob
 			ifNil: [ LeClientCannotExecute new ]
-			ifNotNil: [ self context client
+			ifNotNil: [ self context zinc
 					endpoint: LeClientEndpoints apiUpdateAttachment;
 					authenticated;
 					jsonObject: self jsonObject;

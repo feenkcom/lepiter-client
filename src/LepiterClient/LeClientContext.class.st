@@ -12,7 +12,7 @@ Class {
 
 { #category : #builders }
 LeClientContext >> client [
-	^ LeClientZincClientBuilder new context: self
+	^ LepiterClient new context: self
 ]
 
 { #category : #accessing }
@@ -57,4 +57,9 @@ LeClientContext >> username [
 { #category : #accessing }
 LeClientContext >> username: aString [
 	username := aString
+]
+
+{ #category : #builders }
+LeClientContext >> zinc [
+	^ LeClientZincClientBuilder new context: self
 ]

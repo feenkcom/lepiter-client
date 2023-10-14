@@ -34,7 +34,7 @@ LeClientApiPublishPost >> execute [
 		ifFailure: [  "execute again" ]
 		ifNone: [  "execute" ].
 
-	aResponse := self context client
+	aResponse := self context zinc
 			endpoint: LeClientEndpoints apiPublishPost;
 			jsonObject: self jsonObject;
 			authenticated;

@@ -16,7 +16,7 @@ LeClientApiPostByPage >> description [
 LeClientApiPostByPage >> execute [
 	<return: #TLeClientResponse>
 	| aResponse |
-	aResponse := self context client
+	aResponse := self context zinc
 			endpoint: LeClientEndpoints apiPostByPage;
 			authenticated;
 			queryAt: #page put: page uidString;

@@ -17,7 +17,7 @@ LeClientApiDeleteAttachment >> execute [
 		ifFailure: [  "repeat" ]
 		ifNone: [  "execute" ].
 
-	aResponse := self context client
+	aResponse := self context zinc
 			endpoint: LeClientEndpoints apiDeleteAttachment;
 			jsonObject: self jsonObject;
 			authenticated;

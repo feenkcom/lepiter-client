@@ -34,7 +34,7 @@ LeClientApiCreateRenderedPost >> execute [
 		ifFailure: [  "execute again" ]
 		ifNone: [  "execute" ].
 
-	aResponse := self context client
+	aResponse := self context zinc
 			endpoint: LeClientEndpoints apiCreateRenderedPost;
 			jsonObject: self jsonObject;
 			authenticated;

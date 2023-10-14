@@ -16,7 +16,7 @@ LeClientApiDeletePost >> execute [
 		ifFailure: [  "repeat" ]
 		ifNone: [  "execute" ].
 
-	aResponse := self context client
+	aResponse := self context zinc
 			endpoint: LeClientEndpoints apiDeletePost;
 			jsonObject: self jsonObject;
 			authenticated;

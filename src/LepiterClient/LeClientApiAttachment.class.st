@@ -41,7 +41,7 @@ LeClientApiAttachment >> execute [
 		assert: [ snippetAttachment isNotNil ]
 		description: [ 'Snippet attachment is not defined' ].
 
-	aResponse := self context client
+	aResponse := self context zinc
 			endpoint: LeClientEndpoints apiAttachment;
 			authenticated;
 			entity: (ZnEntity bytes: snippetAttachment contents);

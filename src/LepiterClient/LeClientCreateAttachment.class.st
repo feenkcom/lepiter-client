@@ -35,13 +35,12 @@ LeClientCreateAttachment >> execute [
 	self contentBlob ifNil: [ self commands do: #execute ].
 
 	aResponse := self contentBlob
-			ifNil: [ LeClientCannotExecute new 
-				subresponse: createFile lastResponse ]
-			ifNotNil: [ self context client
+			ifNil: [ LeClientCannotExecute new subresponse: createFile lastResponse ]
+			ifNotNil: [ self context zinc
 					endpoint: LeClientEndpoints apiCreateAttachment;
 					authenticated;
 					jsonObject: self jsonObject;
-					addSubresponse: (createFile lastResponse);
+					addSubresponse: createFile lastResponse;
 					post ].
 
 	self addResponse: aResponse.
