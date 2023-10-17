@@ -6,10 +6,10 @@ Class {
 		'client',
 		'database',
 		'author',
-		'result',
 		'abstract',
 		'title',
-		'onPublish'
+		'onPublish',
+		'publishCommand'
 	],
 	#classInstVars : [
 		'defaultServer',
@@ -150,11 +150,19 @@ LeClientPublishPageForm >> initialize [
 LeClientPublishPageForm >> magritteAcceptAction [
 	<magritteActionDescription>
 	^ super magritteAcceptAction
+		label: 'Publish';
+		isLabelVisible: true;
 		onSuccessCallback: (GtMagritteCallback new
 				action: [ :aModel :aButton :aMemento :aDescription | 
 					self publish.
-					self onPublish ifNotNil: [ :aBlock | aBlock value: result ] ]);
-		beEnabledOnValidAndInactiveOverallStatus
+					self onPublish ifNotNil: [ :aBlock | aBlock value: publishCommand ] ]);
+		onOverallStatusChanged: (GtMagritteBasicAction new
+				action: [ :aStatus :aButton :aMemento :aDescription | 
+					| isEnabled isVisible |
+					isVisible := publishCommand isNil or: [ publishCommand isSuccess ].
+					isEnabled := aStatus isValidAndInactive and: [ isVisible ].
+					aDescription visible: isVisible.
+					aDescription enabled: isEnabled ])
 ]
 
 { #category : #accessing }
@@ -163,6 +171,33 @@ LeClientPublishPageForm >> magritteCancelAction [
 	have `#autoAccept:` set to true."
 	<magritteActionDescription>
 	^ nil
+]
+
+{ #category : #accessing }
+LeClientPublishPageForm >> magritteRetryAction [
+	<magritteActionDescription>
+	^ MAActionDescription new
+		priority: 11;
+		label: 'Retry';
+		isLabelVisible: true;
+		blocIcon: BrGlamorousVectorIcons refresh;
+		action: (GtMagritteAction new
+				beInFutureProcess;
+				beWithFutureResponse;
+				action: [ :aModel :aButton :aMemento :aDescription | aMemento commit ]);
+		beEnabledAndChangedAndValidAndInactiveOverallStatus;
+		beToolbarAction;
+		onSuccessCallback: (GtMagritteCallback new
+				action: [ :aModel :aButton :aMemento :aDescription | 
+					self retry.
+					self onPublish ifNotNil: [ :aBlock | aBlock value: publishCommand ] ]);
+		onOverallStatusChanged: (GtMagritteBasicAction new
+				action: [ :aStatus :aButton :aMemento :aDescription | 
+					| isEnabled isVisible |
+					isVisible := (publishCommand isNotNil and: [ publishCommand isSuccess not ]).
+					isEnabled := aStatus isValidAndInactive and: [ isVisible ].
+					aDescription visible: isVisible.
+					aDescription enabled: isEnabled ])
 ]
 
 { #category : #accessing }
@@ -191,22 +226,39 @@ LeClientPublishPageForm >> page: aPage [
 
 { #category : #actions }
 LeClientPublishPageForm >> publish [
-	| aResult |
-	result := aResult := self client
+	| aCommand |
+	publishCommand := aCommand := self client
 				publishPostOfPage: self page
 				inDatabaseNamed: self database
 				authorName: self author.
 
-	result isSuccess
+	publishCommand isSuccess
 		ifFalse: [ LeClientRequestError new
 				client: self client;
-				result: aResult;
+				result: aCommand;
 				signal ]
 ]
 
 { #category : #accessing }
 LeClientPublishPageForm >> result [
-	^ result
+	<return: #LeClientRenderedPostOfPagePublisher>
+	^ publishCommand
+]
+
+{ #category : #actions }
+LeClientPublishPageForm >> retry [
+	"If the publishing was not successful, try it again"
+
+	self assert: [ publishCommand isNotNil ] description: [ 'Result must be non-nil' ].
+	publishCommand isSuccess ifTrue: [ ^ self ].
+
+	publishCommand execute.
+
+	publishCommand isSuccess
+		ifFalse: [ LeClientRequestError new
+				client: self client;
+				result: publishCommand;
+				signal ]
 ]
 
 { #category : #accessing }
