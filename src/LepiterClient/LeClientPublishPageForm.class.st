@@ -9,7 +9,8 @@ Class {
 		'abstract',
 		'title',
 		'onPublish',
-		'publishCommand'
+		'publishCommand',
+		'pageExists'
 	],
 	#classInstVars : [
 		'defaultServer',
@@ -83,6 +84,11 @@ LeClientPublishPageForm >> abstractDescription [
 ]
 
 { #category : #accessing }
+LeClientPublishPageForm >> acceptLabel [
+	^ self isExistingPage ifTrue: [ 'Republish existing page' ] ifFalse: [ 'Publish new page' ]
+]
+
+{ #category : #accessing }
 LeClientPublishPageForm >> author [
 	^ author
 ]
@@ -147,10 +153,15 @@ LeClientPublishPageForm >> initialize [
 ]
 
 { #category : #accessing }
+LeClientPublishPageForm >> isExistingPage [
+	^ pageExists ifNil: [ pageExists := (self client findPostByPage: self page) isSuccess ]
+]
+
+{ #category : #accessing }
 LeClientPublishPageForm >> magritteAcceptAction [
 	<magritteActionDescription>
 	^ super magritteAcceptAction
-		label: 'Publish';
+		label: self acceptLabel;
 		isLabelVisible: true;
 		onSuccessCallback: (GtMagritteCallback new
 				action: [ :aModel :aButton :aMemento :aDescription | 

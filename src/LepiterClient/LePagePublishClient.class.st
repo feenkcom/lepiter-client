@@ -75,9 +75,6 @@ LePagePublishClient >> gtPostFor: aView [
 { #category : #accessing }
 LePagePublishClient >> gtPublishFor: aView [
 	<gtView>
-	self client ifNil: [ ^ aView empty ].
-	(self client findPostByPage: self page) isSuccess ifTrue: [ ^ aView empty ].
-
 	^ aView forward
 		title: 'Publish';
 		priority: 2;
