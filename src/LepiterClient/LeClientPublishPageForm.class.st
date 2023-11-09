@@ -10,7 +10,8 @@ Class {
 		'title',
 		'onPublish',
 		'publishCommand',
-		'pageExists'
+		'pageExists',
+		'onCommandCreation'
 	],
 	#classInstVars : [
 		'defaultServer',
@@ -212,6 +213,16 @@ LeClientPublishPageForm >> magritteRetryAction [
 ]
 
 { #category : #accessing }
+LeClientPublishPageForm >> onCommandCreation [
+	^ onCommandCreation
+]
+
+{ #category : #accessing }
+LeClientPublishPageForm >> onCommandCreation: anObject [
+	onCommandCreation := anObject
+]
+
+{ #category : #accessing }
 LeClientPublishPageForm >> onPublish [
 	^ onPublish
 ]
@@ -239,9 +250,14 @@ LeClientPublishPageForm >> page: aPage [
 LeClientPublishPageForm >> publish [
 	| aCommand |
 	publishCommand := aCommand := self client
-				publishPostOfPage: self page
-				inDatabaseNamed: self database
+				preparePublishPostOfPage: self page
+				inOrganizationNamed: self database
 				authorName: self author.
+
+	onCommandCreation
+		ifNotNil: [ :aBlock | onCommandCreation value: publishCommand ].
+		
+	publishCommand execute.
 
 	publishCommand isSuccess
 		ifFalse: [ LeClientRequestError new

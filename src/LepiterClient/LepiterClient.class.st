@@ -166,6 +166,18 @@ LepiterClient >> password: anUrl [
 ]
 
 { #category : #'api - actions' }
+LepiterClient >> preparePublishPostOfPage: aPage inOrganizationNamed: aDatabaseName authorName: anAuthorName [
+	^ LeClientRenderedPostOfPagePublisher new
+		context: self context;
+		page: aPage;
+		post: (LeClientPost forPage: aPage);
+		databaseName: aDatabaseName;
+		authorName: anAuthorName;
+		prepare;
+		yourself
+]
+
+{ #category : #'api - actions' }
 LepiterClient >> publishPost: aPost withAuthor: anAuthorName andFile: aFilePath [
 	^ LeClientApiPublishPost new
 		context: self context;
@@ -179,15 +191,13 @@ LepiterClient >> publishPost: aPost withAuthor: anAuthorName andFile: aFilePath 
 
 { #category : #'api - actions' }
 LepiterClient >> publishPostOfPage: aPage inDatabaseNamed: aDatabaseName authorName: anAuthorName [
-	^ LeClientRenderedPostOfPagePublisher new
-		context: self context;
-		page: aPage;
-		post: (LeClientPost forPage: aPage);
-		databaseName: aDatabaseName;
-		authorName: anAuthorName;
-		prepare;
-		execute;
-		yourself
+	| aCommand |
+	aCommand := self
+			preparePublishPostOfPage: aPage
+			inOrganizationNamed: aDatabaseName
+			authorName: anAuthorName.
+	aCommand execute.
+	^ aCommand
 ]
 
 { #category : #'api - configuration' }

@@ -42,6 +42,8 @@ LePagePublishClient >> gtCommandsFor: aView [
 		column: 'Response'
 			text: [ :aCommand | aCommand lastResponse ifNotNil: #label ]
 			width: 120;
+		contextItemLabel: 'Inspect response'
+			action: [ :anElement :aTreeNode | anElement phlow spawnObject: aTreeNode value lastResponse ];
 		actionUpdateButton
 ]
 
@@ -81,9 +83,9 @@ LePagePublishClient >> gtPublishFor: aView [
 		object: [ LeClientPublishPageForm new
 				client: self client;
 				page: self page;
+				onCommandCreation: [ :aCommand | self addResult: aCommand ];
 				onPublish: [ :aResult | 
 					| serverPostResponse |
-					self addResult: aResult.
 					serverPostResponse := self client findPostByPage: self page.
 					self addResult: serverPostResponse.
 					serverPostResponse isSuccess
