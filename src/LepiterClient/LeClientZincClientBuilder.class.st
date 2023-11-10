@@ -34,6 +34,7 @@ LeClientZincClientBuilder >> build [
 	<return: #ZnClient>
 	client := ZnClient new.
 	client beOneShot.
+	client numberOfRetries: 2. "the default retryDelay is 1s, the default timeout is 30s"
 	client url: self url.
 	isAuthenticated ifTrue: [ client setBearerAuthentication: self context token ].
 	entity ifNotNil: [ client entity: entity ]
