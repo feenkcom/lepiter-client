@@ -177,6 +177,16 @@ LepiterClient >> preparePublishPostOfPage: aPage inOrganizationNamed: aDatabaseN
 		yourself
 ]
 
+{ #category : #printing }
+LepiterClient >> printOn: stream [
+	super printOn: stream.
+	stream nextPut: $(.
+	self context ifNotNil: [
+		stream nextPutAll: context username; nextPutAll: ' @ '; print: context serverUrl.
+		self context token ifNotNil: [ stream nextPutAll: ' logged in' ] ].
+	stream nextPut: $)
+]
+
 { #category : #'api - actions' }
 LepiterClient >> publishPost: aPost withAuthor: anAuthorName andFile: aFilePath [
 	^ LeClientApiPublishPost new

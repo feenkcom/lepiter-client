@@ -192,11 +192,11 @@ LeClientOrganization >> refreshPages [
 { #category : #accessing }
 LeClientOrganization >> refreshPosts [
 	^ posts := (((ZnClient new beOneShot
-			url: self server , '/api/posts?database=' , self ledatabase asString;
+			url: self server / '/api/posts' ? ('database' -> self ledatabase asString);
 			get;
 			response) entity string
 			readStreamDo: [ :aStream | LeJsonV4 uniqueInstance deserialize: aStream ])
-			at: 'posts') collect: [ :aPost | aPost database: self ]
+			at: 'posts') collect: [ :aPost | aPost database: self ledatabase asString ]
 ]
 
 { #category : #accessing }

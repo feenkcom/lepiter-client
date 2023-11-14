@@ -36,8 +36,11 @@ LeClientContext >> printOn: aStream [
 	aStream
 		nextPut: $(;
 		nextPutAll: self username asString;
-		nextPutAll: ' at ';
-		print: self serverUrl;
+		nextPutAll: ' @ ';
+		print: self serverUrl.
+	self token ifNotNil: [ 
+		aStream nextPutAll: ' logged in' ].
+	aStream	
 		nextPut: $)
 ]
 
