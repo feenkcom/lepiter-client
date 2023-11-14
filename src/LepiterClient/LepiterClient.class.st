@@ -139,7 +139,7 @@ LepiterClient >> gtOrganizationsFor: aView [
 	^ aView columnedList
 		priority: 1;
 		title: 'Organizations';
-		items: [ self databases ];
+		items: [ self organizations ];
 		column: 'Name' text: #name;
 		column: 'Description' text: #description weight: 2;
 		column: 'Location' text: #location
@@ -158,6 +158,11 @@ LepiterClient >> login [
 { #category : #'api - actions' }
 LepiterClient >> lookupDatabase: aDbName [
 	^ self databases detect: [ :aDb | aDb name = aDbName ]
+]
+
+{ #category : #accessing }
+LepiterClient >> organizations [
+	^ self databases
 ]
 
 { #category : #'api - configuration' }

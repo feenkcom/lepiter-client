@@ -18,11 +18,7 @@ LeClientApiDatabases >> execute [
 			authenticated;
 			onSuccessLepiterModel: [ :aCollection | 
 				aCollection
-					do: [ :aDatabase | 
-						"TODO: set context instead"
-						aDatabase
-							server: self context serverUrl;
-							token: self context token ] ];
+					do: [ :aLeClientOrganization | aLeClientOrganization context: self context ] ];
 			get.
 
 	self addResponse: aResponse.

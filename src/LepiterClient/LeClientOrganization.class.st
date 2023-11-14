@@ -2,8 +2,7 @@ Class {
 	#name : #LeClientOrganization,
 	#superclass : #Object,
 	#instVars : [
-		'server',
-		'token',
+		'context',
 		'pages',
 		'posts',
 		'name',
@@ -28,6 +27,17 @@ LeClientOrganization class >> leJsonV4AttributeMapping [
 { #category : #accessing }
 LeClientOrganization class >> leJsonV4Name [
 	^ #apServerDatabase
+]
+
+{ #category : #accessing }
+LeClientOrganization >> context [
+	<return: #LeClientContext>
+	^ context
+]
+
+{ #category : #accessing }
+LeClientOrganization >> context: leClientContext [
+	context := leClientContext
 ]
 
 { #category : #accessing }
@@ -66,7 +76,7 @@ LeClientOrganization >> gtOverviewFor: aView [
 { #category : #accessing }
 LeClientOrganization >> gtPagesFor: aView [
 	<gtView>
-	self server ifNil: [ ^ aView empty ].
+	self context ifNil: [ ^ aView empty ].
 
 	^ aView columnedList
 		title: 'Pages';
@@ -97,7 +107,7 @@ LeClientOrganization >> gtPagesFor: aView [
 { #category : #accessing }
 LeClientOrganization >> gtPostsFor: aView [
 	<gtView>
-	self server ifNil: [ ^ aView empty ].
+	self context ifNil: [ ^ aView empty ].
 
 	^ aView columnedList
 		title: 'Posts';
@@ -201,12 +211,7 @@ LeClientOrganization >> refreshPosts [
 
 { #category : #accessing }
 LeClientOrganization >> server [
-	^ server
-]
-
-{ #category : #accessing }
-LeClientOrganization >> server: anObject [
-	server := anObject
+	^ self context serverUrl
 ]
 
 { #category : #accessing }
@@ -221,12 +226,7 @@ LeClientOrganization >> slug: anObject [
 
 { #category : #accessing }
 LeClientOrganization >> token [
-	^ token
-]
-
-{ #category : #accessing }
-LeClientOrganization >> token: anObject [
-	token := anObject
+	^ self context token
 ]
 
 { #category : #accessing }
