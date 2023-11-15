@@ -121,11 +121,33 @@ LepiterClient >> findPostByPage: aPage [
 ]
 
 { #category : #'api - actions' }
+LepiterClient >> getPagesForOrganization: leClientOrganization [
+	<return: #TLeClientCommand>
+	^ LeClientApiPages new
+		context: self context;
+		organization: leClientOrganization;
+		prepare;
+		execute;
+		yourself
+]
+
+{ #category : #'api - actions' }
 LepiterClient >> getPostForPage: aPage [
 	<return: #TLeClientCommand>
 	^ LeClientApiPostByPage new
 		context: self context;
 		page: aPage;
+		prepare;
+		execute;
+		yourself
+]
+
+{ #category : #'api - actions' }
+LepiterClient >> getPostsForOrganization: leClientOrganization [
+	<return: #TLeClientCommand>
+	^ LeClientApiPosts new
+		context: self context;
+		organization: leClientOrganization;
 		prepare;
 		execute;
 		yourself

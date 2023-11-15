@@ -65,8 +65,18 @@ LeClientEndpoints class >> apiPage [
 ]
 
 { #category : #accessing }
+LeClientEndpoints class >> apiPages [
+	^ '/api/pages'
+]
+
+{ #category : #accessing }
 LeClientEndpoints class >> apiPostByPage [
 	^ '/api/postByPage'
+]
+
+{ #category : #accessing }
+LeClientEndpoints class >> apiPosts [
+	^ '/api/posts'
 ]
 
 { #category : #accessing }

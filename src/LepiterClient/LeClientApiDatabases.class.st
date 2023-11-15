@@ -28,6 +28,4 @@ LeClientApiDatabases >> execute [
 { #category : #'api - actions' }
 LeClientApiDatabases >> prepare [
 	"do nothing"
-
-	
 ]

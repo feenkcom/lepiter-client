@@ -181,32 +181,16 @@ LeClientOrganization >> pageByUuid: aUuid [
 
 { #category : #accessing }
 LeClientOrganization >> pages [
-	^ pages ifNil: [ self refreshPages ]
+	| command |
+	command := self context client getPagesForOrganization: self.
+	^ command model
 ]
 
 { #category : #accessing }
 LeClientOrganization >> posts [
-	^ posts ifNil: [ self refreshPosts ]
-]
-
-{ #category : #accessing }
-LeClientOrganization >> refreshPages [
-	^ pages := (ZnClient new beOneShot
-			url: self server asZnUrl / '/api/pages' ? ('database' -> self ledatabase asString);
-			setBearerAuthentication: self token;
-			get;
-			response) entity string
-			readStreamDo: [ :aStream | LeJsonV4 uniqueInstance deserialize: aStream ]
-]
-
-{ #category : #accessing }
-LeClientOrganization >> refreshPosts [
-	^ posts := (((ZnClient new beOneShot
-			url: self server / '/api/posts' ? ('database' -> self ledatabase asString);
-			get;
-			response) entity string
-			readStreamDo: [ :aStream | LeJsonV4 uniqueInstance deserialize: aStream ])
-			at: 'posts') collect: [ :aPost | aPost database: self ledatabase asString ]
+	| command |
+	command := self context client getPostsForOrganization: self.
+	^ command model at: #posts
 ]
 
 { #category : #accessing }
