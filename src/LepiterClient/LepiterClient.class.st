@@ -7,6 +7,11 @@ Class {
 	#category : #'LepiterClient-Client New'
 }
 
+{ #category : #initialization }
+LepiterClient >> close [
+	context ifNotNil: [ context close ]
+]
+
 { #category : #'api - configuration' }
 LepiterClient >> context [
 	<return: #LeClientContext>
@@ -210,7 +215,7 @@ LepiterClient >> printOn: stream [
 	stream nextPut: $(.
 	self context ifNotNil: [
 		stream nextPutAll: context username; nextPutAll: ' @ '; print: context serverUrl.
-		self context token ifNotNil: [ stream nextPutAll: ' logged in' ] ].
+		self context token ifNotNil: [ stream nextPutAll: ' with token' ] ].
 	stream nextPut: $)
 ]
 

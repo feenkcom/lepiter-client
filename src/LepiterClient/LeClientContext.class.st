@@ -5,7 +5,8 @@ Class {
 		'serverUrl',
 		'token',
 		'username',
-		'password'
+		'password',
+		'builder'
 	],
 	#category : #'LepiterClient-Client New'
 }
@@ -13,6 +14,30 @@ Class {
 { #category : #builders }
 LeClientContext >> client [
 	^ LepiterClient new context: self
+]
+
+{ #category : #builders }
+LeClientContext >> close [
+	self isCaching ifFalse: [ ^ self ].
+	builder ifNotNil: [ 
+		builder close.
+		builder := nil ]
+]
+
+{ #category : #initalization }
+LeClientContext >> initialize [
+	super initialize.
+	builder := #doNotCache
+]
+
+{ #category : #testing }
+LeClientContext >> isCaching [
+	^ builder ~= #doNotCache
+]
+
+{ #category : #builders }
+LeClientContext >> newZincClientBuilder [
+	^ LeClientZincClientBuilder new context: self
 ]
 
 { #category : #accessing }
@@ -39,7 +64,7 @@ LeClientContext >> printOn: aStream [
 		nextPutAll: ' @ ';
 		print: self serverUrl.
 	self token ifNotNil: [ 
-		aStream nextPutAll: ' logged in' ].
+		aStream nextPutAll: ' with token' ].
 	aStream	
 		nextPut: $)
 ]
@@ -79,5 +104,7 @@ LeClientContext >> username: aString [
 
 { #category : #builders }
 LeClientContext >> zinc [
-	^ LeClientZincClientBuilder new context: self
+	^ self isCaching
+		ifTrue: [ builder ifNil: [ builder := self newZincClientBuilder ] ]
+		ifFalse: [ self newZincClientBuilder ]
 ]

@@ -29,22 +29,29 @@ LeClientZincClientBuilder >> authenticated [
 	isAuthenticated := true
 ]
 
-{ #category : #'api - building' }
-LeClientZincClientBuilder >> build [
-	<return: #ZnClient>
-	client := ZnClient new.
-	client beOneShot.
-	client numberOfRetries: 2. "the default retryDelay is 1s, the default timeout is 30s"
-	client url: self url.
-	isAuthenticated ifTrue: [ client setBearerAuthentication: self context token ].
-	entity ifNotNil: [ client entity: entity ]
-]
-
 { #category : #'api - configuration' }
 LeClientZincClientBuilder >> bytes: aByteArray [
 	| anEntity |
 	anEntity := ZnEntity bytes: aByteArray.
 	self entity: anEntity
+]
+
+{ #category : #initialization }
+LeClientZincClientBuilder >> close [
+	client ifNotNil: [ 
+		client close.
+		client := nil.
+		self resetClientConfiguration ]
+]
+
+{ #category : #building }
+LeClientZincClientBuilder >> configureClient [
+	client ifNil: [ self createClient ].
+	client url: self url.
+	isAuthenticated 
+		ifTrue: [ client setBearerAuthentication: self context token ]
+		ifFalse: [ client setBearerAuthentication: nil ].
+	entity ifNotNil: [ client entity: entity ]
 ]
 
 { #category : #accessing }
@@ -56,6 +63,17 @@ LeClientZincClientBuilder >> context [
 { #category : #accessing }
 LeClientZincClientBuilder >> context: aContext [
 	context := aContext
+]
+
+{ #category : #building }
+LeClientZincClientBuilder >> createClient [
+	<return: #ZnClient>
+	client := ZnClient new.
+	client clientId: 'leClient'.
+	client numberOfRetries: 2. "the default retryDelay is 1s, the default timeout is 30s"
+	client autoResetEntityMethods: #(HEAD GET DELETE).
+	self context isCaching ifFalse: [ client beOneShot ].
+	^ client
 ]
 
 { #category : #accessing }
@@ -181,10 +199,16 @@ LeClientZincClientBuilder >> queryAt: aKey put: aValue [
 ]
 
 { #category : #building }
+LeClientZincClientBuilder >> resetClientConfiguration [
+	endpoint := entity := subresponses := nil.
+	queries removeAll
+]
+
+{ #category : #building }
 LeClientZincClientBuilder >> safe: aBlock [
 	<return: #TLeClientResponse>
 	| aResponse |
-	client ifNil: [ self build ].
+	self configureClient.
 	[ aBlock value.
 	aResponse := LeClientRequestUtility responseForZnClient: client ]
 		on: NetworkError , InvalidSocketStatusException , PrimitiveFailed
@@ -192,9 +216,8 @@ LeClientZincClientBuilder >> safe: aBlock [
 			aResponse := LeClientRequestExceptionResponse new
 				request: client request;
 				freeze: anException ].
-
-	client close.
 	subresponses ifNotNil: [ :aCollection | aResponse subresponses: aCollection ].
+	self resetClientConfiguration.
 	(aResponse isSuccess and: [ onSuccessModel isNotNil ])
 		ifTrue: [ aResponse model: (onSuccessModel cull: client response) ].
 	^ aResponse
