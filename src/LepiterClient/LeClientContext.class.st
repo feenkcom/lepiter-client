@@ -27,7 +27,7 @@ LeClientContext >> close [
 { #category : #initalization }
 LeClientContext >> initialize [
 	super initialize.
-	builder := #doNotCache
+	"builder := #doNotCache"
 ]
 
 { #category : #testing }

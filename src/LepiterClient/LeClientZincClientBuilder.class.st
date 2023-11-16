@@ -200,7 +200,7 @@ LeClientZincClientBuilder >> queryAt: aKey put: aValue [
 
 { #category : #building }
 LeClientZincClientBuilder >> resetClientConfiguration [
-	endpoint := entity := subresponses := nil.
+	endpoint := entity := subresponses := onSuccessModel := nil.
 	queries removeAll
 ]
 
@@ -217,9 +217,9 @@ LeClientZincClientBuilder >> safe: aBlock [
 				request: client request;
 				freeze: anException ].
 	subresponses ifNotNil: [ :aCollection | aResponse subresponses: aCollection ].
-	self resetClientConfiguration.
 	(aResponse isSuccess and: [ onSuccessModel isNotNil ])
 		ifTrue: [ aResponse model: (onSuccessModel cull: client response) ].
+	self resetClientConfiguration.
 	^ aResponse
 ]
 
