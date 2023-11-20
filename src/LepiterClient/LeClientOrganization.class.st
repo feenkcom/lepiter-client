@@ -190,7 +190,7 @@ LeClientOrganization >> pages [
 LeClientOrganization >> posts [
 	| command |
 	command := self context client getPostsForOrganization: self.
-	^ command model at: #posts
+	^ command model
 ]
 
 { #category : #accessing }
