@@ -23,6 +23,14 @@ LeClientApiLoginUser >> execute [
 	^ aResponse
 ]
 
+{ #category : #'gt - extensions' }
+LeClientApiLoginUser >> gtDetails [
+	^ super gtDetails , {
+		{ 'username' . self context username }.
+		{ 'password' . self context password }
+	}
+]
+
 { #category : #private }
 LeClientApiLoginUser >> jsonObject [
 	^ {'username' -> self context username.

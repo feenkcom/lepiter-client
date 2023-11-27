@@ -33,6 +33,14 @@ LeClientApiUpdatePage >> execute [
 	^ aResponse
 ]
 
+{ #category : #'gt - extensions' }
+LeClientApiUpdatePage >> gtDetails [
+	^ super gtDetails , {
+		{ 'page' . self page }.
+		{ 'server database id' . self serverDatabaseId }
+	}
+]
+
 { #category : #private }
 LeClientApiUpdatePage >> lepiterObject [
 	^ {'page' -> self page.

@@ -37,6 +37,19 @@ LeClientApiUpdatePost >> execute [
 	^ aResponse
 ]
 
+{ #category : #'gt - extensions' }
+LeClientApiUpdatePost >> gtDetails [
+	^ super gtDetails , {
+		{ 'post' . self post }.
+		{ 'post id' . self postId ifNil: [ '' ] }.
+		{ 'title' . self post title }.
+		{ 'abstract' . self post abstract }.
+		{ 'thumbnail' . self post thumbnail }.
+		{ 'page' . self page }.
+		{ 'server database id' . self serverDatabaseId }
+	}
+]
+
 { #category : #private }
 LeClientApiUpdatePost >> jsonObject [
 	^ {'post' -> self postId.

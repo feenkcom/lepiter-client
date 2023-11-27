@@ -60,6 +60,14 @@ LeClientOrganizationNameSearcher >> execute [
 	^ aResponse
 ]
 
+{ #category : #'gt - extensions' }
+LeClientOrganizationNameSearcher >> gtDetails [
+	^ super gtDetails , {
+		{ 'organization name' . organizationName }.
+		{ '1. get databases' . apiDatabases classAndDescription . apiDatabases }
+	}
+]
+
 { #category : #'api - actions' }
 LeClientOrganizationNameSearcher >> prepare [
 	apiDatabases := LeClientApiDatabases new context: self context.

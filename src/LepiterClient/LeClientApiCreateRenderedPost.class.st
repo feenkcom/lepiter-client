@@ -69,6 +69,17 @@ LeClientApiCreateRenderedPost >> filePath: anObject [
 	filePath := anObject
 ]
 
+{ #category : #'gt - extensions' }
+LeClientApiCreateRenderedPost >> gtDetails [
+	^ super gtDetails , {
+		{ 'post' . post }.
+		{ 'post id' . post uuid asString. post uuid }.
+		{ 'file path' . filePath }.
+		{ 'contents' . contents }.
+		{ 'figures' . figures }
+	}
+]
+
 { #category : #accessing }
 LeClientApiCreateRenderedPost >> jsonObject [
 	^ Dictionary new

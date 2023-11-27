@@ -40,6 +40,16 @@ LeClientPagePublisher >> execute [
 	^ aResponse
 ]
 
+{ #category : #'gt - extensions' }
+LeClientPagePublisher >> gtDetails [
+	^ super gtDetails , {
+		{ 'page' . self page }.
+		{ 'server database id' . self serverDatabaseId }.
+		{ '1. publish attachments' . attachmentPublisher classAndDescription. attachmentPublisher }.
+		{ '2. create or update page' . createOrUpdatePage classAndDescription. createOrUpdatePage }
+	}
+]
+
 { #category : #private }
 LeClientPagePublisher >> lepiterObject [
 	^ {'page' -> self page.

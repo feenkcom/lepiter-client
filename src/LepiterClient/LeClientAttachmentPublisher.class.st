@@ -33,6 +33,16 @@ LeClientAttachmentPublisher >> execute [
 	^ aResponse
 ]
 
+{ #category : #'gt - extensions' }
+LeClientAttachmentPublisher >> gtDetails [
+	^ super gtDetails , {
+		{ 'page' . self page }.
+		{ 'server database id' . self serverDatabaseId }.
+		{ 'snippet attachments' . snippetAttachments size. snippetAttachments }.
+		{ 'n. create or update attachments' . self commands size . self commands }
+	}
+]
+
 { #category : #private }
 LeClientAttachmentPublisher >> onServerDatabaseIdChange [
 	self commands

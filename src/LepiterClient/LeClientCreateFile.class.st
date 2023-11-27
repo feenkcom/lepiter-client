@@ -25,6 +25,21 @@ LeClientCreateFile >> contentsProvider: anObject [
 	contentsProvider := anObject
 ]
 
+{ #category : #'gt - extensions' }
+LeClientCreateFile >> gtDetailsFor: aView [
+	<gtView>
+	^ aView columnedList
+		  title: 'Details';
+		  priority: 30;
+		  items: [ {
+		  	{ 'contents provider' . self contentsProvider }.
+		  	{ 'json object' . self jsonObject }
+		  } ];
+		  column: 'Key' text: #first;
+		  column: 'Value' text: #second weight: 5;
+		  send: #last
+]
+
 { #category : #accessing }
 LeClientCreateFile >> jsonObject [
 	<return: #Dictionary or: #Array>

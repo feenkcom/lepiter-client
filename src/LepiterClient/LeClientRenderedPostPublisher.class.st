@@ -77,6 +77,18 @@ LeClientRenderedPostPublisher >> filePath [
 		ifNone: [ nil ]
 ]
 
+{ #category : #'gt - extensions' }
+LeClientRenderedPostPublisher >> gtDetails [
+	^ super gtDetails , {
+		{ 'page' . page }.
+		{ 'post' . post }.
+		{ 'server database' . serverDatabase }.
+		{ '1. export post' . postExporter classAndDescription . postExporter }.
+		{ '2. create resources' . resourcesCommand commands size . resourcesCommand }.
+		{ '3. create rendered post' . createRenderedPost classAndDescription . createRenderedPost }
+	}
+]
+
 { #category : #private }
 LeClientRenderedPostPublisher >> onPostChanged [
 	createRenderedPost ifNotNil: [ :aCommand | aCommand post: post ]

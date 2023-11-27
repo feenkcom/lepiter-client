@@ -42,6 +42,15 @@ LeClientFoundOrganization >> description [
 	^ 'found'
 ]
 
+{ #category : #'gt - extensions' }
+LeClientFoundOrganization >> gtDetails [
+	^ super gtDetails , {
+		{ 'database' . database }.
+		{ 'database name' . databaseName }.
+		{ 'database id' . self databaseId }
+	}
+]
+
 { #category : #testing }
 LeClientFoundOrganization >> isSuccess [
 	^ true

@@ -25,6 +25,14 @@ LeClientModelExistResponse >> description [
 ]
 
 { #category : #'gt - extensions' }
+LeClientModelExistResponse >> gtDetails [
+	^ super gtDetails , {
+		{ 'http request' . self request }.
+		{ 'http response' . self response }
+	}
+]
+
+{ #category : #'gt - extensions' }
 LeClientModelExistResponse >> hasResponse [
 	<return: #Boolean>
 	^ self subresponse ifNotNil: #hasResponse ifNil: [ false ]

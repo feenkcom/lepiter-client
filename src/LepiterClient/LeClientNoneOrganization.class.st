@@ -23,6 +23,13 @@ LeClientNoneOrganization >> description [
 	^ 'not found'
 ]
 
+{ #category : #'gt - extensions' }
+LeClientNoneOrganization >> gtDetails [
+	^ super gtDetails , {
+		{ 'database name' . databaseName }
+	}
+]
+
 { #category : #accessing }
 LeClientNoneOrganization >> model [
 	"Return a domain object or nil."

@@ -26,6 +26,13 @@ LeClientApiPosts >> execute [
 	^ aResponse
 ]
 
+{ #category : #'gt - extensions' }
+LeClientApiPosts >> gtDetails [
+	^ super gtDetails , {
+		{ 'organization' . self organization }
+	}
+]
+
 { #category : #accessing }
 LeClientApiPosts >> organization [
 	<return: #LeClientOrganizatoin>

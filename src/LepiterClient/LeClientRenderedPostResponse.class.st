@@ -48,6 +48,17 @@ LeClientRenderedPostResponse >> filePath [
 		ifNone: [ nil ]
 ]
 
+{ #category : #'gt - extensions' }
+LeClientRenderedPostResponse >> gtDetails [
+	^ super gtDetails , {
+		{ 'export post response' . exportResponse }.
+		{ 'create resources response' . resourcesResponse }.
+		{ 'create rendered post response' . createRenderedPostResponse }.
+		{ 'filepath' . self filePath }.
+		{ 'server post' . self serverPost }
+	}
+]
+
 { #category : #testing }
 LeClientRenderedPostResponse >> isSuccess [
 	^ self subresponses

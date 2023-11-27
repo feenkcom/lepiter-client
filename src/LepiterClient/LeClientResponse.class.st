@@ -16,7 +16,7 @@ LeClientResponse >> gtDetails [
 		{ 'color' . 9632 asCharacter asString asRopedText foreground: self color . self color }.
 		{ 'label' . self label }.
 		{ 'subresponses' . self subresponses size . self subresponses }.
-		{ 'model' . self model }
+		{ 'model' . self model ifNil: [ '' ] . self model }
 	}
 ]
 

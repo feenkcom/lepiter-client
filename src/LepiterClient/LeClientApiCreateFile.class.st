@@ -60,6 +60,13 @@ LeClientApiCreateFile >> execute [
 	^ aResponse
 ]
 
+{ #category : #'gt - extensions' }
+LeClientApiCreateFile >> gtDetails [
+	^ super gtDetails , {
+		{ 'contents provider' . self contentsProvider ifNil: [ '' ] . self contentsProvider }
+	}
+]
+
 { #category : #'api - actions' }
 LeClientApiCreateFile >> prepare [
 	"do nothing"

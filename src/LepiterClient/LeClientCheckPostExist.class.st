@@ -28,6 +28,16 @@ LeClientCheckPostExist >> execute [
 	^ aResponse
 ]
 
+{ #category : #'gt - extensions' }
+LeClientCheckPostExist >> gtDetails [
+	^ super gtDetails , {
+		{ 'page' . self page }.
+		{ '1. get post'
+			. getPost classAndDescription
+			. getPost }
+	}
+]
+
 { #category : #accessing }
 LeClientCheckPostExist >> page [
 	<return: #LePage>

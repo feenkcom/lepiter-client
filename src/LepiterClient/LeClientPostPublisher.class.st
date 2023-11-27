@@ -42,6 +42,21 @@ LeClientPostPublisher >> execute [
 	^ aResponse
 ]
 
+{ #category : #'gt - extensions' }
+LeClientPostPublisher >> gtDetails [
+	^ super gtDetails , {
+		{ 'page' . self page }.
+		{ 'server database id' . self serverDatabaseId }.
+		{ 'post' . self post }.
+		{ '1. page publisher' 
+			. pagePublisher classAndDescription
+			. pagePublisher }.
+		{ '2. post creator/updater' 
+			. createOrUpdatePost classAndDescription
+			. createOrUpdatePost }
+	}
+]
+
 { #category : #private }
 LeClientPostPublisher >> onServerDatabaseIdChange [
 	createOrUpdatePost

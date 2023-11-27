@@ -33,6 +33,13 @@ LeClientExceptionResponse >> freeze: anException [
 	self exception: anExceptionCopy
 ]
 
+{ #category : #'gt - extensions' }
+LeClientExceptionResponse >> gtDetails [
+	^ super gtDetails , {
+		{ 'exception' . exception }
+	}
+]
+
 { #category : #testing }
 LeClientExceptionResponse >> isException [
 	^ true

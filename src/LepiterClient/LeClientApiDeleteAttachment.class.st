@@ -27,6 +27,14 @@ LeClientApiDeleteAttachment >> execute [
 	^ aResponse
 ]
 
+{ #category : #'gt - extensions' }
+LeClientApiDeleteAttachment >> gtDetails [
+	^ super gtDetails , {
+		{ 'snippet attachment' . self snippetAttachment }.
+		{ 'server database id' . self serverDatabaseId }
+	}
+]
+
 { #category : #accessing }
 LeClientApiDeleteAttachment >> jsonObject [
 	^ Dictionary new

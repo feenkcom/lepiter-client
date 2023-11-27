@@ -11,6 +11,14 @@ Class {
 }
 
 { #category : #'gt - extensions' }
+LeClientRequestFailure >> gtDetails [
+	^ super gtDetails , {
+		{ 'http request' . self request }.
+		{ 'http response' . self response }
+	}
+]
+
+{ #category : #'gt - extensions' }
 LeClientRequestFailure >> gtResponseJsonFor: aView [
 	<gtView>
 	self isNoContent ifTrue: [ ^ aView empty ].

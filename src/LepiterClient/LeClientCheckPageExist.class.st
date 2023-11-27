@@ -30,6 +30,14 @@ LeClientCheckPageExist >> execute [
 	^ aResponse
 ]
 
+{ #category : #'gt - extensions' }
+LeClientCheckPageExist >> gtDetails [
+	^ super gtDetails , {
+		{ 'page' . self page }.
+		{ 'server database id' . self serverDatabaseId }
+	}
+]
+
 { #category : #accessing }
 LeClientCheckPageExist >> page [
 	<return: #LePage>

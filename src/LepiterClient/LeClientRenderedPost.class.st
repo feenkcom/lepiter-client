@@ -22,6 +22,21 @@ LeClientRenderedPost >> filePath: aString [
 	filePath := aString
 ]
 
+{ #category : #'gt - extensions' }
+LeClientRenderedPost >> gtDetailsFor: aView [
+	<gtView>
+	^ aView columnedList
+		  title: 'Details';
+		  priority: 30;
+		  items: [ {
+		  	{ 'post' . self post }.
+		  	{ 'file path' . self filePath }
+		  } ];
+		  column: 'Key' text: #first;
+		  column: 'Value' text: #second weight: 5;
+		  send: #last
+]
+
 { #category : #accessing }
 LeClientRenderedPost >> post [
 	<return: #LeClientPost>

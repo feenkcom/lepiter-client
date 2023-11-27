@@ -33,6 +33,14 @@ LeClientApiCreatePage >> execute [
 	^ aResponse
 ]
 
+{ #category : #'gt - extensions' }
+LeClientApiCreatePage >> gtDetails [
+	^ super gtDetails , {
+		{ 'page' . self page }.
+		{ 'server database id' . self serverDatabaseId }
+	}
+]
+
 { #category : #private }
 LeClientApiCreatePage >> lepiterObject [
 	^ {'page' -> self page.

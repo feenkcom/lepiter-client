@@ -64,6 +64,19 @@ LeClientPostExporter >> exportPage [
 	^ aPageOutputResponse
 ]
 
+{ #category : #'gt - extensions' }
+LeClientPostExporter >> gtDetails [
+	^ super gtDetails , {
+		{ 'page' . page }.
+		{ 'server database' . serverDatabase }.
+		{ 'page links' . pageLinks }.
+		{ 'page path' . pagePath }.
+		{ 'html sequencer' . htmlSequencer }.
+		{ 'html context' . htmlContext }.
+		{ 'html exporter' . htmlExporter }
+	}
+]
+
 { #category : #private }
 LeClientPostExporter >> onServerDatabaseChanged [
 	htmlContext ifNotNil: [ :aContext | aContext serverDatabase: serverDatabase ]

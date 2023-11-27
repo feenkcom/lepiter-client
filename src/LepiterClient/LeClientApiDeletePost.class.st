@@ -26,6 +26,13 @@ LeClientApiDeletePost >> execute [
 	^ aResponse
 ]
 
+{ #category : #'gt - extensions' }
+LeClientApiDeletePost >> gtDetails [
+	^ super gtDetails , {
+		{ 'post' . self post }
+	}
+]
+
 { #category : #accessing }
 LeClientApiDeletePost >> jsonObject [
 	^ Dictionary new

@@ -52,6 +52,21 @@ LeClientConditionResponse >> description [
 		ifNone: [ LeClientNoResponse defaultDescription ]
 ]
 
+{ #category : #'gt - extensions' }
+LeClientConditionResponse >> gtDetails [
+	^ super gtDetails , {
+		{ '1. check'
+			. self check classAndDescription
+			. self check }.
+		{ '2. subsequent'
+			. self subsequent classAndDescription
+			. self subsequent }.
+		{ 'relevant'
+			. self relevant classAndDescription
+			. self relevant }
+	}
+]
+
 { #category : #testing }
 LeClientConditionResponse >> ifSuccess: successBlock ifFailure: failureBlock ifNone: noneBlock [
 	^ self relevant

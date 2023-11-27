@@ -26,6 +26,13 @@ LeClientApiPostByPage >> execute [
 	^ aResponse
 ]
 
+{ #category : #'gt - extensions' }
+LeClientApiPostByPage >> gtDetails [
+	^ super gtDetails , {
+		{ 'page' . self page }
+	}
+]
+
 { #category : #accessing }
 LeClientApiPostByPage >> page [
 	<return: #LePage>

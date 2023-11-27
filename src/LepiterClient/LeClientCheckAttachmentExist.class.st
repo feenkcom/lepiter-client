@@ -51,6 +51,17 @@ LeClientCheckAttachmentExist >> execute [
 	^ aResponse
 ]
 
+{ #category : #'gt - extensions' }
+LeClientCheckAttachmentExist >> gtDetails [
+	^ super gtDetails , {
+		{ 'snippet attachment' . self snippetAttachment }.
+		{ 'server database id' . self serverDatabaseId }.
+		{ '1. get attachment'
+			. getAttachment classAndDescription
+			. getAttachment }
+	}
+]
+
 { #category : #private }
 LeClientCheckAttachmentExist >> onServerDatabaseIdChange [
 	getAttachment

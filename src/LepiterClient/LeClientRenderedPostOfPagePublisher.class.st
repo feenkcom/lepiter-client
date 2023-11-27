@@ -88,6 +88,19 @@ LeClientRenderedPostOfPagePublisher >> execute [
 	^ aResponse
 ]
 
+{ #category : #'gt - extensions' }
+LeClientRenderedPostOfPagePublisher >> gtDetails [
+	^ super gtDetails , {
+		{ 'page' . page }.
+		{ 'post' . post }.
+		{ 'author name' . authorName }.
+		{ '1. get databases' . databaseCommand classAndDescription. databaseCommand }.
+		{ '2. publish post' . postPublisher classAndDescription. postPublisher }.
+		{ '3. render post' . renderedPost classAndDescription. renderedPost }.
+		{ '4. publish rendered post' . publishPost classAndDescription . publishPost }
+	}
+]
+
 { #category : #accessing }
 LeClientRenderedPostOfPagePublisher >> page [
 	<return: #LePage>

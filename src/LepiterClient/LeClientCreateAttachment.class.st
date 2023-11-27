@@ -47,6 +47,17 @@ LeClientCreateAttachment >> execute [
 	^ aResponse
 ]
 
+{ #category : #'gt - extensions' }
+LeClientCreateAttachment >> gtDetails [
+	^ super gtDetails , {
+		{ 'snippet attachment' . self snippetAttachment }.
+		{ 'server database id' . self serverDatabaseId }.
+		{ '1. create file'
+			. createFile classAndDescription
+			. createFile }
+	}
+]
+
 { #category : #private }
 LeClientCreateAttachment >> jsonObject [
 	^ {'blob' -> self contentBlob.

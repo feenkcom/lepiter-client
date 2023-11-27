@@ -26,6 +26,13 @@ LeClientApiDeletePage >> execute [
 	^ aResponse
 ]
 
+{ #category : #'gt - extensions' }
+LeClientApiDeletePage >> gtDetails [
+	^ super gtDetails , {
+		{ 'page' . self page }
+	}
+]
+
 { #category : #accessing }
 LeClientApiDeletePage >> jsonObject [
 	^ Dictionary new

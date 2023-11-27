@@ -2,12 +2,9 @@ Class {
 	#name : #LeClientApiCreatePost,
 	#superclass : #LeClientCommand,
 	#instVars : [
-		'page',
 		'serverDatabaseId',
-		'title',
-		'abstract',
-		'thumbnail',
-		'post'
+		'post',
+		'page'
 	],
 	#category : #'LepiterClient-Publishing New'
 }
@@ -35,6 +32,19 @@ LeClientApiCreatePost >> execute [
 
 	self addResponse: aResponse.
 	^ aResponse
+]
+
+{ #category : #'gt - extensions' }
+LeClientApiCreatePost >> gtDetails [
+	^ super gtDetails , {
+		{ 'post' . self post }.
+		{ 'post page' . self post page asString . self post page }.
+		{ 'title' . self post title }.
+		{ 'abstract' . self post abstract }.
+		{ 'thumbnail' . self post thumbnail }.
+		{ 'server database id' . self serverDatabaseId }.
+		{ 'page' . self page }
+	}
 ]
 
 { #category : #private }

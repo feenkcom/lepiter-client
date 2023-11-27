@@ -48,6 +48,14 @@ LeClientMultiCommand >> execute [
 	^ aResponse
 ]
 
+{ #category : #'gt - extensions' }
+LeClientMultiCommand >> gtDetails [
+	^ super gtDetails , {
+		{ 'name' . name ifNil: [ '' ] . name }.
+		{ 'commands' . commands size. commands }
+	}
+]
+
 { #category : #accessing }
 LeClientMultiCommand >> name [
 	^ name

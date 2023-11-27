@@ -24,6 +24,13 @@ LeClientPageOutputResponse >> filePath [
 	^ resource pageLink fileName
 ]
 
+{ #category : #'gt - extensions' }
+LeClientPageOutputResponse >> gtDetails [
+	^ super gtDetails , {
+		{ 'resource' . self resource }
+	}
+]
+
 { #category : #testing }
 LeClientPageOutputResponse >> isSuccess [
 	^ true

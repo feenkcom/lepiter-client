@@ -11,6 +11,14 @@ Class {
 	#category : #'LepiterClient-Responses'
 }
 
+{ #category : #accessing }
+LeClientRequestSuccess >> gtDetails [
+	^ super gtDetails , {
+		{ 'http request' . self request }.
+		{ 'http response' . self response }
+	}
+]
+
 { #category : #'gt - extensions' }
 LeClientRequestSuccess >> hasResponse [
 	<return: #Boolean>

@@ -37,6 +37,14 @@ LeClientRequestExceptionResponse >> freeze: anException [
 ]
 
 { #category : #'gt - extensions' }
+LeClientRequestExceptionResponse >> gtDetails [
+	^ super gtDetails , {
+		{ 'exception' . self exception }.
+		{ 'http request' . self request }
+	}
+]
+
+{ #category : #'gt - extensions' }
 LeClientRequestExceptionResponse >> gtExceptionMessageTextFor: aView [
 	<gtView>
 	self exception ifNil: [ ^ aView empty ].

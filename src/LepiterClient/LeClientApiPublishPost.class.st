@@ -56,6 +56,16 @@ LeClientApiPublishPost >> filePath: aRelativePath [
 	filePath := aRelativePath
 ]
 
+{ #category : #'gt - extensions' }
+LeClientApiPublishPost >> gtDetails [
+	^ super gtDetails , {
+		{ 'post' . post }.
+		{ 'post id' . post uuid asString . post uuid }.
+		{ 'file' . filePath pathString . filePath }.
+		{ 'author' . authorName }
+	}
+]
+
 { #category : #private }
 LeClientApiPublishPost >> jsonObject [
 	^ Dictionary new

@@ -49,10 +49,11 @@ TLeClientCommand >> gtCommandsFor: aView [
 		items: [ {self} ];
 		children: #commands;
 		expandAll;
-		column: 'Description' text: #description;
+		column: 'Description' 
+			text: #description
+			weight: 5;
 		column: 'Response'
-			text: [ :aCommand | aCommand lastResponse ifNotNil: #label ]
-			width: 120;
+			text: [ :aCommand | aCommand lastResponse ifNotNil: #label ];
 		actionUpdateButton
 ]
 
@@ -65,7 +66,8 @@ TLeClientCommand >> gtResponsesFor: aView [
 		items: [ self responses ];
 		expandAll;
 		children: #subresponses;
-		column: 'Description' text: #label;
+		column: 'Description' text: [ :each | each class name ];
+		column: 'Response' text: #label;
 		actionUpdateButton
 ]
 

@@ -61,6 +61,22 @@ LeClientCondition >> execute [
 	^ aResponse
 ]
 
+{ #category : #'gt - extensions' }
+LeClientCondition >> gtDetails [
+	^ super gtDetails , {
+		{ '1. check'
+			. self check classAndDescription
+			. self check }.
+		{ '2. on success' 
+			. self onSuccess classAndDescription
+			. self onSuccess }.
+		{ '2. on not found' 
+			. self onNotFound classAndDescription
+			. self onNotFound }.
+		{ 'before on success' . successPreExecutionBlock ifNil: [ '' ] }
+	}
+]
+
 { #category : #accessing }
 LeClientCondition >> onNotFound [
 	<return: #TLeClientCommand>

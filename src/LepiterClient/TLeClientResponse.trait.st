@@ -29,7 +29,8 @@ TLeClientResponse >> gtResponsesFor: aView [
 		items: [ { self } ];
 		expandAll;
 		children: #subresponses;
-		column: 'Description' text: #label;
+		column: 'Description' text: [ :each | each class name ];
+		column: 'Response' text: #label;
 		actionUpdateButton
 ]
 

@@ -55,6 +55,14 @@ LeClientApiAttachment >> execute [
 	^ aResponse
 ]
 
+{ #category : #'gt - extensions' }
+LeClientApiAttachment >> gtDetails [
+	^ super gtDetails , {
+		{ 'snippet attachment' . self snippetAttachment }.
+		{ 'server database id' . self serverDatabaseId }
+	}
+]
+
 { #category : #'api - actions' }
 LeClientApiAttachment >> prepare [
 	"nothing to do"
