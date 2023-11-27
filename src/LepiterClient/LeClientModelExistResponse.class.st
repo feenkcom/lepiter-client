@@ -1,8 +1,8 @@
 Class {
 	#name : #LeClientModelExistResponse,
-	#superclass : #Object,
-	#traits : 'TLeClientResponse - {#description} + TLeClientZincResponse',
-	#classTraits : 'TLeClientResponse classTrait + TLeClientZincResponse classTrait',
+	#superclass : #LeClientResponse,
+	#traits : 'TLeClientZincResponse',
+	#classTraits : 'TLeClientZincResponse classTrait',
 	#instVars : [
 		'subresponse'
 	],

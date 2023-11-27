@@ -1,8 +1,8 @@
 Class {
 	#name : #LeClientRequestExceptionResponse,
-	#superclass : #Object,
-	#traits : 'TLeClientResponse + TLeClientExceptionViews',
-	#classTraits : 'TLeClientResponse classTrait + TLeClientExceptionViews classTrait',
+	#superclass : #LeClientResponse,
+	#traits : 'TLeClientExceptionViews',
+	#classTraits : 'TLeClientExceptionViews classTrait',
 	#instVars : [
 		'exception',
 		'request',

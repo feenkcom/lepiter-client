@@ -1,8 +1,6 @@
 Class {
 	#name : #LeClientConditionResponse,
-	#superclass : #Object,
-	#traits : 'TLeClientResponse',
-	#classTraits : 'TLeClientResponse classTrait',
+	#superclass : #LeClientResponse,
 	#instVars : [
 		'check',
 		'subsequent'

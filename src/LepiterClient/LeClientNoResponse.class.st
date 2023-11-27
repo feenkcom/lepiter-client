@@ -1,8 +1,6 @@
 Class {
 	#name : #LeClientNoResponse,
-	#superclass : #Object,
-	#traits : 'TLeClientResponse',
-	#classTraits : 'TLeClientResponse classTrait',
+	#superclass : #LeClientResponse,
 	#category : #'LepiterClient-Responses'
 }
 

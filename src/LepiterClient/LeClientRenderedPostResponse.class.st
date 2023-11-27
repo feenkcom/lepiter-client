@@ -1,8 +1,6 @@
 Class {
 	#name : #LeClientRenderedPostResponse,
-	#superclass : #Object,
-	#traits : 'TLeClientResponse',
-	#classTraits : 'TLeClientResponse classTrait',
+	#superclass : #LeClientResponse,
 	#instVars : [
 		'exportResponse',
 		'resourcesResponse',

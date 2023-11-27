@@ -1,8 +1,8 @@
 Class {
 	#name : #LeClientRequestSuccess,
-	#superclass : #Object,
-	#traits : 'TLeClientResponse - {#description. #subresponses} + TLeClientZincResponse + TLeClientWithSubresponses',
-	#classTraits : 'TLeClientResponse classTrait + TLeClientZincResponse classTrait + TLeClientWithSubresponses classTrait',
+	#superclass : #LeClientResponse,
+	#traits : 'TLeClientZincResponse + TLeClientWithSubresponses',
+	#classTraits : 'TLeClientZincResponse classTrait + TLeClientWithSubresponses classTrait',
 	#instVars : [
 		'model',
 		'response',

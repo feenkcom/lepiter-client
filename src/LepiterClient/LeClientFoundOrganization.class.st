@@ -1,8 +1,6 @@
 Class {
 	#name : #LeClientFoundOrganization,
-	#superclass : #Object,
-	#traits : 'TLeClientResponse',
-	#classTraits : 'TLeClientResponse classTrait',
+	#superclass : #LeClientResponse,
 	#instVars : [
 		'subresponse',
 		'databaseName',

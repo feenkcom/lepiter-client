@@ -1,8 +1,6 @@
 Class {
 	#name : #LeClientReadyResponse,
-	#superclass : #Object,
-	#traits : 'TLeClientResponse',
-	#classTraits : 'TLeClientResponse classTrait',
+	#superclass : #LeClientResponse,
 	#instVars : [
 		'model'
 	],

@@ -12,6 +12,11 @@ TLeClientCommand >> addResponse: aResponse [
 ]
 
 { #category : #accessing }
+TLeClientCommand >> classAndDescription [
+	^ 'a {1} ({2})' format: { self class name . self description }
+]
+
+{ #category : #accessing }
 TLeClientCommand >> commands [
 	"Return a subcommands"
 

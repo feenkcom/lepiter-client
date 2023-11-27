@@ -29,6 +29,32 @@ LeClientCommand >> execute [
 	^ self subclassResponsibility
 ]
 
+{ #category : #'gt - extensions' }
+LeClientCommand >> gtDetails [
+	^ {
+		{ 'command' . self class name . self }.
+		{ 'description' . self description }.
+		{ 'success' . self isSuccess }.
+		{ 'subcommands' . self commands size . self commands }.
+		{ 'responses' . self responses size . self responses }.
+		{ 'last response' 
+			. self lastResponse classAndDescription
+			. self lastResponse }
+	}
+]
+
+{ #category : #'gt - extensions' }
+LeClientCommand >> gtDetailsFor: aView [
+	<gtView>
+	^ aView columnedList
+		  title: 'Details';
+		  priority: 30;
+		  items: [ self gtDetails ];
+		  column: 'Key' text: #first;
+		  column: 'Value' text: #second weight: 5;
+		  send: #last
+]
+
 { #category : #'api - actions' }
 LeClientCommand >> prepare [
 	"Prepare (initialize) this command.

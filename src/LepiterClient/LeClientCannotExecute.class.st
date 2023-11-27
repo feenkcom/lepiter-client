@@ -1,8 +1,6 @@
 Class {
 	#name : #LeClientCannotExecute,
-	#superclass : #Object,
-	#traits : 'TLeClientResponse',
-	#classTraits : 'TLeClientResponse classTrait',
+	#superclass : #LeClientResponse,
 	#instVars : [
 		'subresponses'
 	],

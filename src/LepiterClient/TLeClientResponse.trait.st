@@ -4,6 +4,11 @@ Trait {
 }
 
 { #category : #accessing }
+TLeClientResponse >> classAndDescription [
+	^ 'a {1} ({2})' format: { self class name . self description }
+]
+
+{ #category : #accessing }
 TLeClientResponse >> color [
 	^ self isSuccess
 		ifFalse: [ BrGlamorousColors errorBackgroundColor ]
