@@ -1,6 +1,6 @@
 Class {
 	#name : #LeClientUpdateAttachment,
-	#superclass : #LeClientCommand,
+	#superclass : #LeClientApiCommand,
 	#instVars : [
 		'snippetAttachment',
 		'serverDatabaseId',
@@ -8,6 +8,11 @@ Class {
 	],
 	#category : #'LepiterClient-Publishing New'
 }
+
+{ #category : #accessing }
+LeClientUpdateAttachment class >> endPoint [
+	^ LeClientEndpoints apiUpdateAttachment
+]
 
 { #category : #accessing }
 LeClientUpdateAttachment >> commands [

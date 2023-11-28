@@ -1,6 +1,6 @@
 Class {
 	#name : #LeClientMultiCommand,
-	#superclass : #LeClientCommand,
+	#superclass : #LeClientCompositeCommand,
 	#instVars : [
 		'commands',
 		'name'

@@ -1,11 +1,16 @@
 Class {
 	#name : #LeClientApiPages,
-	#superclass : #LeClientCommand,
+	#superclass : #LeClientApiCommand,
 	#instVars : [
 		'organization'
 	],
 	#category : #'LepiterClient-Publishing New'
 }
+
+{ #category : #accessing }
+LeClientApiPages class >> endPoint [
+	^ LeClientEndpoints apiPages
+]
 
 { #category : #accessing }
 LeClientApiPages >> description [

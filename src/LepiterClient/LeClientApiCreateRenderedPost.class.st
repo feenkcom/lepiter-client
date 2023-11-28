@@ -1,6 +1,6 @@
 Class {
 	#name : #LeClientApiCreateRenderedPost,
-	#superclass : #LeClientCommand,
+	#superclass : #LeClientApiCommand,
 	#instVars : [
 		'post',
 		'filePath',
@@ -9,6 +9,11 @@ Class {
 	],
 	#category : #'LepiterClient-Publishing New'
 }
+
+{ #category : #accessing }
+LeClientApiCreateRenderedPost class >> endPoint [
+	^ LeClientEndpoints apiCreateRenderedPost
+]
 
 { #category : #accessing }
 LeClientApiCreateRenderedPost >> contents [

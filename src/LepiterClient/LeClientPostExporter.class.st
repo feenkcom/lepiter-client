@@ -1,6 +1,6 @@
 Class {
 	#name : #LeClientPostExporter,
-	#superclass : #LeClientCommand,
+	#superclass : #LeClientCompositeCommand,
 	#instVars : [
 		'htmlContext',
 		'htmlSequencer',

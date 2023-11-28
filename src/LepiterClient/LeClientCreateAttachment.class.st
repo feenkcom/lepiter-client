@@ -1,6 +1,6 @@
 Class {
 	#name : #LeClientCreateAttachment,
-	#superclass : #LeClientCommand,
+	#superclass : #LeClientApiCommand,
 	#instVars : [
 		'snippetAttachment',
 		'createFile',
@@ -8,6 +8,11 @@ Class {
 	],
 	#category : #'LepiterClient-Publishing New'
 }
+
+{ #category : #accessing }
+LeClientCreateAttachment class >> endPoint [
+	^ LeClientEndpoints apiCreateAttachment
+]
 
 { #category : #accessing }
 LeClientCreateAttachment >> commands [

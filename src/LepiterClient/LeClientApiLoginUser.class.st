@@ -1,8 +1,13 @@
 Class {
 	#name : #LeClientApiLoginUser,
-	#superclass : #LeClientCommand,
+	#superclass : #LeClientApiCommand,
 	#category : #'LepiterClient-Publishing New'
 }
+
+{ #category : #accessing }
+LeClientApiLoginUser class >> endPoint [
+	^ LeClientEndpoints apiLoginUser
+]
 
 { #category : #'api - actions' }
 LeClientApiLoginUser >> execute [

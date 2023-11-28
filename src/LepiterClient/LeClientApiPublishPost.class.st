@@ -1,6 +1,6 @@
 Class {
 	#name : #LeClientApiPublishPost,
-	#superclass : #LeClientCommand,
+	#superclass : #LeClientApiCommand,
 	#instVars : [
 		'post',
 		'filePath',
@@ -8,6 +8,11 @@ Class {
 	],
 	#category : #'LepiterClient-Publishing New'
 }
+
+{ #category : #accessing }
+LeClientApiPublishPost class >> endPoint [
+	^ LeClientEndpoints apiPublishPost
+]
 
 { #category : #accessing }
 LeClientApiPublishPost >> authorName [

@@ -105,16 +105,18 @@ LeClientEndpoints class >> gtEndpointsFor: aView [
 	^ aView columnedList
 		title: 'Endpoints';
 		priority: 30;
-		items: [ (self classSide methods select: [ :each | each numArgs = 0 ])
-				sort: [ :a :b | a selector < b selector ] ];
+		items: [ 
+			(self classSide methods 
+				select: [ :each | each numArgs = 0 and: [ each selector beginsWith: #api ] ])
+					sort: [ :a :b | a selector < b selector ] ];
 		column: 'Endpoint' text: [ :aMethod | self perform: aMethod selector ];
 		send: [ :aMethod | 
 			| aString |
 			aString := (self perform: aMethod selector) asString.
 			(aString beginsWith: '/') ifTrue: [ aString := aString allButFirst ].
 			aMethod selector gtSenders
-				| (aString gtSubstringLiteralCaseSensitiveMatch
-						& self classSide gtMethodsInClass not) ]
+				"| (aString gtSubstringLiteralCaseSensitiveMatch
+						& self classSide gtMethodsInClass not)" ]
 ]
 
 { #category : #accessing }

@@ -1,6 +1,6 @@
 Class {
 	#name : #LeClientApiCreatePost,
-	#superclass : #LeClientCommand,
+	#superclass : #LeClientApiCommand,
 	#instVars : [
 		'serverDatabaseId',
 		'post',
@@ -8,6 +8,11 @@ Class {
 	],
 	#category : #'LepiterClient-Publishing New'
 }
+
+{ #category : #accessing }
+LeClientApiCreatePost class >> endPoint [
+	^ LeClientEndpoints apiCreatePost
+]
 
 { #category : #accessing }
 LeClientApiCreatePost >> description [

@@ -1,12 +1,17 @@
 Class {
 	#name : #LeClientApiDeleteAttachment,
-	#superclass : #LeClientCommand,
+	#superclass : #LeClientApiCommand,
 	#instVars : [
 		'snippetAttachment',
 		'serverDatabaseId'
 	],
 	#category : #'LepiterClient-Publishing New'
 }
+
+{ #category : #accessing }
+LeClientApiDeleteAttachment class >> endPoint [
+	^ LeClientEndpoints apiDeleteAttachment
+]
 
 { #category : #'api - actions' }
 LeClientApiDeleteAttachment >> execute [

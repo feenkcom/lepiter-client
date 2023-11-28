@@ -1,8 +1,13 @@
 Class {
 	#name : #LeClientApiDatabases,
-	#superclass : #LeClientCommand,
+	#superclass : #LeClientApiCommand,
 	#category : #'LepiterClient-Publishing New'
 }
+
+{ #category : #accessing }
+LeClientApiDatabases class >> endPoint [
+	^ LeClientEndpoints apiDatabases
+]
 
 { #category : #accessing }
 LeClientApiDatabases >> description [

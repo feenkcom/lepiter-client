@@ -1,11 +1,16 @@
 Class {
 	#name : #LeClientApiPostByPage,
-	#superclass : #LeClientCommand,
+	#superclass : #LeClientApiCommand,
 	#instVars : [
 		'page'
 	],
 	#category : #'LepiterClient-Publishing New'
 }
+
+{ #category : #accessing }
+LeClientApiPostByPage class >> endPoint [
+	^ LeClientEndpoints apiPostByPage
+]
 
 { #category : #accessing }
 LeClientApiPostByPage >> description [

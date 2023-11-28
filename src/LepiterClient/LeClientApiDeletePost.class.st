@@ -1,11 +1,16 @@
 Class {
 	#name : #LeClientApiDeletePost,
-	#superclass : #LeClientCommand,
+	#superclass : #LeClientApiCommand,
 	#instVars : [
 		'post'
 	],
 	#category : #'LepiterClient-Publishing New'
 }
+
+{ #category : #accessing }
+LeClientApiDeletePost class >> endPoint [
+	^ LeClientEndpoints apiDeletePost
+]
 
 { #category : #'api - actions' }
 LeClientApiDeletePost >> execute [

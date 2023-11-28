@@ -1,6 +1,6 @@
 Class {
 	#name : #LeClientCheckAttachmentExist,
-	#superclass : #LeClientCommand,
+	#superclass : #LeClientCompositeCommand,
 	#instVars : [
 		'snippetAttachment',
 		'serverDatabaseId',

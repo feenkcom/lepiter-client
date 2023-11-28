@@ -1,6 +1,6 @@
 Class {
 	#name : #LeClientCheckPostExist,
-	#superclass : #LeClientCommand,
+	#superclass : #LeClientCompositeCommand,
 	#instVars : [
 		'page',
 		'getPost'

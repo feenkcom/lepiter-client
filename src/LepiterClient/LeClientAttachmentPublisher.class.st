@@ -1,6 +1,6 @@
 Class {
 	#name : #LeClientAttachmentPublisher,
-	#superclass : #LeClientCommand,
+	#superclass : #LeClientCompositeCommand,
 	#traits : 'TLeClientWithCommands',
 	#classTraits : 'TLeClientWithCommands classTrait',
 	#instVars : [

@@ -1,11 +1,16 @@
 Class {
 	#name : #LeClientApiCreateFile,
-	#superclass : #LeClientCommand,
+	#superclass : #LeClientApiCommand,
 	#instVars : [
 		'contentsProvider'
 	],
 	#category : #'LepiterClient-Publishing New'
 }
+
+{ #category : #accessing }
+LeClientApiCreateFile class >> endPoint [
+	^ LeClientEndpoints apiCreateFile
+]
 
 { #category : #accessing }
 LeClientApiCreateFile >> blob [

@@ -1,6 +1,6 @@
 Class {
 	#name : #LeClientCondition,
-	#superclass : #LeClientCommand,
+	#superclass : #LeClientCompositeCommand,
 	#instVars : [
 		'check',
 		'onSuccess',

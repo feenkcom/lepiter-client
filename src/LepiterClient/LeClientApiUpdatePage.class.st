@@ -1,12 +1,17 @@
 Class {
 	#name : #LeClientApiUpdatePage,
-	#superclass : #LeClientCommand,
+	#superclass : #LeClientApiCommand,
 	#instVars : [
 		'page',
 		'serverDatabaseId'
 	],
 	#category : #'LepiterClient-Publishing New'
 }
+
+{ #category : #accessing }
+LeClientApiUpdatePage class >> endPoint [
+	^ LeClientEndpoints apiUpdatePage
+]
 
 { #category : #accessing }
 LeClientApiUpdatePage >> description [

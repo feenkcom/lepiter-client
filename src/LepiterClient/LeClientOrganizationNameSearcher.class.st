@@ -1,6 +1,6 @@
 Class {
 	#name : #LeClientOrganizationNameSearcher,
-	#superclass : #LeClientCommand,
+	#superclass : #LeClientCompositeCommand,
 	#instVars : [
 		'apiDatabases',
 		'organizationName'

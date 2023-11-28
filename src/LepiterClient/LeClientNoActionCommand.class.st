@@ -1,6 +1,6 @@
 Class {
 	#name : #LeClientNoActionCommand,
-	#superclass : #LeClientCommand,
+	#superclass : #LeClientCompositeCommand,
 	#instVars : [
 		'description'
 	],

@@ -1,6 +1,6 @@
 Class {
 	#name : #LeClientPostPublisher,
-	#superclass : #LeClientCommand,
+	#superclass : #LeClientCompositeCommand,
 	#instVars : [
 		'page',
 		'serverDatabaseId',

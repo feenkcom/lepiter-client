@@ -1,12 +1,17 @@
 Class {
 	#name : #LeClientApiAttachment,
-	#superclass : #LeClientCommand,
+	#superclass : #LeClientApiCommand,
 	#instVars : [
 		'snippetAttachment',
 		'serverDatabaseId'
 	],
 	#category : #'LepiterClient-Publishing New'
 }
+
+{ #category : #accessing }
+LeClientApiAttachment class >> endPoint [
+	^ LeClientEndpoints apiAttachment
+]
 
 { #category : #accessing }
 LeClientApiAttachment >> attachmentHash [

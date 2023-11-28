@@ -1,12 +1,17 @@
 Class {
 	#name : #LeClientApiCreatePage,
-	#superclass : #LeClientCommand,
+	#superclass : #LeClientApiCommand,
 	#instVars : [
 		'page',
 		'serverDatabaseId'
 	],
 	#category : #'LepiterClient-Publishing New'
 }
+
+{ #category : #accessing }
+LeClientApiCreatePage class >> endPoint [
+	^ LeClientEndpoints apiCreatePage
+]
 
 { #category : #accessing }
 LeClientApiCreatePage >> description [

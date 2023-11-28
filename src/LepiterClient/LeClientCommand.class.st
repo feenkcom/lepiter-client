@@ -10,6 +10,13 @@ Class {
 }
 
 { #category : #accessing }
+LeClientCommand class >> endPoint [
+	"Return a string resource path used by me, as in /api/databases"
+
+	self subclassResponsibility
+]
+
+{ #category : #accessing }
 LeClientCommand >> context [
 	<retuarn: #LeClientContext>
 	^ context

@@ -1,12 +1,17 @@
 Class {
 	#name : #LeClientCheckPageExist,
-	#superclass : #LeClientCommand,
+	#superclass : #LeClientApiCommand,
 	#instVars : [
 		'page',
 		'serverDatabaseId'
 	],
 	#category : #'LepiterClient-Publishing New'
 }
+
+{ #category : #accessing }
+LeClientCheckPageExist class >> endPoint [
+	^ LeClientEndpoints apiPage
+]
 
 { #category : #accessing }
 LeClientCheckPageExist >> description [
