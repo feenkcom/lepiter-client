@@ -22,7 +22,11 @@ LeClientApiCommand class >> gtEndpointFor: aView [
 		  } ];
 		  column: 'Key' text: #first;
 		  column: 'Value' text: #second weight: 5;
-		  send: #last
+		  sendTool: [ :spec | | target |
+		  	target := spec last.
+		  	(target notNil and: [ target isClass ])
+		  		ifTrue: [ GtClassCoderTool forClass: target ]
+		  		ifFalse: [ target gtDefaultInspectorTool ] ]
 ]
 
 { #category : #accessing }
