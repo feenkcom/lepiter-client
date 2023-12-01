@@ -97,11 +97,11 @@ LeClientOrganization >> gtPagesFor: aView [
 				(aPageOrDailyNote isKindOf: LeDailyNote)
 					ifTrue: [ '' ]
 					ifFalse: [ aPageOrDailyNote editEmail ] ];
+		contextItemLabel: 'Delete page on server' 
+			action: [ :anElement :aPage | self context client deletePage: aPage ];
 		actionButtonIcon: BrGlamorousVectorIcons refresh
 			tooltip: 'Update'
-			action: [ :aButton :aTab | 
-				self refreshPages.
-				aTab viewContentElement phlow update ]
+			action: [ :aButton :aTab | aTab viewContentElement phlow update ]
 ]
 
 { #category : #accessing }
@@ -115,14 +115,12 @@ LeClientOrganization >> gtPostsFor: aView [
 		items: [ self posts ];
 		column: 'Title' text: #title;
 		column: 'Abstract' text: #abstract;
-		column: 'Published'
-			text: #isPublished
-			width: 75;
+		column: 'Published' text: #isPublished width: 75;
+		contextItemLabel: 'Delete post on server' 
+			action: [ :anElement :aPost | self context client deletePost: aPost ];
 		actionButtonIcon: BrGlamorousVectorIcons refresh
 			tooltip: 'Update'
-			action: [ :aButton :aTab | 
-				self refreshPosts.
-				aTab viewContentElement phlow update ]
+			action: [ :aButton :aTab | aTab viewContentElement phlow update ]
 ]
 
 { #category : #accessing }
