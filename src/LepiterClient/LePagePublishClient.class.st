@@ -26,7 +26,8 @@ LePagePublishClient >> client [
 { #category : #accessing }
 LePagePublishClient >> client: aClient [
 	client := aClient.
-	self server: aClient server
+	self server: aClient server.
+	self tryToResolvePage
 ]
 
 { #category : #accessing }
@@ -84,12 +85,7 @@ LePagePublishClient >> gtPublishFor: aView [
 				client: self client;
 				page: self page;
 				onCommandCreation: [ :aCommand | self addResult: aCommand ];
-				onPublish: [ :aResult | 
-					| serverPostResponse |
-					serverPostResponse := self client findPostByPage: self page.
-					self addResult: serverPostResponse.
-					serverPostResponse isSuccess
-						ifTrue: [ self post: (serverPostResponse model client: self client) ] ] ];
+				onPublish: [ :aResult | self resolvePage ] ];
 		view: #gtMagritteFor:
 ]
 
@@ -106,7 +102,8 @@ LePagePublishClient >> page [
 
 { #category : #accessing }
 LePagePublishClient >> page: anObject [
-	page := anObject
+	page := anObject.
+	self tryToResolvePage
 ]
 
 { #category : #accessing }
@@ -120,6 +117,17 @@ LePagePublishClient >> post: anObject [
 ]
 
 { #category : #accessing }
+LePagePublishClient >> resolvePage [
+	| aResponse |
+	aResponse := self client findPostByPage: self page.
+
+	self addResult: aResponse.
+
+	aResponse isSuccess
+		ifTrue: [ self post: (aResponse model client: self client) ]
+]
+
+{ #category : #accessing }
 LePagePublishClient >> server [
 	^ server
 ]
@@ -127,4 +135,10 @@ LePagePublishClient >> server [
 { #category : #accessing }
 LePagePublishClient >> server: anObject [
 	server := anObject
+]
+
+{ #category : #accessing }
+LePagePublishClient >> tryToResolvePage [
+	(self page isNotNil and: [ self client isNotNil and: [ self post isNil ] ])
+		ifTrue: [ self resolvePage ]
 ]

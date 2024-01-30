@@ -11,6 +11,6 @@ LePage >> gtExportActionFor: anAction [
 				onLogin: [ :aClient | 
 					aButton phlow
 						spawnObject: (LePagePublishClient new
-								client: aClient;
-								page: self) ]) asElement ]
+								page: self;
+								client: aClient) ]) asElement ]
 ]

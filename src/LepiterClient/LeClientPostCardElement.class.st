@@ -93,7 +93,8 @@ LeClientPostCardElement >> delete [
 	self post client deletePost: self post.
 	self post publishedAt: nil.
 	self post publishedUser: nil.
-	self post publishedFile: nil
+	self post publishedFile: nil.
+	self isPublished: false
 ]
 
 { #category : #accessing }
