@@ -246,6 +246,14 @@ LeClientPublishPageForm >> page: aPage [
 	self abstract: aPost abstract
 ]
 
+{ #category : #accessing }
+LeClientPublishPageForm >> post: aPost [
+	aPost
+		ifNotNil: [ self abstract: aPost abstract.
+			self author: aPost publishedUser.
+			self title: aPost title ]
+]
+
 { #category : #actions }
 LeClientPublishPageForm >> publish [
 	| aCommand |

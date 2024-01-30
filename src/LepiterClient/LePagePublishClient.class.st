@@ -79,11 +79,12 @@ LePagePublishClient >> gtPostFor: aView [
 LePagePublishClient >> gtPublishFor: aView [
 	<gtView>
 	^ aView forward
-		title: 'Publish';
+		title: (self post ifNil: [ 'Publish' ] ifNotNil: [ 'Update' ]);
 		priority: 2;
 		object: [ LeClientPublishPageForm new
 				client: self client;
 				page: self page;
+				post: self post;
 				onCommandCreation: [ :aCommand | self addResult: aCommand ];
 				onPublish: [ :aResult | self resolvePage ] ];
 		view: #gtMagritteFor:
