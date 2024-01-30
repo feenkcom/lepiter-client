@@ -253,6 +253,9 @@ LeClientPublishPageForm >> publish [
 				preparePublishPostOfPage: self page
 				inOrganizationNamed: self database
 				authorName: self author.
+				
+	publishCommand post abstract: self abstract.
+	publishCommand post title: self title.
 
 	onCommandCreation
 		ifNotNil: [ :aBlock | onCommandCreation value: publishCommand ].
