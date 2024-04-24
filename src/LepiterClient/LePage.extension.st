@@ -9,8 +9,11 @@ LePage >> gtExportActionFor: anAction [
 		content: [ :aButton | 
 			(LeClientLoginPane new
 				onLogin: [ :aClient | 
-					aButton phlow
-						spawnObject: (LePagePublishClient new
-								page: self;
-								client: aClient) ]) asElement ]
+					BlTaskAction 
+						enqueueElement: aButton 
+						action: [
+							aButton phlow
+								spawnObject: (LePagePublishClient new
+										page: self;
+										client: aClient) ] ]) asElement ]
 ]
