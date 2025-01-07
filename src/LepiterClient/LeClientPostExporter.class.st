@@ -106,6 +106,8 @@ LeClientPostExporter >> prepare [
 LeClientPostExporter >> prepareHtmlContext [
 	htmlContext ifNotNil: [ ^ self ].
 	htmlContext := LeClientHtmlContext new
+			date: context postPublishDate;
+			authorName: context postAuthorName;
 			page: page;
 			pageLinks: pageLinks;
 			sequencer: htmlSequencer;

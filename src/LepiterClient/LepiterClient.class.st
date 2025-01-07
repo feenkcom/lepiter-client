@@ -200,7 +200,9 @@ LepiterClient >> password: anUrl [
 { #category : #'api - actions' }
 LepiterClient >> preparePublishPostOfPage: aPage inOrganizationNamed: aDatabaseName authorName: anAuthorName [
 	^ LeClientRenderedPostOfPagePublisher new
-		context: self context;
+		context: (self context
+			postAuthorName: anAuthorName;
+			postPublishDate: DateAndTime now);
 		page: aPage;
 		post: (LeClientPost forPage: aPage);
 		databaseName: aDatabaseName;

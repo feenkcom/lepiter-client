@@ -1,6 +1,8 @@
 Class {
 	#name : #LeClientContext,
 	#superclass : #Object,
+	#traits : 'TGtOptions',
+	#classTraits : 'TGtOptions classTrait',
 	#instVars : [
 		'serverUrl',
 		'token',
@@ -49,6 +51,28 @@ LeClientContext >> password [
 { #category : #accessing }
 LeClientContext >> password: aString [
 	password := aString
+]
+
+{ #category : #'options - post' }
+LeClientContext >> postAuthorName [
+	<return: #String or: nil>
+	^ self optionAt: #postAuthorName ifAbsent: [ nil ]
+]
+
+{ #category : #'options - post' }
+LeClientContext >> postAuthorName: aString [
+	self optionAt: #postAuthorName put: aString
+]
+
+{ #category : #'options - post' }
+LeClientContext >> postPublishDate [
+	<return: #DateAndTime or: nil>
+	^ self optionAt: #postPublishDate ifAbsent: [ nil ]
+]
+
+{ #category : #'options - post' }
+LeClientContext >> postPublishDate: aDate [
+	self optionAt: #postPublishDate put: aDate
 ]
 
 { #category : #accessing }
