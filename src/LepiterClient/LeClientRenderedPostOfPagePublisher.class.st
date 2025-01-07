@@ -19,8 +19,8 @@ LeClientRenderedPostOfPagePublisher >> authorName [
 ]
 
 { #category : #accessing }
-LeClientRenderedPostOfPagePublisher >> authorName: anObject [
-	authorName := anObject
+LeClientRenderedPostOfPagePublisher >> authorName: aString [
+	authorName := aString
 ]
 
 { #category : #accessing }

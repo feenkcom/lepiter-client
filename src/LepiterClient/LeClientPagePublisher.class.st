@@ -80,7 +80,9 @@ LeClientPagePublisher >> page: aPage [
 
 { #category : #'api - actions' }
 LeClientPagePublisher >> prepare [
-	self page ifNil: [  "Command is not ready for initialization"^ self ].
+	self page ifNil: [ 
+		"Command is not ready for initialization"
+		^ self ].
 
 	self prepareAttachments.
 	self prepareCreateOrUpdatePage.
