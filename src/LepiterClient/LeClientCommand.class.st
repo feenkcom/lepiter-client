@@ -18,7 +18,7 @@ LeClientCommand class >> endPoint [
 
 { #category : #accessing }
 LeClientCommand >> context [
-	<retuarn: #LeClientContext>
+	<return: #LeClientContext>
 	^ context
 ]
 

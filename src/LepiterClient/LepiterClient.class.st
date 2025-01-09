@@ -169,7 +169,9 @@ LepiterClient >> gtOrganizationsFor: aView [
 		items: [ self organizations ];
 		column: 'Name' text: #name;
 		column: 'Description' text: #description weight: 2;
-		column: 'Location' text: #location
+		column: 'Location' text: #location;
+		contextItemLabel: 'Browse organization' 
+			action: [ :anElement :anOrg | WebBrowser openOn: anOrg location ]
 ]
 
 { #category : #'api - actions' }
