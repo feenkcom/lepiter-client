@@ -1,7 +1,7 @@
-Extension { #name : #LeHtmlFormatPiece }
+Extension { #name : #LeHtmlDoubleBracketFormatPiece }
 
 { #category : #'*LepiterClient' }
-LeHtmlFormatPiece class >> atpPostMetaData [
+LeHtmlDoubleBracketFormatPiece class >> atpPostMetaData [
 	^ self fromFile: FileLocator gtResource 
 		/ 'feenkcom' 
 		/ 'lepiter-client' 

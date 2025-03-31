@@ -25,7 +25,7 @@ LeHtmlGtAtpPostPiece >> initialize [
 		at: #urlAttribute put: LeHtmlGtApUrlAttributePiece;
 		at: #postMeta put: (LeHtmlConditionPiece new
 			condition: [ :aContext | aContext author isNotNil ];
-			piece: (LeHtmlFormatPiece atpPostMetaData
+			piece: (LeHtmlDoubleBracketFormatPiece atpPostMetaData
 				at: #date put: LeHtmlDatePiece;
 				at: #author put: LeHtmlAuthorPiece))
 ]
